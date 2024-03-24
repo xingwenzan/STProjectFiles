@@ -21,6 +21,16 @@
 - 原理
 - 结构
 
+# 相关资料
+
+- STM32F446RC
+    - 数据手册
+        - [官网](https://www.st.com/zh/microcontrollers-microprocessors/stm32f446/documentation.html)
+        - 本地 &#x2002; 方便使用而下载到本地，基本都来自官网
+            - [数据手册](RelevantInformation/DataSheet/stm32f446mc.pdf)
+            - [参考手册](RelevantInformation/DataSheet/rm0390-stm32f446xx-advanced-armbased-32bit-mcus-stmicroelectronics.pdf)
+            - [编程手册](RelevantInformation/DataSheet/pm0214-stm32-cortexm4-mcus-and-mpus-programming-manual-stmicroelectronics.pdf)
+
 ## 问题解决
 
 - [Clion开发STM32添加文件后报错“No such file or directory“](https://blog.csdn.net/weixin_45636061/article/details/121623826)

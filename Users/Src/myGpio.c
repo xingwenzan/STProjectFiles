@@ -4,7 +4,7 @@
 
 #include "myGpio.h"
 
-void MY_GPOI_INIT(void ){
+void MY_GPOI_INIT(void) {
     GPIO_InitTypeDef GPIO_InitStruct = {0};
 
     /* GPIO Ports Clock Enable */
