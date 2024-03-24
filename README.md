@@ -16,7 +16,7 @@
 ## 当前进度
 
 - 电控
-    - [x] HelloWorld
+    - [x] HelloWorld!
     - [ ] PWM 初步应用
 - 原理
 - 结构
