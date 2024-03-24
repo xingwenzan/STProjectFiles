@@ -9,4 +9,4 @@
 
 #include "main.h"
 
-void MY_GPOI_INIT(void);
+void MY_GPIO_INIT(void);
