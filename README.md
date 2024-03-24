@@ -12,6 +12,13 @@
     点击链接直接打开 或者 淘宝搜索直接打开
 - 仿真器 - JLink
 
+## 当前进度
+- 电控
+  -[x] HelloWorld
+  -[ ] PWM 初步应用
+- 原理
+- 结构
+
 ## 问题解决
 - [Clion开发STM32添加文件后报错“No such file or directory“](https://blog.csdn.net/weixin_45636061/article/details/121623826)
 
