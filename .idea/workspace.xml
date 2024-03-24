@@ -20,9 +20,8 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7de1e715-2908-491e-b866-8c7d6b3e860a" name="更改" comment="HelloWorld!">
+    <list default="true" id="7de1e715-2908-491e-b866-8c7d6b3e860a" name="更改" comment="add Task List">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,6 +84,11 @@
     </key>
   </component>
   <component name="RunManager" selected="OpenOCD 下载并运行.OCD STProjectFiles">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="STProjectFiles.elf" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="STProjectFiles" TARGET_NAME="STProjectFiles.elf" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="STProjectFiles" RUN_TARGET_NAME="STProjectFiles.elf">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -113,7 +117,7 @@
       <workItem from="1711283848925" duration="618000" />
       <workItem from="1711288097057" duration="5917000" />
       <workItem from="1711297114870" duration="1141000" />
-      <workItem from="1711298275714" duration="3000" />
+      <workItem from="1711298275714" duration="349000" />
     </task>
     <task id="LOCAL-00001" summary="firstCommit">
       <option name="closed" value="true" />
@@ -139,7 +143,15 @@
       <option name="project" value="LOCAL" />
       <updated>1711297538010</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="add Task List">
+      <option name="closed" value="true" />
+      <created>1711298614801</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1711298614801</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -167,6 +179,7 @@
     </ignored-roots>
     <MESSAGE value="firstCommit" />
     <MESSAGE value="HelloWorld!" />
-    <option name="LAST_COMMIT_MESSAGE" value="HelloWorld!" />
+    <MESSAGE value="add Task List" />
+    <option name="LAST_COMMIT_MESSAGE" value="add Task List" />
   </component>
 </project>
