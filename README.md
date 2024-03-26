@@ -16,7 +16,7 @@
 ## 当前进度
 
 - 电控
-    - [x] HelloWorld!
+    - [x] HelloWorld! & PWM By Delay
     - [ ] PWM 初步应用
 - 原理
 - 结构
@@ -30,6 +30,8 @@
             - [数据手册](RelevantInformation/DataSheet/stm32f446mc.pdf)
             - [参考手册](RelevantInformation/DataSheet/rm0390-stm32f446xx-advanced-armbased-32bit-mcus-stmicroelectronics.pdf)
             - [编程手册](RelevantInformation/DataSheet/pm0214-stm32-cortexm4-mcus-and-mpus-programming-manual-stmicroelectronics.pdf)
+        - 其他资源
+            - [野火 - STM32 HAL库开发实战指南](https://doc.embedfire.com/mcu/stm32/f429tiaozhanzhe/hal/zh/latest/index.html)
 
 ## 问题解决
 
