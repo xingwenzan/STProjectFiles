@@ -484,6 +484,11 @@
   #define assert_param(expr) ((expr) ? (void)0U : assert_failed((uint8_t *)__FILE__, __LINE__))
 /* Exported functions ------------------------------------------------------- */
   void assert_failed(uint8_t* file, uint32_t line);
+//  {
+//      // 输入参数错误重定向输出，为自行手动添加操作
+//      // 不用可删，记得加分号
+//      printf(“\r\n 输入参数错误，错误文件名=%s,行号=%s”,file,line);
+//  }
 #else
   #define assert_param(expr) ((void)0U)
 #endif /* USE_FULL_ASSERT */

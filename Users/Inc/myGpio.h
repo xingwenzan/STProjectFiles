@@ -5,8 +5,8 @@
 #ifndef STPROJECTFILES_GPIO_H
 #define STPROJECTFILES_GPIO_H
 
-#endif //STPROJECTFILES_GPIO_H
-
 #include "main.h"
 
 void MY_GPIO_INIT(void);
+
+#endif //STPROJECTFILES_GPIO_H

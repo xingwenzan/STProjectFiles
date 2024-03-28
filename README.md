@@ -30,8 +30,10 @@
             - [数据手册](RelevantInformation/DataSheet/stm32f446mc.pdf)
             - [参考手册](RelevantInformation/DataSheet/rm0390-stm32f446xx-advanced-armbased-32bit-mcus-stmicroelectronics.pdf)
             - [编程手册](RelevantInformation/DataSheet/pm0214-stm32-cortexm4-mcus-and-mpus-programming-manual-stmicroelectronics.pdf)
+            - [Cortex-M3权威指南](RelevantInformation/DataSheet/Cortex_M3_Definitive_Guide(CN).pdf)
         - 其他资源
             - [野火 - STM32 HAL库开发实战指南](https://doc.embedfire.com/mcu/stm32/f429tiaozhanzhe/hal/zh/latest/index.html)
+            - [Doxygen 注释规范](https://www.cnblogs.com/silencehuan/p/11169084.html)
 
 ## 问题解决
 

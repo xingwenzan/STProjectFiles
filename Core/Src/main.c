@@ -85,7 +85,7 @@ int main(void) {
     /* Initialize all configured peripherals */
     MY_GPIO_INIT();
     /* USER CODE BEGIN 2 */
-
+    HAL_GPIO_WritePin(LED_GPIO_Port, PWM_Power_Pin, GPIO_PIN_SET);
     /* USER CODE END 2 */
 
     /* Infinite loop */
