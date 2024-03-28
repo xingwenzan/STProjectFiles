@@ -2,7 +2,7 @@
 
 ## 项目背景
 
-> 待定
+> [背景调研](RelevantInformation/Research/背景调研.docx)
 
 ## 使用工具
 
@@ -19,6 +19,7 @@
     - [x] HelloWorld! & PWM By Delay
     - [ ] PWM 初步应用
 - 原理
+  - [机器人足数调研](RelevantInformation/Research/机械人足数调研.docx)
 - 结构
 
 # 相关资料
