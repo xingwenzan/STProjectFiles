@@ -20,9 +20,8 @@
 #include "main.h"
 
 /* Private includes ----------------------------------------------------------*/
-#include "myGpio.h"
 /* USER CODE BEGIN Includes */
-
+#include "myGpio.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -47,9 +46,8 @@
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
-void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
-
+void SystemClock_Config(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -69,26 +67,23 @@ int main(void) {
     /* MCU Configuration--------------------------------------------------------*/
 
     /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-    HAL_Init();
-
     /* USER CODE BEGIN Init */
-
+    HAL_Init();
     /* USER CODE END Init */
 
-    /* Configure the system clock */
-    SystemClock_Config();
-
+    /* Configure the system clock *************************************************/
     /* USER CODE BEGIN SysInit */
+    SystemClock_Config();
 
     /* USER CODE END SysInit */
 
-    /* Initialize all configured peripherals */
-    MY_GPIO_INIT();
+    /* Initialize all configured peripherals *************************************/
     /* USER CODE BEGIN 2 */
+    MY_GPIO_INIT();
     HAL_GPIO_WritePin(LED_GPIO_Port, PWM_Power_Pin, GPIO_PIN_SET);
     /* USER CODE END 2 */
 
-    /* Infinite loop */
+    /* Infinite loop *************************************************************/
     /* USER CODE BEGIN WHILE */
     while (1) {
         /* USER CODE END WHILE */
