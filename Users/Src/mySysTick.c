@@ -4,11 +4,9 @@
 
 #include "mySysTick.h"
 
-
-
 /**
  * @brief 系统定时器初始化，每 us 微秒中断一次
- * @param us
+ * @param us 中断间隔
  */
 void MY_SysTick_INIT(uint32_t us) {
     /*

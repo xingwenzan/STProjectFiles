@@ -8,5 +8,6 @@
 #include "main.h"
 
 void MY_GPIO_INIT(void);
+void MY_GPIO_EXAMPLE_LED(uint32_t delay_num);
 
 #endif //STPROJECTFILES_GPIO_H

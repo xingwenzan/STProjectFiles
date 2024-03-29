@@ -70,32 +70,28 @@ int main(void) {
     /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
     /* USER CODE BEGIN Init */
     HAL_Init();
-    MY_SysTick_INIT(1000);
     /* USER CODE END Init */
 
     /* Configure the system clock *************************************************/
     /* USER CODE BEGIN SysInit */
     SystemClock_Config();
-
     /* USER CODE END SysInit */
 
     /* Initialize all configured peripherals *************************************/
     /* USER CODE BEGIN 2 */
     MY_GPIO_INIT();
+    MY_SysTick_INIT(1000);
 //    HAL_GPIO_WritePin(LED_GPIO_Port, PWM_Power_Pin, GPIO_PIN_SET);
     /* USER CODE END 2 */
 
     /* Infinite loop *************************************************************/
     /* USER CODE BEGIN WHILE */
     while (1) {
-        /* USER CODE END WHILE */
-        HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_RESET);
-        HAL_Delay(100);
-        HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET);
-        HAL_Delay(100);
         /* USER CODE BEGIN 3 */
+//        MY_GPIO_EXAMPLE_LED(100);
+        /* USER CODE END 3 */
     }
-    /* USER CODE END 3 */
+    /* USER CODE END WHILE */
 }
 
 /**

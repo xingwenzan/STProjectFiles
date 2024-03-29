@@ -182,7 +182,7 @@ void PendSV_Handler(void)
   */
 void SysTick_Handler(void)
 {
-    static uint32_t n_us_num = 0;
+    static uint32_t n_us_num = 0;   // 已中断次数记录
     static uint8_t state = 0;
   /* USER CODE BEGIN SysTick_IRQn 0 */
 
@@ -190,7 +190,7 @@ void SysTick_Handler(void)
 //  HAL_IncTick();
   /* USER CODE BEGIN SysTick_IRQn 1 */
     n_us_num = (n_us_num+1)%1000;
-    if (n_us_num%1000==0){
+    if (n_us_num%500==0){
         state = ~state;
         HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, state?GPIO_PIN_RESET:GPIO_PIN_SET);
     }
