@@ -22,6 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "myGpio.h"
+#include "mySysTick.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -69,6 +70,7 @@ int main(void) {
     /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
     /* USER CODE BEGIN Init */
     HAL_Init();
+    MY_SysTick_INIT(1000);
     /* USER CODE END Init */
 
     /* Configure the system clock *************************************************/
@@ -80,7 +82,7 @@ int main(void) {
     /* Initialize all configured peripherals *************************************/
     /* USER CODE BEGIN 2 */
     MY_GPIO_INIT();
-    HAL_GPIO_WritePin(LED_GPIO_Port, PWM_Power_Pin, GPIO_PIN_SET);
+//    HAL_GPIO_WritePin(LED_GPIO_Port, PWM_Power_Pin, GPIO_PIN_SET);
     /* USER CODE END 2 */
 
     /* Infinite loop *************************************************************/

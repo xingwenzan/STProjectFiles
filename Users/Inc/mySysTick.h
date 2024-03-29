@@ -10,10 +10,8 @@ extern "C" {
 #endif
 
 #include "main.h"
-extern uint32_t my_sysTick_Countdown;
+
 void MY_SysTick_INIT(uint32_t us);
-void MY_SysTick_Delay(uint32_t num);
-void MY_SysTick_Countdown();
 
 #ifdef __cplusplus
 }
