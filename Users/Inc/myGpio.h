@@ -8,6 +8,7 @@
 #include "main.h"
 
 void MY_GPIO_INIT(void);
-void MY_GPIO_EXAMPLE_LED(uint32_t delay_num);
+void MY_GPIO_EXAMPLE_LED_ByDelay(uint32_t delay_num);
+void MY_GPIO_EXAMPLE_LED_ByTimer(uint32_t sysTickNum);
 
 #endif //STPROJECTFILES_GPIO_H

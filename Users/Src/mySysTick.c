@@ -14,6 +14,8 @@ void MY_SysTick_INIT(uint32_t us) {
      * SystemFrequency / 100000 10us中断一次
      * SystemFrequency / 1000000 1us中断一次
      *
+     * 下方调用含义：TickNumb 次脉冲中断一次
+     *
      * 另：中断行为一律在 stm32f4xx_it.c 内
      * */
     if (HAL_SYSTICK_Config(SystemCoreClock / 1000000 * us)) {
