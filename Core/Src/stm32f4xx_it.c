@@ -23,6 +23,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "myGpio.h"
+#include "myTIM.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -182,13 +183,12 @@ void PendSV_Handler(void)
   */
 void SysTick_Handler(void)
 {
-
   /* USER CODE BEGIN SysTick_IRQn 0 */
 
   /* USER CODE END SysTick_IRQn 0 */
-//  HAL_IncTick();
+  HAL_IncTick();
   /* USER CODE BEGIN SysTick_IRQn 1 */
-    MY_GPIO_EXAMPLE_LED_ByTimer(100);
+//    MY_GPIO_EXAMPLE_LED_ByTimer(100);
   /* USER CODE END SysTick_IRQn 1 */
 }
 
@@ -200,5 +200,20 @@ void SysTick_Handler(void)
 /******************************************************************************/
 
 /* USER CODE BEGIN 1 */
-
+/**
+  * @brief  This function handles TIM interrupt request.
+  * @param  None
+  * @retval None
+  */
+void  BASIC_TIM_IRQHandler (void)
+{
+    HAL_TIM_IRQHandler(&TIM_TimeBaseStructure);
+}
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+    if(htim==(&TIM_TimeBaseStructure))
+    {
+        MY_GPIO_EXAMPLE_LED_ByTimer(1);
+    }
+}
 /* USER CODE END 1 */

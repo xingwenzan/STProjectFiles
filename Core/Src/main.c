@@ -22,7 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "myGpio.h"
-#include "mySysTick.h"
+#include "myTIM.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -79,9 +79,9 @@ int main(void) {
 
     /* Initialize all configured peripherals *************************************/
     /* USER CODE BEGIN 2 */
-    MY_GPIO_INIT();
-    MY_SysTick_INIT(1000);
-//    HAL_GPIO_WritePin(LED_GPIO_Port, PWM_Power_Pin, GPIO_PIN_SET);
+    MY_GPIO_INIT();   // 初始化 LED 引脚
+    /* 初始化基本定时器定时，1s产生一次中断 */
+    TIMx_Configuration();
     /* USER CODE END 2 */
 
     /* Infinite loop *************************************************************/
