@@ -56,9 +56,20 @@ void Error_Handler(void);
 
 /* Private defines -----------------------------------------------------------*/
 /* USER CODE BEGIN Private defines */
-#define LED_Pin GPIO_PIN_0
-#define LED_GPIO_Port GPIOC
-#define PWM_Power_Pin GPIO_PIN_14
+#define LED_PIN GPIO_PIN_0
+#define LED_GPIO_PORT GPIOC
+#define LED_GPIO_CLK_ENABLE() __HAL_RCC_GPIOC_CLK_ENABLE()
+
+#define PWM_GPIO_PORT GPIOC
+#define PWM_POWER_PIN GPIO_PIN_14
+/**TIM8 GPIO Configuration
+ * PC6     ------> TIM8_CH1
+ * PC7     ------> TIM8_CH2
+ * PC8     ------> TIM8_CH3
+ * PC9     ------> TIM8_CH4
+ */
+#define PWM_CONTROL_PIN GPIO_PIN_6|GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_9
+#define PWM_GPIO_CLK_ENABLE() __HAL_RCC_GPIOC_CLK_ENABLE()
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

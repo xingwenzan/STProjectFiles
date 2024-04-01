@@ -207,11 +207,11 @@ void SysTick_Handler(void)
   */
 void  BASIC_TIM_IRQHandler (void)
 {
-    HAL_TIM_IRQHandler(&TIM_TimeBaseStructure);
+    HAL_TIM_IRQHandler(&htim_base);
 }
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-    if(htim==(&TIM_TimeBaseStructure))
+    if(htim==(&htim_base))
     {
         MY_GPIO_EXAMPLE_LED_ByTimer(1);
     }

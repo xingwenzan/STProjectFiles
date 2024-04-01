@@ -18,7 +18,6 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "myGpio.h"
@@ -80,8 +79,14 @@ int main(void) {
     /* Initialize all configured peripherals *************************************/
     /* USER CODE BEGIN 2 */
     MY_GPIO_INIT();   // 初始化 LED 引脚
-    /* 初始化基本定时器定时，1s产生一次中断 */
-    TIMx_Configuration();
+    MX_TIM_Advance_Init();   // 初始化高级定时器
+    TIMx_Configuration();/* 初始化基本定时器定时，1s产生一次中断 */
+
+    HAL_GPIO_WritePin(PWM_GPIO_PORT, PWM_POWER_PIN, GPIO_PIN_SET);   // 开启 PWM 正极
+    HAL_TIM_PWM_Start(&htim_advance, TIM_CHANNEL_1);    /* 开启 PWM 通道 1 */
+    HAL_TIM_PWM_Start(&htim_advance, TIM_CHANNEL_2);    /* 开启 PWM 通道 2 */
+    HAL_TIM_PWM_Start(&htim_advance, TIM_CHANNEL_3);    /* 开启 PWM 通道 3 */
+    HAL_TIM_PWM_Start(&htim_advance, TIM_CHANNEL_4);    /* 开启 PWM 通道 4 */
     /* USER CODE END 2 */
 
     /* Infinite loop *************************************************************/
