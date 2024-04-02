@@ -46,7 +46,7 @@ static void TIM_Mode_Config(void)
 
     //定时器时钟源TIMxCLK = 2 * PCLK1
     //				PCLK1 = HCLK / 4
-    //				=> TIMxCLK=HCLK/2=SystemCoreClock/2=8MHz
+    //				=> TIMxCLK = HCLK/2 = SystemCoreClock/2 = 8MHz
     // 设定定时器频率为=TIMxCLK/(TIM_Prescaler+1)=10000Hz
     htim_base.Init.Prescaler = 800 - 1;
 
@@ -78,49 +78,70 @@ void MX_TIM_Advance_Init(void)
     TIM_OC_InitTypeDef sConfigOC = {0};
     TIM_BreakDeadTimeConfigTypeDef sBreakDeadTimeConfig = {0};
 
-    htim_advance.Instance = ADVANCE_TIM; /* 定义定时器的句柄即确定定时器寄存器的基地址*/
+    /* 定义定时器的句柄即确定定时器寄存器的基地址*/
+    htim_advance.Instance = ADVANCE_TIM;
+    // 高级控制定时器时钟源 TIMxCLK = HCLK = 16MHz
+    // 设定定时器频率为 = TIMxCLK/(TIM_Prescaler+1) = 16MHz
     htim_advance.Init.Prescaler = 0;
+    // 计数方式
     htim_advance.Init.CounterMode = TIM_COUNTERMODE_UP;
+    /* 累计 TIM_Period个后产生一个更新或者中断*/
+    //当定时器从 0 计数到 65535，即为 65536 次，为一个定时周期
     htim_advance.Init.Period = 65535;
+    // 采样时钟分频
     htim_advance.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+    // 重复计数器
     htim_advance.Init.RepetitionCounter = 0;
+    // 自动输出使能
     htim_advance.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+    // 初始化定时器TIMx, x[1,8]
     if (HAL_TIM_PWM_Init(&htim_advance) != HAL_OK)
     {
         Error_Handler();
     }
+
+    /* 自动输出使能，断路、死区时间和锁定配置 */
     sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
     sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
     if (HAL_TIMEx_MasterConfigSynchronization(&htim_advance, &sMasterConfig) != HAL_OK)
     {
         Error_Handler();
     }
+
+    /*PWM模式配置*/
+    //配置为PWM模式1
     sConfigOC.OCMode = TIM_OCMODE_PWM1;
-    sConfigOC.Pulse = 40000;
     sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
     sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
     sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
     sConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;
     sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_RESET;
+    // 初始化通道 1 输出 PWM
+    sConfigOC.Pulse = 40000;
     if (HAL_TIM_PWM_ConfigChannel(&htim_advance, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
     {
         Error_Handler();
     }
+    // 初始化通道 2 输出 PWM
     sConfigOC.Pulse = 30000;
     if (HAL_TIM_PWM_ConfigChannel(&htim_advance, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
     {
         Error_Handler();
     }
+    // 初始化通道 3 输出 PWM
     sConfigOC.Pulse = 20000;
     if (HAL_TIM_PWM_ConfigChannel(&htim_advance, &sConfigOC, TIM_CHANNEL_3) != HAL_OK)
     {
         Error_Handler();
     }
+    // 初始化通道 4 输出 PWM
     sConfigOC.Pulse = 10000;
     if (HAL_TIM_PWM_ConfigChannel(&htim_advance, &sConfigOC, TIM_CHANNEL_4) != HAL_OK)
     {
         Error_Handler();
     }
+
+    /* 自动输出使能，断路、死区时间和锁定配置 */
     sBreakDeadTimeConfig.OffStateRunMode = TIM_OSSR_DISABLE;
     sBreakDeadTimeConfig.OffStateIDLEMode = TIM_OSSI_DISABLE;
     sBreakDeadTimeConfig.LockLevel = TIM_LOCKLEVEL_OFF;
