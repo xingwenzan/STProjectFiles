@@ -117,7 +117,7 @@ void MX_TIM_Advance_Init(void)
     sConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;
     sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_RESET;
     // 初始化通道 1 输出 PWM
-    sConfigOC.Pulse = 40000;
+    sConfigOC.Pulse = 40000;   // max = 2^16，正占空比 = Pulse/max
     if (HAL_TIM_PWM_ConfigChannel(&htim_advance, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
     {
         Error_Handler();
@@ -140,6 +140,7 @@ void MX_TIM_Advance_Init(void)
     {
         Error_Handler();
     }
+//    __HAL_TIM_SetCompare(&htim_advance,TIM_CHANNEL_1,0);   // 外部控制占空比代码
 
     /* 自动输出使能，断路、死区时间和锁定配置 */
     sBreakDeadTimeConfig.OffStateRunMode = TIM_OSSR_DISABLE;
