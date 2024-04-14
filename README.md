@@ -23,6 +23,9 @@
 - 原理
     - [机器人足数调研](RelevantInformation/Research/机械人足数调研.docx)
 - 结构
+    - [x] 最初版结构
+- 总体
+    - [ ] 第一次实验 - PWM 控制 4 电机 - 仅前移
 
 # 相关资料
 
