@@ -117,25 +117,25 @@ void MX_TIM_Advance_Init(void)
     sConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;
     sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_RESET;
     // 初始化通道 1 输出 PWM
-    sConfigOC.Pulse = 40000;   // max = 2^16，正占空比 = Pulse/max
+    sConfigOC.Pulse = 0x7fff;   // max = 2^16，正占空比 = Pulse/max
     if (HAL_TIM_PWM_ConfigChannel(&htim_advance, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
     {
         Error_Handler();
     }
     // 初始化通道 2 输出 PWM
-    sConfigOC.Pulse = 40000;
+    sConfigOC.Pulse = 0x7fff;
     if (HAL_TIM_PWM_ConfigChannel(&htim_advance, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
     {
         Error_Handler();
     }
     // 初始化通道 3 输出 PWM
-    sConfigOC.Pulse = 40000;
+    sConfigOC.Pulse = 0x7fff;
     if (HAL_TIM_PWM_ConfigChannel(&htim_advance, &sConfigOC, TIM_CHANNEL_3) != HAL_OK)
     {
         Error_Handler();
     }
     // 初始化通道 4 输出 PWM
-    sConfigOC.Pulse = 40000;
+    sConfigOC.Pulse = 0x7fff;
     if (HAL_TIM_PWM_ConfigChannel(&htim_advance, &sConfigOC, TIM_CHANNEL_4) != HAL_OK)
     {
         Error_Handler();
