@@ -15,32 +15,43 @@
 
 ## 各自进度
 
+> 为了学到新东西 & 利用上空闲时间 & 努力有方向，电控方面进行扩展，尝试添加使用树莓派，进行功能扩展的同时深入理解计算机
+
 - 电控
-    - [x] HelloWorld! & PWM By Delay
-    - [x] Example By SysTick
-    - [x] PWM 初步应用
-    - [ ] CAN 及其他学习（方便控制额外电机）
+    - STM32
+        - [x] HelloWorld! & PWM By Delay
+        - [x] Example By SysTick
+        - [x] PWM 初步应用
+        - [ ] CAN 及其他学习（方便控制额外电机）
+    - 树莓派
+      - [x] 外壳组装
+      - [x] 系统下载
+        - 下载地址：[官方软件](https://downloads.raspberrypi.org/imager/imager_latest.exe) 
+        - 一般挂 vpn 速度会快些，不挂有时候好使，有时候不好使
+        - 我选择的系统：Raspberry Pi OS(32-bit)（推荐是 64 位，但我烧录 64 位后无法联网）
+      - [x] 开机、WiFi 连接与 ssh 连接
 - 原理
     - [机器人足数调研](RelevantInformation/Research/机械人足数调研.docx)
 - 结构
     - [x] 最初版结构
+    - [x] 3D 打印外壳，结构更新
 
 ## 实验进程
 
 - [x] 第一次实验 - PWM 控制 4 电机 - 仅前移
-  - 结果：无法行动
-  - 问题：
-    - 电机仅顺时针转动，导致左右腿反向 -> 电机调向
-    - 太沉，电机力量不够，带不动 -> 换 12v 电源尝试
-    - 电线发热 -> 需要更好的线以及焊接转接板
+    - 结果：无法行动
+    - 问题：
+        - 电机仅顺时针转动，导致左右腿反向 -> 电机调向
+        - 太沉，电机力量不够，带不动 -> 换 12v 电源尝试
+        - 电线发热 -> 需要更好的线以及焊接转接板
 - [x] 第二次实验 - 4 电机直接供电 - 仅前移
-  - 结果：未前移，机器人起来了，腿飞了
-  - 问题：
-    - 飞腿：新的固定方法
-    - 电机疯转未前移：改舵机
-    - 舵机带不动
-      - 大型化：大舵机
-      - 小型化：小电池（重点在12v）、小电机（无需太大力，水下推动即可）
+    - 结果：未前移，机器人起来了，腿飞了
+    - 问题：
+        - 飞腿：新的固定方法
+        - 电机疯转未前移：改舵机
+        - 舵机带不动
+            - [ ] 大型化：大舵机
+            - [X] 小型化：小电池（重点在12v）、小电机（无需太大力，水下推动即可）
 
 # 相关资料
 
@@ -55,6 +66,9 @@
         - 其他资源
             - [野火 - STM32 HAL库开发实战指南](https://doc.embedfire.com/mcu/stm32/f429tiaozhanzhe/hal/zh/latest/index.html)
             - [Doxygen 注释规范](https://www.cnblogs.com/silencehuan/p/11169084.html)
+- 树莓派
+  - [官网](https://www.raspberrypi.com/)
+  - [初始使用](https://cloud.tencent.com/developer/article/2299252)
 
 ## 问题解决
 
