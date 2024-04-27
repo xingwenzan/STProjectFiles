@@ -68,7 +68,13 @@
             - [Doxygen 注释规范](https://www.cnblogs.com/silencehuan/p/11169084.html)
 - 树莓派
   - [官网](https://www.raspberrypi.com/)
-  - [初始使用](https://cloud.tencent.com/developer/article/2299252)
+  - 初始化
+    - [树莓派4B上手 - 从初始设置开始](https://cloud.tencent.com/developer/article/2299252)
+    - [整套相关初始设置](https://www.cnblogs.com/lhonghong/category/2147754.html)
+    - [更换国内源](https://zhuanlan.zhihu.com/p/98079246)
+    - [一劳永逸配置树莓派](https://zhuanlan.zhihu.com/p/63275945)
+  - 使用
+    - [B站视频](https://www.bilibili.com/video/BV1QB4y1M7EJ/?buvid=XU8906089F0C5E86A9676712E0A07656645F7&from_spmid=search.search-result.0.0&is_story_h5=false&mid=n%2FX0f%2F%2FzAX2mMZP5OK9PEg%3D%3D&p=1&plat_id=122&share_from=ugc&share_medium=android&share_plat=android&share_session_id=6aa7a45c-79b4-434e-a531-84a6a2bed73f&share_source=WEIXIN&share_tag=s_i&spmid=united.player-video-detail.0.0&timestamp=1713808563&unique_k=U51iiDN&up_id=330866298&vd_source=1ccb8ff2c60b49bbfff6dfe8c1bb0eab)
 
 ## 问题解决
 
