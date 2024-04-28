@@ -2,7 +2,7 @@
 
 ## 项目背景
 
-> [背景调研](RelevantInformation/Research/背景调研.docx)
+> [背景调研](RelevantInformation/AboutSTM32/Research/背景调研.docx)
 
 ## 使用工具
 
@@ -31,7 +31,7 @@
         - 我选择的系统：Raspberry Pi OS(32-bit)（推荐是 64 位，但我烧录 64 位后无法联网）
       - [x] 开机、WiFi 连接与 ssh 连接
 - 原理
-    - [机器人足数调研](RelevantInformation/Research/机械人足数调研.docx)
+    - [机器人足数调研](RelevantInformation/AboutSTM32/Research/机械人足数调研.docx)
 - 结构
     - [x] 最初版结构
     - [x] 3D 打印外壳，结构更新
@@ -59,10 +59,10 @@
     - 数据手册
         - [官网](https://www.st.com/zh/microcontrollers-microprocessors/stm32f446/documentation.html)
         - 本地 &#x2002; 方便使用而下载到本地，基本都来自官网
-            - [数据手册](RelevantInformation/DataSheet/stm32f446mc.pdf)
-            - [参考手册](RelevantInformation/DataSheet/rm0390-stm32f446xx-advanced-armbased-32bit-mcus-stmicroelectronics.pdf)
-            - [编程手册](RelevantInformation/DataSheet/pm0214-stm32-cortexm4-mcus-and-mpus-programming-manual-stmicroelectronics.pdf)
-            - [Cortex-M3权威指南](RelevantInformation/DataSheet/Cortex_M3_Definitive_Guide(CN).pdf)
+            - [数据手册](RelevantInformation/AboutSTM32/DataSheet/stm32f446mc.pdf)
+            - [参考手册](RelevantInformation/AboutSTM32/DataSheet/rm0390-stm32f446xx-advanced-armbased-32bit-mcus-stmicroelectronics.pdf)
+            - [编程手册](RelevantInformation/AboutSTM32/DataSheet/pm0214-stm32-cortexm4-mcus-and-mpus-programming-manual-stmicroelectronics.pdf)
+            - [Cortex-M3权威指南](RelevantInformation/AboutSTM32/DataSheet/Cortex_M3_Definitive_Guide(CN).pdf)
         - 其他资源
             - [野火 - STM32 HAL库开发实战指南](https://doc.embedfire.com/mcu/stm32/f429tiaozhanzhe/hal/zh/latest/index.html)
             - [Doxygen 注释规范](https://www.cnblogs.com/silencehuan/p/11169084.html)
@@ -75,7 +75,7 @@
     - [更换国内源](https://zhuanlan.zhihu.com/p/98079246)
     - [一劳永逸配置树莓派](https://zhuanlan.zhihu.com/p/63275945)
     - 我喜欢的 Linux 配置 - 来自 [AcWing Linux 基础课](https://www.acwing.com/activity/content/57/)
-      - 配置方法：将 [该文件](RelevantInformation/LinuxConfig.zip) 解压缩后里面的内容上传到树莓派中
+      - 配置方法：将 [该文件](RelevantInformation/AboutRaspberryPi/LinuxConfig.zip) 解压缩后里面的内容上传到树莓派中
       - 上传方法：百度搜索 - Linux scp 使用
   - 使用
     - [B站视频](https://www.bilibili.com/video/BV1QB4y1M7EJ/?buvid=XU8906089F0C5E86A9676712E0A07656645F7&from_spmid=search.search-result.0.0&is_story_h5=false&mid=n%2FX0f%2F%2FzAX2mMZP5OK9PEg%3D%3D&p=1&plat_id=122&share_from=ugc&share_medium=android&share_plat=android&share_session_id=6aa7a45c-79b4-434e-a531-84a6a2bed73f&share_source=WEIXIN&share_tag=s_i&spmid=united.player-video-detail.0.0&timestamp=1713808563&unique_k=U51iiDN&up_id=330866298&vd_source=1ccb8ff2c60b49bbfff6dfe8c1bb0eab)
@@ -86,6 +86,9 @@
 - [解决IDEA配置.gitignore不生效的问题](https://blog.csdn.net/qq_43705131/article/details/107989768)
 - [STM32F4xx_HAL_Driver](Drivers/STM32F4xx_HAL_Driver) 结构未定义(标红)/函数无法使用(淡黄字色)问题
     - 解除 [stm32f4xx_hal_conf.h](Core/Inc/stm32f4xx_hal_conf.h) 中对应定义的注释
+    - 缺少驱动文件
+      - [官网下载](https://www.st.com/zh/embedded-software/stm32cubef4.html) 自行添加到 [STM32F4xx_HAL_Driver](Drivers/STM32F4xx_HAL_Driver) 文件夹中
+      - 我的已经下好，从 [我这里](RelevantInformation/AboutSTM32/Download/en.stm32cubef4-v1-28-0.zip) 下载使用也行（未必还是最新版）
 - [系统时钟问题](https://blog.csdn.net/u014670574/article/details/70162036)
 
 ## 备注
