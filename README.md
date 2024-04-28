@@ -88,7 +88,6 @@
     - 解除 [stm32f4xx_hal_conf.h](Core/Inc/stm32f4xx_hal_conf.h) 中对应定义的注释
     - 缺少驱动文件
       - [官网下载](https://www.st.com/zh/embedded-software/stm32cubef4.html) 自行添加到 [STM32F4xx_HAL_Driver](Drivers/STM32F4xx_HAL_Driver) 文件夹中
-      - 我的已经下好，从 [我这里](RelevantInformation/AboutSTM32/Download/en.stm32cubef4-v1-28-0.zip) 下载使用也行（未必还是最新版）
 - [系统时钟问题](https://blog.csdn.net/u014670574/article/details/70162036)
 
 ## 备注
