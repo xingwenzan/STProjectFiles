@@ -70,6 +70,16 @@ void Error_Handler(void);
  */
 #define PWM_CONTROL_PIN GPIO_PIN_6|GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_9
 #define PWM_GPIO_CLK_ENABLE() __HAL_RCC_GPIOC_CLK_ENABLE()
+
+/**
+ * UART5 GPIO Configuration
+ * PC12     ------> UART5_TX
+ * PD2     ------> UART5_RX
+*/
+#define UART_TX_PORT GPIOC
+#define UART_TX_PIN GPIO_PIN_12
+#define UART_RX_PORT GPIOD
+#define UART_RX_PIN GPIO_PIN_2
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

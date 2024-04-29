@@ -158,6 +158,7 @@ void MX_TIM_Advance_Init(void)
 
 }
 
+// Initializes the TIM PWM MSP - 代码重写
 void HAL_TIM_PWM_MspInit(TIM_HandleTypeDef* tim_pwmHandle)
 {
 
@@ -173,6 +174,7 @@ void HAL_TIM_PWM_MspInit(TIM_HandleTypeDef* tim_pwmHandle)
         /* USER CODE END TIM8_MspInit 1 */
     }
 }
+// 定时器使用 PWM 开启端口及引脚
 void HAL_TIM_MspPostInit(TIM_HandleTypeDef* timHandle)
 {
 
@@ -198,6 +200,7 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef* timHandle)
     }
 
 }
+// DeInitializes TIM PWM MSP - 代码重写
 void HAL_TIM_PWM_MspDeInit(TIM_HandleTypeDef* tim_pwmHandle)
 {
 
