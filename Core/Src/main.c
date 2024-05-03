@@ -22,7 +22,7 @@
 /* USER CODE BEGIN Includes */
 #include "myGpio.h"
 #include "myTIM.h"
-#include "myUsart.h"
+//#include "myUsart.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -80,9 +80,9 @@ int main(void) {
     /* Initialize all configured peripherals *************************************/
     /* USER CODE BEGIN 2 */
     MY_GPIO_INIT();   // 初始化 LED 引脚
-    MX_TIM_Advance_Init();   // 初始化高级定时器
-    TIMx_Configuration();/* 初始化基本定时器定时，1s产生一次中断 */
-    MX_UART_Init();   // 初始化串口
+    MX_TIM_Advance_Init();   // 初始化高级定时器 - 用于PWM
+    TIMx_Configuration();/* 初始化基本定时器定时，1s 产生一次中断 */
+//    MX_UART_Init();   // 初始化串口
 
     HAL_GPIO_WritePin(PWM_GPIO_PORT, PWM_POWER_PIN, GPIO_PIN_SET);   // 开启 PWM 正极
     HAL_TIM_PWM_Start(&htim_advance, TIM_CHANNEL_1);    /* 开启 PWM 通道 1 */
@@ -95,10 +95,7 @@ int main(void) {
     /* USER CODE BEGIN WHILE */
     while (1) {
         /* USER CODE BEGIN 3 */
-//        MY_GPIO_EXAMPLE_LED(100);
-        HAL_UART_Transmit(&huart,"Uart5 Hello!\n",13,100);
-        HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_0);
-        HAL_Delay(100);
+//        HAL_UART_Transmit(&huart,"Uart5 Hello!\n",13,100);   // 串口发送内容
         /* USER CODE END 3 */
     }
     /* USER CODE END WHILE */

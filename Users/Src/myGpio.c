@@ -41,11 +41,12 @@ void MY_GPIO_EXAMPLE_LED_ByDelay(uint32_t delay_num) {
  */
 void MY_GPIO_EXAMPLE_LED_ByTimer(uint32_t sysTickNum){
     static uint32_t n_us_num = 0;   // 已中断次数记录
-    static uint8_t state = 0;
+//    static uint8_t state = 0;
 
     n_us_num = (n_us_num+1)%sysTickNum;
     if (n_us_num%sysTickNum==0){
-        state = ~state;
-        HAL_GPIO_WritePin(LED_GPIO_PORT, LED_PIN, state ? GPIO_PIN_RESET : GPIO_PIN_SET);
+//        state = ~state;
+//        HAL_GPIO_WritePin(LED_GPIO_PORT, LED_PIN, state ? GPIO_PIN_RESET : GPIO_PIN_SET);
+        HAL_GPIO_TogglePin(LED_GPIO_PORT, LED_PIN);   // GPIO 电平翻转
     }
 }
