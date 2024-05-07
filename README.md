@@ -24,12 +24,12 @@
         - [x] PWM 初步应用
         - [ ] CAN 及其他学习（方便控制额外电机）
     - 树莓派
-      - [x] 外壳组装
-      - [x] 系统下载
-        - 下载地址：[官方软件](https://downloads.raspberrypi.org/imager/imager_latest.exe) 
-        - 一般挂 vpn 速度会快些，不挂有时候好使，有时候不好使
-        - 我选择的系统：Raspberry Pi OS(32-bit)（推荐是 64 位，但我烧录 64 位后无法联网）
-      - [x] 开机、WiFi 连接与 ssh 连接
+        - [x] 外壳组装
+        - [x] 系统下载
+            - 下载地址：[官方软件](https://downloads.raspberrypi.org/imager/imager_latest.exe)
+            - 一般挂 vpn 速度会快些，不挂有时候好使，有时候不好使
+            - 我选择的系统：Raspberry Pi OS(32-bit)（推荐是 64 位，但我烧录 64 位后无法联网）
+        - [x] 开机、WiFi 连接与 ssh 连接
 - 原理
     - [机器人足数调研](RelevantInformation/AboutSTM32/Research/机械人足数调研.docx)
 - 结构
@@ -53,8 +53,8 @@
             - [ ] 大型化：大舵机
             - [X] 小型化：小电池（重点在12v）、小电机（无需太大力，水下推动即可）
 - [x] 第三次实验 - 8 舵机 - 仅站立/手持
-  - 结果：腿未改变状态/舵机未转动，舵机颤抖 -> 舵机想动没转动
-  - 问题：舵机力量不够 -> 换舵机
+    - 结果：腿未改变状态/舵机未转动，舵机颤抖 -> 舵机想动没转动
+    - 问题：舵机力量不够 -> 换舵机
 
 # 相关资料
 
@@ -70,18 +70,13 @@
             - [野火 - STM32 HAL库开发实战指南](https://doc.embedfire.com/mcu/stm32/f429tiaozhanzhe/hal/zh/latest/index.html)
             - [Doxygen 注释规范](https://www.cnblogs.com/silencehuan/p/11169084.html)
 - 树莓派
-  - 整体流程 - 待定（撰写中）
-  - [官网](https://www.raspberrypi.com/)
-  - 初始化
-    - [树莓派4B上手 - 从初始设置开始](https://cloud.tencent.com/developer/article/2299252)
-    - [整套相关初始设置](https://www.cnblogs.com/lhonghong/category/2147754.html)
-    - [更换国内源](https://zhuanlan.zhihu.com/p/98079246)
-    - [一劳永逸配置树莓派](https://zhuanlan.zhihu.com/p/63275945)
-    - 我喜欢的 Linux 配置 - 来自 [AcWing Linux 基础课](https://www.acwing.com/activity/content/57/)
-      - 配置方法：将 [该文件](RelevantInformation/AboutRaspberryPi/LinuxConfig.zip) 解压缩后里面的内容上传到树莓派中
-      - 上传方法：百度搜索 - Linux scp 使用
-  - 使用
-    - [B站视频](https://www.bilibili.com/video/BV1QB4y1M7EJ/?buvid=XU8906089F0C5E86A9676712E0A07656645F7&from_spmid=search.search-result.0.0&is_story_h5=false&mid=n%2FX0f%2F%2FzAX2mMZP5OK9PEg%3D%3D&p=1&plat_id=122&share_from=ugc&share_medium=android&share_plat=android&share_session_id=6aa7a45c-79b4-434e-a531-84a6a2bed73f&share_source=WEIXIN&share_tag=s_i&spmid=united.player-video-detail.0.0&timestamp=1713808563&unique_k=U51iiDN&up_id=330866298&vd_source=1ccb8ff2c60b49bbfff6dfe8c1bb0eab)
+    - [官网](https://www.raspberrypi.com/)
+    - [初始化文档](/RelevantInformation/AboutRaspberryPi/RaspberryPiInit.md)
+        - 我喜欢的 Linux 配置 - 来自 [AcWing Linux 基础课](https://www.acwing.com/activity/content/57/)
+            - 配置方法：将 [该文件](RelevantInformation/AboutRaspberryPi/LinuxConfig.zip) 解压缩后里面的内容上传到树莓派中
+            - 上传方法：百度搜索 - Linux scp 使用
+    - 使用
+        - [B站视频](https://www.bilibili.com/video/BV1QB4y1M7EJ/?buvid=XU8906089F0C5E86A9676712E0A07656645F7&from_spmid=search.search-result.0.0&is_story_h5=false&mid=n%2FX0f%2F%2FzAX2mMZP5OK9PEg%3D%3D&p=1&plat_id=122&share_from=ugc&share_medium=android&share_plat=android&share_session_id=6aa7a45c-79b4-434e-a531-84a6a2bed73f&share_source=WEIXIN&share_tag=s_i&spmid=united.player-video-detail.0.0&timestamp=1713808563&unique_k=U51iiDN&up_id=330866298&vd_source=1ccb8ff2c60b49bbfff6dfe8c1bb0eab)
 
 ## 问题解决
 
@@ -90,7 +85,8 @@
 - [STM32F4xx_HAL_Driver](Drivers/STM32F4xx_HAL_Driver) 结构未定义(标红)/函数无法使用(淡黄字色)问题
     - 解除 [stm32f4xx_hal_conf.h](Core/Inc/stm32f4xx_hal_conf.h) 中对应定义的注释
     - 缺少驱动文件
-      - [官网下载](https://www.st.com/zh/embedded-software/stm32cubef4.html) 自行添加到 [STM32F4xx_HAL_Driver](Drivers/STM32F4xx_HAL_Driver) 文件夹中
+        - [官网下载](https://www.st.com/zh/embedded-software/stm32cubef4.html)
+          自行添加到 [STM32F4xx_HAL_Driver](Drivers/STM32F4xx_HAL_Driver) 文件夹中
 - [系统时钟问题](https://blog.csdn.net/u014670574/article/details/70162036)
 
 ## 备注
