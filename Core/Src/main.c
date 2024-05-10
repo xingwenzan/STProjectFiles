@@ -90,7 +90,7 @@ int main(void) {
     HAL_TIM_PWM_Start(&htim_advance, TIM_CHANNEL_3);    /* 开启 PWM 通道 3 */
     HAL_TIM_PWM_Start(&htim_advance, TIM_CHANNEL_4);    /* 开启 PWM 通道 4 */
 
-    HAL_UART_Transmit(&huart,"Uart4 Hello!\n",13,100);   // 串口发送内容
+    HAL_UART_Transmit(&huart,"my Uart Hello!\n",15,100);   // 串口发送内容
     /* USER CODE END 2 */
 
     /* Infinite loop *************************************************************/
