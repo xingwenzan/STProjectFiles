@@ -11,17 +11,17 @@ void MY_GPIO_INIT(void) {
     GPIO_InitTypeDef GPIO_InitStruct = {0};
 
     /* GPIO Ports Clock Enable */
-    LED_GPIO_CLK_ENABLE();   // LED（C 端口）时钟使能，使用外设时都要先开启它的时钟
+    MY_LED_GPIO_CLK_ENABLE();   // LED（C 端口）时钟使能，使用外设时都要先开启它的时钟
 
     /*Configure GPIO pin Output Level */
-    HAL_GPIO_WritePin(LED_GPIO_PORT, LED_PIN | PWM_POWER_PIN, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(MY_LED_GPIO_PORT, MY_LED_PIN | MY_PWM_POWER_PIN, GPIO_PIN_RESET);
 
     /*Configure GPIO pin : PtPin */
-    GPIO_InitStruct.Pin = LED_PIN | PWM_POWER_PIN;
+    GPIO_InitStruct.Pin = MY_LED_PIN | MY_PWM_POWER_PIN;
     GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    HAL_GPIO_Init(LED_GPIO_PORT, &GPIO_InitStruct);
+    HAL_GPIO_Init(MY_LED_GPIO_PORT, &GPIO_InitStruct);
 }
 
 /**
@@ -29,9 +29,9 @@ void MY_GPIO_INIT(void) {
  * @param delay_num 闪烁间隔（半周期），每隔 delay_num ms LED 电平翻转一次
  */
 void MY_GPIO_EXAMPLE_LED_ByDelay(uint32_t delay_num) {
-    HAL_GPIO_WritePin(LED_GPIO_PORT, LED_PIN, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(MY_LED_GPIO_PORT, MY_LED_PIN, GPIO_PIN_RESET);
     HAL_Delay(delay_num);
-    HAL_GPIO_WritePin(LED_GPIO_PORT, LED_PIN, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(MY_LED_GPIO_PORT, MY_LED_PIN, GPIO_PIN_SET);
     HAL_Delay(delay_num);
 }
 
@@ -46,7 +46,7 @@ void MY_GPIO_EXAMPLE_LED_ByTimer(uint32_t sysTickNum){
     n_us_num = (n_us_num+1)%sysTickNum;
     if (n_us_num%sysTickNum==0){
 //        state = ~state;
-//        HAL_GPIO_WritePin(LED_GPIO_PORT, LED_PIN, state ? GPIO_PIN_RESET : GPIO_PIN_SET);
-        HAL_GPIO_TogglePin(LED_GPIO_PORT, LED_PIN);   // GPIO 电平翻转
+//        HAL_GPIO_WritePin(MY_LED_GPIO_PORT, MY_LED_PIN, state ? GPIO_PIN_RESET : GPIO_PIN_SET);
+        HAL_GPIO_TogglePin(MY_LED_GPIO_PORT, MY_LED_PIN);   // GPIO 电平翻转
     }
 }

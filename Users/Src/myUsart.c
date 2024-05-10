@@ -9,7 +9,7 @@ UART_HandleTypeDef huart;
 /* UART init function */
 void MX_UART_Init(void) {
 
-    huart.Instance = UART5;
+    huart.Instance = MY_UART;
     huart.Init.BaudRate = 115200;
     huart.Init.WordLength = UART_WORDLENGTH_8B;
     huart.Init.StopBits = UART_STOPBITS_1;
@@ -27,12 +27,12 @@ void MX_UART_Init(void) {
 void HAL_UART_MspInit(UART_HandleTypeDef *uartHandle) {
 
     GPIO_InitTypeDef GPIO_InitStruct = {0};
-    if (uartHandle->Instance == UART5) {
+    if (uartHandle->Instance == MY_UART) {
         /* USER CODE BEGIN UART5_MspInit 0 */
 
         /* USER CODE END UART5_MspInit 0 */
         /* UART5 clock enable */
-        __HAL_RCC_UART5_CLK_ENABLE();
+        MY_UART_CLK_ENABLE();
 
         __HAL_RCC_GPIOC_CLK_ENABLE();
         __HAL_RCC_GPIOD_CLK_ENABLE();
@@ -40,19 +40,19 @@ void HAL_UART_MspInit(UART_HandleTypeDef *uartHandle) {
         PC12     ------> UART5_TX
         PD2     ------> UART5_RX
         */
-        GPIO_InitStruct.Pin = UART_TX_PIN;
+        GPIO_InitStruct.Pin = MY_UART_TX_PIN;
         GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
         GPIO_InitStruct.Pull = GPIO_PULLUP;
         GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-        GPIO_InitStruct.Alternate = GPIO_AF8_UART5;
-        HAL_GPIO_Init(UART_TX_PORT, &GPIO_InitStruct);
+        GPIO_InitStruct.Alternate = MY_UART_ALTERNATE;
+        HAL_GPIO_Init(MY_UART_TX_PORT, &GPIO_InitStruct);
 
-        GPIO_InitStruct.Pin = UART_RX_PIN;
+        GPIO_InitStruct.Pin = MY_UART_RX_PIN;
         GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
         GPIO_InitStruct.Pull = GPIO_PULLUP;
         GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-        GPIO_InitStruct.Alternate = GPIO_AF8_UART5;
-        HAL_GPIO_Init(UART_RX_PORT, &GPIO_InitStruct);
+        GPIO_InitStruct.Alternate = MY_UART_ALTERNATE;
+        HAL_GPIO_Init(MY_UART_RX_PORT, &GPIO_InitStruct);
 
         /* USER CODE BEGIN UART5_MspInit 1 */
 
@@ -62,20 +62,20 @@ void HAL_UART_MspInit(UART_HandleTypeDef *uartHandle) {
 // UART MSP DeInit - 代码重写
 void HAL_UART_MspDeInit(UART_HandleTypeDef *uartHandle) {
 
-    if (uartHandle->Instance == UART5) {
+    if (uartHandle->Instance == MY_UART) {
         /* USER CODE BEGIN UART5_MspDeInit 0 */
 
         /* USER CODE END UART5_MspDeInit 0 */
         /* Peripheral clock disable */
-        __HAL_RCC_UART5_CLK_DISABLE();
+        MY_UART_CLK_DISABLE();
 
         /**UART5 GPIO Configuration
         PC12     ------> UART5_TX
         PD2     ------> UART5_RX
         */
-        HAL_GPIO_DeInit(GPIOC, GPIO_PIN_12);
+        HAL_GPIO_DeInit(MY_UART_TX_PORT, MY_UART_TX_PIN);
 
-        HAL_GPIO_DeInit(GPIOD, GPIO_PIN_2);
+        HAL_GPIO_DeInit(MY_UART_RX_PORT, MY_UART_RX_PIN);
 
         /* USER CODE BEGIN UART5_MspDeInit 1 */
 

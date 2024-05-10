@@ -198,7 +198,7 @@ void BASIC_TIM_IRQHandler(void) {
 // 定时器中断响应 - 代码重写
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     if (htim == (&htim_base)) {
-        MY_GPIO_EXAMPLE_LED_ByTimer(10);
+        MY_GPIO_EXAMPLE_LED_ByTimer(1);
     }
 }
 /* USER CODE END 1 */
