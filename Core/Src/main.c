@@ -23,6 +23,7 @@
 #include "myGpio.h"
 #include "myTIM.h"
 #include "myUsart.h"
+#include "myRobot.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -79,25 +80,32 @@ int main(void) {
 
     /* Initialize all configured peripherals *************************************/
     /* USER CODE BEGIN 2 */
-    MY_GPIO_INIT();   // 初始化 LED 引脚
-    MX_TIM_Advance_Init();   // 初始化高级定时器 - 用于PWM
-    TIMx_Configuration();/* 初始化基本定时器定时，1s 产生一次中断 */
+    // 其他功能
+//    TIMx_Configuration();   // 初始化基本定时器定时，1s 产生一次中断
     MX_UART_Init();   // 初始化串口
+    HAL_UART_Transmit(&huart, "my Uart Hello!\n", 15, 100);   // 串口发送内容
 
-    HAL_GPIO_WritePin(MY_PWM_GPIO_PORT, MY_PWM_POWER_PIN, GPIO_PIN_SET);   // 开启 PWM 正极
-    HAL_TIM_PWM_Start(&htim_advance, TIM_CHANNEL_1);    /* 开启 PWM 通道 1 */
-    HAL_TIM_PWM_Start(&htim_advance, TIM_CHANNEL_2);    /* 开启 PWM 通道 2 */
-    HAL_TIM_PWM_Start(&htim_advance, TIM_CHANNEL_3);    /* 开启 PWM 通道 3 */
-    HAL_TIM_PWM_Start(&htim_advance, TIM_CHANNEL_4);    /* 开启 PWM 通道 4 */
+    // PWM - 供电
+    MY_GPIO_INIT();   // 初始化 LED & 5v 引脚
+    HAL_GPIO_WritePin(MY_PWM_GPIO_PORT, MY_PWM_POWER_PIN|MY_LED_PIN, GPIO_PIN_SET);   // 开启 PWM 正极
 
-    HAL_UART_Transmit(&huart,"my Uart Hello!\n",15,100);   // 串口发送内容
+    // 机器人初始化
+    Robot_Init();
+    HAL_Delay(3000);
+    Robot_Stand();   // 机器人站立
+
     /* USER CODE END 2 */
 
     /* Infinite loop *************************************************************/
     /* USER CODE BEGIN WHILE */
     while (1) {
         /* USER CODE BEGIN 3 */
-//        HAL_UART_Transmit(&huart,"Uart5 Hello!\n",13,100);   // 串口发送内容
+//        HAL_UART_Receive(&huart, (uint8_t *) &ch, 1, 0xFFFF);   // 串口接收
+//        HAL_UART_Transmit(&huart, (uint8_t *) &ch, 1, 0xFFFF);   // 串口发送
+
+//        x = 0xa000;
+//                __HAL_TIM_SetCompare(&htim_advance, TIM_CHANNEL_1, x);
+//        HAL_Delay(500);
         /* USER CODE END 3 */
     }
     /* USER CODE END WHILE */

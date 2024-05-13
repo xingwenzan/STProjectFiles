@@ -22,14 +22,16 @@
         - [x] HelloWorld! & PWM By Delay
         - [x] Example By SysTick
         - [x] PWM 初步应用
+        - [x] 串口使用
         - [ ] CAN 及其他学习（方便控制额外电机）
     - 树莓派
         - [x] 外壳组装
         - [x] 系统下载
             - 下载地址：[官方软件](https://downloads.raspberrypi.org/imager/imager_latest.exe)
             - 一般挂 vpn 速度会快些，不挂有时候好使，有时候不好使
-            - 我选择的系统：Raspberry Pi OS(32-bit)（推荐是 64 位，但我烧录 64 位后无法联网）
+            - 我选择的系统：Raspberry Pi OS(64-bit)
         - [x] 开机、WiFi 连接与 ssh 连接
+        - [x] 串口使用
 - 原理
     - [机器人足数调研](RelevantInformation/AboutSTM32/Research/机械人足数调研.docx)
 - 结构

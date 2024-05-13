@@ -117,25 +117,25 @@ void MX_TIM_Advance_Init(void)
     sConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;
     sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_RESET;
     // 初始化通道 1 输出 PWM
-    sConfigOC.Pulse = 0x7fff;   // max = 2^16，正占空比 = Pulse/max
+    sConfigOC.Pulse = MY_PWM_STATE_0;   // max = 2^16，正占空比 = Pulse/max
     if (HAL_TIM_PWM_ConfigChannel(&htim_advance, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
     {
         Error_Handler();
     }
     // 初始化通道 2 输出 PWM
-    sConfigOC.Pulse = 0x7fff;
+    sConfigOC.Pulse = MY_PWM_STATE_0;
     if (HAL_TIM_PWM_ConfigChannel(&htim_advance, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
     {
         Error_Handler();
     }
     // 初始化通道 3 输出 PWM
-    sConfigOC.Pulse = 0x7fff;
+    sConfigOC.Pulse = MY_PWM_STATE_0;
     if (HAL_TIM_PWM_ConfigChannel(&htim_advance, &sConfigOC, TIM_CHANNEL_3) != HAL_OK)
     {
         Error_Handler();
     }
     // 初始化通道 4 输出 PWM
-    sConfigOC.Pulse = 0x7fff;
+    sConfigOC.Pulse = MY_PWM_STATE_0;
     if (HAL_TIM_PWM_ConfigChannel(&htim_advance, &sConfigOC, TIM_CHANNEL_4) != HAL_OK)
     {
         Error_Handler();
@@ -174,6 +174,23 @@ void HAL_TIM_PWM_MspInit(TIM_HandleTypeDef* tim_pwmHandle)
         /* USER CODE END TIM8_MspInit 1 */
     }
 }
+// DeInitializes TIM PWM MSP - 代码重写
+void HAL_TIM_PWM_MspDeInit(TIM_HandleTypeDef* tim_pwmHandle)
+{
+
+    if(tim_pwmHandle->Instance==ADVANCE_TIM)
+    {
+        /* USER CODE BEGIN TIM8_MspDeInit 0 */
+
+        /* USER CODE END TIM8_MspDeInit 0 */
+        /* Peripheral clock disable */
+        ADVANCE_TIM_CLK_DISABLE();
+        /* USER CODE BEGIN TIM8_MspDeInit 1 */
+
+        /* USER CODE END TIM8_MspDeInit 1 */
+    }
+}
+
 // 定时器使用 PWM 开启端口及引脚
 void HAL_TIM_MspPostInit(TIM_HandleTypeDef* timHandle)
 {
@@ -199,20 +216,4 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef* timHandle)
         /* USER CODE END TIM8_MspPostInit 1 */
     }
 
-}
-// DeInitializes TIM PWM MSP - 代码重写
-void HAL_TIM_PWM_MspDeInit(TIM_HandleTypeDef* tim_pwmHandle)
-{
-
-    if(tim_pwmHandle->Instance==ADVANCE_TIM)
-    {
-        /* USER CODE BEGIN TIM8_MspDeInit 0 */
-
-        /* USER CODE END TIM8_MspDeInit 0 */
-        /* Peripheral clock disable */
-        ADVANCE_TIM_CLK_DISABLE();
-        /* USER CODE BEGIN TIM8_MspDeInit 1 */
-
-        /* USER CODE END TIM8_MspDeInit 1 */
-    }
 }
