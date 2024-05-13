@@ -2,7 +2,7 @@
 
 ## 项目背景
 
-> [背景调研](RelevantInformation/AboutSTM32/Research/背景调研.docx)
+> [背景调研](RelevantInformation/Research/背景调研.docx)
 
 ## 使用工具
 
@@ -10,6 +10,10 @@
     - 自行搜索：clion 开发 stm32
 - 开发板 - STM32F446RC
     - 链接：【淘宝】https://m.tb.cn/h.5CJXeVUz83zlGUm?tk=SRL0WoMApgi CZ0012 「神器工具开发板比赛STM32F446达妙科技DM_MC01小米电机电赛机器人」
+      点击链接直接打开 或者 淘宝搜索直接打开
+- 树莓派4B
+    - 链接：【淘宝】https://m.tb.cn/h.gbH1X1HDpsrB7PX?tk=vHVsWsDZ7jL CZ0012 「树莓派4代B型 RaspberryPi4 4B 8GB 开发板编程AI入门套件
+      Python」
       点击链接直接打开 或者 淘宝搜索直接打开
 - 仿真器 - JLink
 
@@ -32,11 +36,13 @@
             - 我选择的系统：Raspberry Pi OS(64-bit)
         - [x] 开机、WiFi 连接与 ssh 连接
         - [x] 串口使用
+        - [x] 摄像头使用
 - 原理
-    - [机器人足数调研](RelevantInformation/AboutSTM32/Research/机械人足数调研.docx)
+    - [机器人足数调研](RelevantInformation/Research/机械人足数调研.docx)
+    - [机器人足部运动方式调研](RelevantInformation/Research/足部运动.docx)
 - 结构
     - [x] 最初版结构
-    - [x] 3D 打印外壳，结构更新
+    - [x] 3D 打印外壳，结构更新([菠萝狗](http://padog.com.cn/#/index.md))
 
 ## 实验进程
 
@@ -57,6 +63,9 @@
 - [x] 第三次实验 - 8 舵机 - 仅站立/手持
     - 结果：腿未改变状态/舵机未转动，舵机颤抖 -> 舵机想动没转动
     - 问题：舵机力量不够 -> 电池驱动不够 -> 换电池
+- [x] 第四次实验 - 8 舵机 - 坐立 & 行走推演
+    - 结果：成功坐立
+    - 问题：顺拐 -> 重构身躯，问题解决
 
 # 相关资料
 
@@ -73,7 +82,8 @@
             - [Doxygen 注释规范](https://www.cnblogs.com/silencehuan/p/11169084.html)
 - 树莓派
     - [官网](https://www.raspberrypi.com/)
-    - [初始化文档](/RelevantInformation/AboutRaspberryPi/RaspberryPiInit.md)
+    - [资料全集](https://pan.baidu.com/s/1SkvnrBC5YwOKgMn1FnPlzw?pwd=mylo)
+    - [初始化文档](RelevantInformation/AboutRaspberryPi/RaspberryPiInit.md)
         - 我喜欢的 Linux 配置 - 来自 [AcWing Linux 基础课](https://www.acwing.com/activity/content/57/)
             - 配置方法：将 [该文件](RelevantInformation/AboutRaspberryPi/LinuxConfig.zip) 解压缩后里面的内容上传到树莓派中
             - 上传方法：百度搜索 - Linux scp 使用

@@ -76,6 +76,7 @@
 
 ## 参考资料
 
+- [资料全集](https://pan.baidu.com/s/1SkvnrBC5YwOKgMn1FnPlzw?pwd=mylo)
 - [树莓派4B上手 - 从初始设置开始](https://cloud.tencent.com/developer/article/2299252)
 - [整套相关初始设置](https://www.cnblogs.com/lhonghong/category/2147754.html)
 - [更换国内源](https://zhuanlan.zhihu.com/p/98079246)
