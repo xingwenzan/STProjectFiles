@@ -113,7 +113,11 @@
         - [cron 服务启、停、状态查看](https://www.jianshu.com/p/7cc20d441bda?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation)
         - 注意：
             - 调用的脚本中一定要使用绝对路径，或在内部自行定义路径，一定不要直接使用全局的环境变量，否则既不会报错，也不会正常运行
-            - cron 命令调用生成的内容会自带写保护，后面加上 `2>&1` 将解决此问题
+            - cron 命令调用生成的内容有时候会自带写保护，影响不大
+    - python 使用
+        - [虚拟环境使用](https://blog.csdn.net/weixin_51331359/article/details/119826810)
+        - 我的环境路径：`$HOME/.env`
+        - [更换国内源](https://blog.csdn.net/qq_44214671/article/details/111008427)
     - 其他使用
         - [B站视频](https://www.bilibili.com/video/BV1QB4y1M7EJ/?buvid=XU8906089F0C5E86A9676712E0A07656645F7&from_spmid=search.search-result.0.0&is_story_h5=false&mid=n%2FX0f%2F%2FzAX2mMZP5OK9PEg%3D%3D&p=1&plat_id=122&share_from=ugc&share_medium=android&share_plat=android&share_session_id=6aa7a45c-79b4-434e-a531-84a6a2bed73f&share_source=WEIXIN&share_tag=s_i&spmid=united.player-video-detail.0.0&timestamp=1713808563&unique_k=U51iiDN&up_id=330866298&vd_source=1ccb8ff2c60b49bbfff6dfe8c1bb0eab)
         - [使用 python](https://blog.csdn.net/Eden2088/article/details/122118962)
@@ -131,6 +135,7 @@
 - [系统时钟问题](https://blog.csdn.net/u014670574/article/details/70162036)
 - [树莓派为 py 安装依赖的包时 error: externally-managed-environment](https://www.yaolong.net/article/pip-externally-managed-environment/#%E6%96%B9%E6%A1%88%E4%B8%89%E9%AB%98%E9%98%B6-%E4%BD%BF%E7%94%A8venv)
 - [树莓派使用 pip 安装太慢解决](https://blog.csdn.net/qq_43556844/article/details/113616214)
+- [树莓派 py 使用串口不好使](https://blog.csdn.net/ChenWenHaoHaoHao/article/details/130328922)
 
 ## 备注
 

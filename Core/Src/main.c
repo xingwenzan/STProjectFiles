@@ -87,12 +87,15 @@ int main(void) {
 
     // PWM - 供电
     MY_GPIO_INIT();   // 初始化 LED & 5v 引脚
-    HAL_GPIO_WritePin(MY_PWM_GPIO_PORT, MY_PWM_POWER_PIN|MY_LED_PIN, GPIO_PIN_SET);   // 开启 PWM 正极
+    HAL_GPIO_WritePin(MY_PWM_GPIO_PORT, MY_PWM_POWER_PIN, GPIO_PIN_SET);   // 开启 PWM 正极
+    HAL_GPIO_WritePin(MY_LED_GPIO_PORT, MY_LED_PIN, GPIO_PIN_RESET);    // 开启小灯指示
 
     // 机器人初始化
     Robot_Init();
     HAL_Delay(3000);
     Robot_Stand();   // 机器人站立
+    HAL_Delay(3000);
+    Robot_Move();
 
     /* USER CODE END 2 */
 
@@ -100,8 +103,10 @@ int main(void) {
     /* USER CODE BEGIN WHILE */
     while (1) {
         /* USER CODE BEGIN 3 */
-//        HAL_UART_Receive(&huart, (uint8_t *) &ch, 1, 0xFFFF);   // 串口接收
-//        HAL_UART_Transmit(&huart, (uint8_t *) &ch, 1, 0xFFFF);   // 串口发送
+        int ch;
+        HAL_UART_Receive(&huart, (uint8_t *) &ch, 1, 0xFFFF);   // 串口接收
+        HAL_UART_Transmit(&huart, (uint8_t *) &ch, 1, 0xFFFF);   // 串口发送
+//        if(ch=='1')HAL_GPIO_WritePin(MY_LED_GPIO_PORT, MY_LED_PIN, GPIO_PIN_SET);
 
 //        x = 0xa000;
 //                __HAL_TIM_SetCompare(&htim_advance, TIM_CHANNEL_1, x);

@@ -8,7 +8,19 @@
 #include "main.h"
 #include "myTIM.h"
 
+/**机器人各腿对应通道
+ * 1 -> 右前 & 左后大腿 -> 右大腿
+ * 2 -> 左前 & 右后大腿 -> 左大腿
+ * 3 -> 右前 & 左后小腿 -> 右小腿
+ * 4 -> 左前 & 右后小腿 -> 左小腿
+ */
+#define LEG_LARGE_RIGHT TIM_CHANNEL_1
+#define LEG_LARGE_LEFT TIM_CHANNEL_2
+#define LEF_SMALL_RIGHT TIM_CHANNEL_3
+#define LEF_SMALL_LEFT TIM_CHANNEL_4
+
 void Robot_Init();
 void Robot_Stand();
+void Robot_Move();
 
 #endif //STPROJECTFILES_MYROBOT_H
