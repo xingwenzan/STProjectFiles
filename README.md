@@ -38,10 +38,11 @@
         - [x] 摄像头使用
     - 混合
         - [x] 树莓派与 STM32 的串口通信（正确接线即可正常使用）
-        - [ ] 树莓派定时拍摄并获取信息发送到 STM32
+        - [x] 树莓派定时拍摄并获取信息发送到 STM32
             - [x] 定时拍摄
-            - [ ] 信息获取
+            - [x] 信息获取
             - [x] 定时发送与接收
+            - [x] 完整启停控制流程（即上面三个内容的拼接）
             - 参考文档
                 - [树莓派定时发送图片到服务器](https://www.cnblogs.com/nnnv/p/17722550.html)
 - 原理
@@ -100,6 +101,7 @@
             - 这里的 .bashrc 文件就不要用了，但是可以参考其中的 tmux 设置
     - 串口使用
         - [资料全集](https://pan.baidu.com/s/1SkvnrBC5YwOKgMn1FnPlzw?pwd=mylo)/ `入门版——树莓派4B型初学者使用及设置指南`/`8.串口连接外部设备通信`
+        - [python 调用](https://blog.csdn.net/ZhuanShangNiDeXin/article/details/113791267)
     - 摄像头使用
         - 寻常拍照及录像：
             - [libcamera 命令](https://shumeipai.nxez.com/2023/05/14/camera-module-v3-configuration-and-libcamera-usage.html)
@@ -118,6 +120,9 @@
         - [虚拟环境使用](https://blog.csdn.net/weixin_51331359/article/details/119826810)
         - 我的环境路径：`$HOME/.env`
         - [更换国内源](https://blog.csdn.net/qq_44214671/article/details/111008427)
+        - [串口使用](https://blog.csdn.net/ZhuanShangNiDeXin/article/details/113791267)
+        - [图形（颜色块）测距](https://blog.csdn.net/qq_42444944/article/details/97415276)
+        - [CV2 读取图片文件](https://blog.csdn.net/weixin_43196262/article/details/82807698)
     - 其他使用
         - [B站视频](https://www.bilibili.com/video/BV1QB4y1M7EJ/?buvid=XU8906089F0C5E86A9676712E0A07656645F7&from_spmid=search.search-result.0.0&is_story_h5=false&mid=n%2FX0f%2F%2FzAX2mMZP5OK9PEg%3D%3D&p=1&plat_id=122&share_from=ugc&share_medium=android&share_plat=android&share_session_id=6aa7a45c-79b4-434e-a531-84a6a2bed73f&share_source=WEIXIN&share_tag=s_i&spmid=united.player-video-detail.0.0&timestamp=1713808563&unique_k=U51iiDN&up_id=330866298&vd_source=1ccb8ff2c60b49bbfff6dfe8c1bb0eab)
         - [使用 python](https://blog.csdn.net/Eden2088/article/details/122118962)
