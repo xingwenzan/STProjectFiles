@@ -77,10 +77,10 @@ void Error_Handler(void);
  * 且实际使用极端情况并不合适，经过实验选择以下数据
  */
 #define MY_PWM_STATE_0 0x6000
-#define MY_PWM_STATE_S01 0x4800
-#define MY_PWM_STATE_S11 0x7800
-#define MY_PWM_STATE_M01 0x4000
-#define MY_PWM_STATE_M11 0x8000
+#define MY_PWM_STATE_S01 0x5800
+#define MY_PWM_STATE_S11 0x6800
+#define MY_PWM_STATE_M01 0x3000
+#define MY_PWM_STATE_M11 0x9000
 
 /**
  * UART SET
