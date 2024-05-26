@@ -48,7 +48,7 @@ static void TIM_Mode_Config(void)
     //				PCLK1 = HCLK / 4
     //				=> TIMxCLK = HCLK/2 = SystemCoreClock/2 = 8MHz
     // 设定定时器频率为=TIMxCLK/(TIM_Prescaler+1)=10000Hz
-    htim_base.Init.Prescaler = 800 - 1;
+    htim_base.Init.Prescaler = 1600 - 1;
 
     // 初始化定时器TIMx, x[6,7]
     HAL_TIM_Base_Init(&htim_base);

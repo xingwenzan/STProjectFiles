@@ -44,7 +44,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+extern uint8_t walk = 1;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -80,11 +80,6 @@ int main(void) {
 
     /* Initialize all configured peripherals *************************************/
     /* USER CODE BEGIN 2 */
-    // 其他功能
-//    TIMx_Configuration();   // 初始化基本定时器定时，1s 产生一次中断
-    MX_UART_Init();   // 初始化串口
-    HAL_UART_Transmit(&huart, "my Uart Hello!\n", 15, 100);   // 串口发送内容
-
     // PWM - 供电
     MY_GPIO_INIT();   // 初始化 LED & 5v 引脚
     HAL_GPIO_WritePin(MY_PWM_GPIO_PORT, MY_PWM_POWER_PIN, GPIO_PIN_SET);   // 开启 PWM 正极
@@ -92,11 +87,14 @@ int main(void) {
 
     // 机器人初始化
     Robot_Init();
-    HAL_Delay(3000);
     Robot_Stand();   // 机器人站立
     HAL_Delay(3000);
-    Robot_Move();
+//    Robot_Move();
 
+    // 其他功能
+    TIMx_Configuration();   // 初始化基本定时器定时，1s 产生一次中断
+    MX_UART_Init();   // 初始化串口
+    HAL_UART_Transmit(&huart, "my Uart Hello!\n", 15, 100);   // 串口发送内容
     /* USER CODE END 2 */
 
     /* Infinite loop *************************************************************/
@@ -106,8 +104,13 @@ int main(void) {
         int ch;
         HAL_UART_Receive(&huart, (uint8_t *) &ch, 1, 0xFFFF);   // 串口接收
 //        HAL_UART_Transmit(&huart, (uint8_t *) &ch, 1, 0xFFFF);   // 串口发送
-        if (ch == '1')HAL_GPIO_WritePin(MY_LED_GPIO_PORT, MY_LED_PIN, GPIO_PIN_RESET);
-        else HAL_GPIO_WritePin(MY_LED_GPIO_PORT, MY_LED_PIN, GPIO_PIN_SET);
+        if (ch == '1'){
+            walk = 1;
+            HAL_GPIO_WritePin(MY_LED_GPIO_PORT, MY_LED_PIN, GPIO_PIN_RESET);
+        }else {
+            walk = 0;
+            HAL_GPIO_WritePin(MY_LED_GPIO_PORT, MY_LED_PIN, GPIO_PIN_SET);
+        }
 
 //        x = 0xa000;
 //                __HAL_TIM_SetCompare(&htim_advance, TIM_CHANNEL_1, x);

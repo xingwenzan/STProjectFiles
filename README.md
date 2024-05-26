@@ -120,7 +120,7 @@
             - 调用的脚本中一定要使用绝对路径，或在内部自行定义路径，一定不要直接使用全局的环境变量，否则既不会报错，也不会正常运行
             - cron 命令调用生成的内容有时候会自带写保护，影响不大
     - python 使用
-        - [虚拟环境使用](https://blog.csdn.net/weixin_51331359/article/details/119826810)
+        - [虚拟环境使用](https://blog.csdn.net/qq_59449692/article/details/136397131)
         - 我的环境路径：`$HOME/.env`
         - [更换国内源](https://blog.csdn.net/qq_44214671/article/details/111008427)
         - [串口使用](https://blog.csdn.net/ZhuanShangNiDeXin/article/details/113791267)

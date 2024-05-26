@@ -19,8 +19,12 @@
 #define LEF_SMALL_RIGHT TIM_CHANNEL_3
 #define LEF_SMALL_LEFT TIM_CHANNEL_4
 
+extern uint8_t walk;
+
 void Robot_Init();
 void Robot_Stand();
 void Robot_Move();
+void Robot_State_Choose(uint8_t state);
+void Robot_Control();
 
 #endif //STPROJECTFILES_MYROBOT_H
