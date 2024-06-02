@@ -21,6 +21,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "myGpio.h"
+//#include "mySysTick.h"
 #include "myTIM.h"
 #include "myUsart.h"
 #include "myRobot.h"
@@ -44,7 +45,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-extern uint8_t walk = 1;
+uint8_t walk=1;   // 为 myRobot 的 walk 赋值，以便使用，
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/

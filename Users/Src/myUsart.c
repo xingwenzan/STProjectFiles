@@ -34,8 +34,8 @@ void HAL_UART_MspInit(UART_HandleTypeDef *uartHandle) {
         /* UART5 clock enable */
         MY_UART_CLK_ENABLE();
 
-        __HAL_RCC_GPIOC_CLK_ENABLE();
-        __HAL_RCC_GPIOD_CLK_ENABLE();
+        MY_UART_TX_GPIO_CLK_ENABLE();
+        MY_UART_RX_GPIO_CLK_ENABLE();
         /**UART5 GPIO Configuration
         PC12     ------> UART5_TX
         PD2     ------> UART5_RX
