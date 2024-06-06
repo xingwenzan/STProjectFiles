@@ -95,6 +95,8 @@
         - 其他资源
             - [野火 - STM32 HAL库开发实战指南](https://doc.embedfire.com/mcu/stm32/f429tiaozhanzhe/hal/zh/latest/index.html)
             - [Doxygen 注释规范](https://www.cnblogs.com/silencehuan/p/11169084.html)
+    - 相关文档
+        - [Keil创建STM32项目并烧录使用](RelevantInformation/AboutSTM32/STM32InitByKeil.md)
 - 树莓派
     - [官网](https://www.raspberrypi.com/)
     - [资料全集](https://pan.baidu.com/s/1SkvnrBC5YwOKgMn1FnPlzw?pwd=mylo)
