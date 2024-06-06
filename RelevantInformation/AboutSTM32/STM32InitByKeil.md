@@ -85,6 +85,9 @@
   ![如图](../Photos/AboutSTM32/ProjectSet2.png)
 - 上面的两步完成后记得点击 `OK` 保存
   ![如图](../Photos/AboutSTM32/ProjectSetSave.png)
+
+### 2.4、烧录
+
 - `Build` 测试（测试代码在下面）
   ![如图](../Photos/AboutSTM32/ProjectBuild2.png)
   ![如图](../Photos/AboutSTM32/ProjectBuild.png)
@@ -99,15 +102,15 @@
 ```C
 // 测试代码 - 具体位置结合图片
 // 以下代码写在 main.c 的 main 函数的 while 外
-HAL_GPIO_WritePin(GPIOC,GPIO_PIN_14,GPIO_PIN_SET);
+HAL_GPIO_WritePin(GPIOC, GPIO_PIN_14, GPIO_PIN_SET);
 // 以下代码写在 main.c 的 main 函数的 while 里
-HAL_GPIO_WritePin(GPIOC,GPIO_PIN_0,GPIO_PIN_RESET);
+HAL_GPIO_WritePin(GPIOC, GPIO_PIN_0, GPIO_PIN_RESET);
 HAL_Delay(1000);
-HAL_GPIO_WritePin(GPIOC,GPIO_PIN_0,GPIO_PIN_SET);
+HAL_GPIO_WritePin(GPIOC, GPIO_PIN_0, GPIO_PIN_SET);
 HAL_Delay(1000);
 /******************************************************************/
 // 以下代码补在 gpio.c 的 MX_GPIO_Init 函数已有内容之后
-GPIO_InitTypeDef GPIO_InitStruct = {0};
+GPIO_InitTypeDef GPIO_InitStruct = { 0 };
 
 /*Configure GPIO pin Output Level */
 HAL_GPIO_WritePin(GPIOC, GPIO_PIN_14 | GPIO_PIN_0, GPIO_PIN_RESET);
@@ -120,6 +123,9 @@ GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
 HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 ```
 
-### 2.4、烧录
-
 ## 3、备注
+
+- 参考资料
+  - [使用STM32CubeIDE新建工程](https://doc.embedfire.com/linux/stm32mp1/hal/zh/latest/doc/chapter5/chapter5.html#)
+  - [将STM32CubeIDE工程转为keil MDK工程](https://doc.embedfire.com/linux/stm32mp1/hal/zh/latest/doc/chapter41/chapter41.html#)
+  - [STM32安装教程和J-link烧录驱动安装教程](https://blog.csdn.net/m0_45463480/article/details/125919787)
