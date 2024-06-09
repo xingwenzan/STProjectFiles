@@ -84,6 +84,7 @@
 
 # 相关资料
 
+- [总体设计](RelevantInformation/Research/课程设计_机器狗.docx)
 - STM32F446RC
     - 数据手册
         - [官网](https://www.st.com/zh/microcontrollers-microprocessors/stm32f446/documentation.html)
@@ -132,6 +133,7 @@
         - [串口使用](https://blog.csdn.net/ZhuanShangNiDeXin/article/details/113791267)
         - [图形（颜色块）测距](https://blog.csdn.net/qq_42444944/article/details/97415276)
         - [CV2 读取图片文件](https://blog.csdn.net/weixin_43196262/article/details/82807698)
+        - [查看包版本](https://blog.csdn.net/weixin_42578378/article/details/89293537)
     - 其他使用
         - [B站视频](https://www.bilibili.com/video/BV1QB4y1M7EJ/?buvid=XU8906089F0C5E86A9676712E0A07656645F7&from_spmid=search.search-result.0.0&is_story_h5=false&mid=n%2FX0f%2F%2FzAX2mMZP5OK9PEg%3D%3D&p=1&plat_id=122&share_from=ugc&share_medium=android&share_plat=android&share_session_id=6aa7a45c-79b4-434e-a531-84a6a2bed73f&share_source=WEIXIN&share_tag=s_i&spmid=united.player-video-detail.0.0&timestamp=1713808563&unique_k=U51iiDN&up_id=330866298&vd_source=1ccb8ff2c60b49bbfff6dfe8c1bb0eab)
         - [使用 python](https://blog.csdn.net/Eden2088/article/details/122118962)
