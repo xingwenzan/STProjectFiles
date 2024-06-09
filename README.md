@@ -107,6 +107,7 @@
             - 这里的 .bashrc 文件就不要用了，但是可以参考其中的 tmux 设置
     - 串口使用
         - [资料全集](https://pan.baidu.com/s/1SkvnrBC5YwOKgMn1FnPlzw?pwd=mylo)/ `入门版——树莓派4B型初学者使用及设置指南`/`8.串口连接外部设备通信`
+        - [原资料改编版](RelevantInformation/AboutRaspberryPi/RaspberryPiUartUse.docx)
         - [python 调用](https://blog.csdn.net/ZhuanShangNiDeXin/article/details/113791267)
     - 摄像头使用
         - 寻常拍照及录像：
@@ -123,7 +124,9 @@
             - 调用的脚本中一定要使用绝对路径，或在内部自行定义路径，一定不要直接使用全局的环境变量，否则既不会报错，也不会正常运行
             - cron 命令调用生成的内容有时候会自带写保护，影响不大
     - python 使用
-        - [虚拟环境使用](https://blog.csdn.net/qq_59449692/article/details/136397131)
+        - 虚拟环境使用
+            - [网络参考文档](https://blog.csdn.net/qq_59449692/article/details/136397131)
+            - [自写文档](RelevantInformation/AboutRaspberryPi/PythonVirtualEnvironment.docx)
         - 我的环境路径：`$HOME/.env`
         - [更换国内源](https://blog.csdn.net/qq_44214671/article/details/111008427)
         - [串口使用](https://blog.csdn.net/ZhuanShangNiDeXin/article/details/113791267)
