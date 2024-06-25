@@ -21,7 +21,6 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "myGpio.h"
-//#include "mySysTick.h"
 #include "myTIM.h"
 #include "myUsart.h"
 #include "myRobot.h"
@@ -45,12 +44,12 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-uint8_t walk=1;   // 为 myRobot 的 walk 赋值，以便使用，
+uint8_t walk = 1;   // 为 myRobot 的 walk 赋值，该参数是 extern 型变量，可以在同一个项目中跨文件使用，只要在使用前正确赋值了
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN PFP */
-void SystemClock_Config(void);
+void SystemClock_Config(void);   // 文件创建自带函数
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -105,10 +104,10 @@ int main(void) {
         int ch;
         HAL_UART_Receive(&huart, (uint8_t *) &ch, 1, 0xFFFF);   // 串口接收
 //        HAL_UART_Transmit(&huart, (uint8_t *) &ch, 1, 0xFFFF);   // 串口发送
-        if (ch == '1'){
+        if (ch == '1') {
             walk = 1;
             HAL_GPIO_WritePin(MY_LED_GPIO_PORT, MY_LED_PIN, GPIO_PIN_RESET);
-        }else {
+        } else {
             walk = 0;
             HAL_GPIO_WritePin(MY_LED_GPIO_PORT, MY_LED_PIN, GPIO_PIN_SET);
         }

@@ -124,6 +124,9 @@
         - 注意：
             - 调用的脚本中一定要使用绝对路径，或在内部自行定义路径，一定不要直接使用全局的环境变量，否则既不会报错，也不会正常运行
             - cron 命令调用生成的内容有时候会自带写保护，影响不大
+    - [开机启动使用](https://shumeipai.nxez.com/2020/06/30/linux-usage-systemd.html)
+        - 自启动服务应在 `/etc/systemd/system/`
+          文件夹下，但为了方便，服务文件在被自启动的文件所在文件夹也有一份备份，请在该备份中更改，并在更改后将其复制到应在的文件夹，如 `sudo cp distance_measurement.service /etc/systemd/system/distance_measurement.service`
     - python 使用
         - 虚拟环境使用
             - [网络参考文档](https://blog.csdn.net/qq_59449692/article/details/136397131)
