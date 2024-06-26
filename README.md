@@ -85,6 +85,7 @@
 # 相关资料
 
 - [总体设计](RelevantInformation/Research/课程设计_机器狗.docx)
+  - [机器人整体控制](RelevantInformation/Research/TotalControl.md)
 - STM32F446RC
     - 数据手册
         - [官网](https://www.st.com/zh/microcontrollers-microprocessors/stm32f446/documentation.html)

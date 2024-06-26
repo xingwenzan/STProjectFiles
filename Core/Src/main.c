@@ -86,21 +86,22 @@ int main(void) {
     HAL_GPIO_WritePin(MY_LED_GPIO_PORT, MY_LED_PIN, GPIO_PIN_RESET);    // 开启小灯指示
 
     // 机器人初始化
-    Robot_Init();
+    Robot_Init();   // 机器人初始化函数
     Robot_Stand();   // 机器人站立
-    HAL_Delay(3000);
+    HAL_Delay(3000);   // 延时等待
 //    Robot_Move();
 
     // 其他功能
-    TIMx_Configuration();   // 初始化基本定时器定时，1s 产生一次中断
+    TIMx_Configuration();   // 初始化基本定时器定时，1s 产生一次中断，控制机器人运动的每一步的核心
     MX_UART_Init();   // 初始化串口
-    HAL_UART_Transmit(&huart, "my Uart Hello!\n", 15, 100);   // 串口发送内容
+    HAL_UART_Transmit(&huart, "my Uart Hello!\n", 15, 100);   // 串口发送内容（用于测试，可有可无）
     /* USER CODE END 2 */
 
     /* Infinite loop *************************************************************/
     /* USER CODE BEGIN WHILE */
     while (1) {
         /* USER CODE BEGIN 3 */
+        // 主要信号接收部分，通过接收串口信号实现启停接收
         int ch;
         HAL_UART_Receive(&huart, (uint8_t *) &ch, 1, 0xFFFF);   // 串口接收
 //        HAL_UART_Transmit(&huart, (uint8_t *) &ch, 1, 0xFFFF);   // 串口发送

@@ -19,6 +19,7 @@
 #define LEF_SMALL_RIGHT TIM_CHANNEL_3
 #define LEF_SMALL_LEFT TIM_CHANNEL_4
 
+// 启停标志，代表是否运动，1 为允许运动，0 为拒绝（注意：作为 extern 变量，它在整个项目第一次使用前必须正确赋值）
 extern uint8_t walk;
 
 void Robot_Init();
