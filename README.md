@@ -135,7 +135,7 @@
         - 我的环境路径：`$HOME/.env`
         - [更换国内源](https://blog.csdn.net/qq_44214671/article/details/111008427)
         - [串口使用](https://blog.csdn.net/ZhuanShangNiDeXin/article/details/113791267)
-        - [图形（颜色块）测距](https://blog.csdn.net/qq_42444944/article/details/97415276)
+        - [特定图形（颜色块）测距](https://blog.csdn.net/qq_42444944/article/details/97415276)
         - [CV2 读取图片文件](https://blog.csdn.net/weixin_43196262/article/details/82807698)
         - [查看包版本](https://blog.csdn.net/weixin_42578378/article/details/89293537)
     - 其他使用
