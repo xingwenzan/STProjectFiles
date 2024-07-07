@@ -1,5 +1,7 @@
 # 机器狗整体控制
 
+> 写在前面：未特殊说明，一切操作皆在 `小黑框（终端）` 中进行
+
 ## 1、控制关系
 
 > 通过树莓派接收图片信息并测量标志距离，根据所得距离信息与预设 `危险距离`
@@ -42,7 +44,38 @@
 
 > 具体实现
 
------------还没写------------
+- [初始化开启串口](/RelevantInformation/AboutRaspberryPi/RaspberryPiUartUse.docx)
+- 使用 python 代码控制串口发送
+  - [python 环境配置](/RelevantInformation/AboutRaspberryPi/PythonVirtualEnvironment.docx)并激活虚拟环境
+  - 创建 `.py` 文件并在文件中添加如下代码（详情查看下方 `代码 4.1.1`、`代码 4.1.2`）
+  - 运行刚才的文件（详情查看下方 `代码 4.1.3`）
+  - 接收查看：树莓派与电脑正确连接后打开任意串口助手软件开启串口后皆可看见结果
+```shell
+# 代码 4.1.1
+# 创建名为 python 文件；xxx 是文件名，可更改；`.py` 不允许更改
+nano xxx.py
+# 有些文件夹创建文件会要求根权限，则这么写，当然，最好不要在这种文件夹下操作
+# sudo nano xxx.py
+
+# 运行后会自动进入创建的文件
+```
+
+```python
+# 代码 4.1.2
+# 以下代码添加到刚刚创建的文件（创建后会自动进入）
+import serial   # 添加串口包
+ser = serial.Serial("/dev/ttyAMA0", 115200)   # 设置串口端口和波特率，前者自行查看，一般用本部分的串口初始化者和我的是一样的
+ser.flushInput()    # 清除缓存
+ser.write("Hello World\r\n".encode())    # 发送数据  \r\n可以实现换行  encode()默认是'utf-8'
+# ctrl + o，回车：保存
+# ctrl + x：退出该文件
+```
+
+```shell
+# 代码 4.1.3
+# 运行刚刚的文件
+python3 xxx.py   # python3 文件名
+```
 
 > 参考资料
 
