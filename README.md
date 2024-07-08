@@ -19,8 +19,6 @@
 
 ## 各自进度
 
-> 为了学到新东西 & 利用上空闲时间 & 努力有方向，电控方面进行扩展，尝试添加使用树莓派，进行功能扩展的同时深入理解计算机
-
 - 电控
     - STM32
         - [x] HelloWorld! & PWM By Delay
@@ -85,7 +83,7 @@
 # 相关资料
 
 - [总体设计](RelevantInformation/Research/课程设计_机器狗.docx)
-  - [机器人整体控制](RelevantInformation/Research/TotalControl.md)
+    - [机器人整体控制](RelevantInformation/Research/TotalControl.md)
 - STM32F446RC
     - 数据手册
         - [官网](https://www.st.com/zh/microcontrollers-microprocessors/stm32f446/documentation.html)
