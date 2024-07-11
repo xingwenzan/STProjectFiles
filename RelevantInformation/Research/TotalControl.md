@@ -1,10 +1,16 @@
 # 机器狗整体控制
 
-> 写在前面：
-> 未特殊说明，一切树莓派操作皆在 `小黑框（终端）` 中进行
-> STM32单片机的操作皆在创建的 Keil 项目中进行
->
-> 项目创建：[Keil创建STM32项目并烧录使用](RelevantInformation/AboutSTM32/STM32InitByKeil.md)
+## 0、写在前面：
+
+1. 未特殊说明，一切树莓派操作皆在 `小黑框（终端）` 中进行STM32单片机的操作皆在创建的 Keil 项目中进行
+2. 项目创建方法：[Keil创建STM32项目并烧录使用](/RelevantInformation/AboutSTM32/STM32InitByKeil.md)
+3. 关于初始化函数的位置
+    - （不推荐）直接写在 `main.c` 里
+    - （推荐）创建单独的 `XXX.c` 和 `XXX.h` 用于放置相关函数，分别放在 [Core](/Core)
+      文件夹下的 [Inc](/Core/Inc) 和 [Src](/Core/Src)里，前一个文件夹用于放 `XXX.h`，后者放 `XXX.c`
+    - （较推荐）创建单独的 `XXX.c` 和 `XXX.h`
+      用于放置相关函数，单独额外创建文件夹用于放置自写的文件（记得添加到项目的 `include` 中）
+      ![如图](/RelevantInformation/Photos/AboutControl/KeilUserPathAdd.png)
 
 ## 1、控制关系
 
@@ -131,4 +137,45 @@ python3 xxx.py   # python3 文件名
 
 ## 5、单片机的 PWM 运动控制
 
------------还没写------------
+> 使用步骤
+
+### 5.1、简述
+
+- 引脚输出的 `PWM` 信号控制 180 度舵机的 `输出角度`
+- 使用 `高级定时器` 根据当前应该输出的 `脚步状态` 控制引脚输出 `PWM` 信号
+- 使用 `基本定时器` 根据 `时间` 控制当前应该输出的 `脚步状态`
+
+### 5.2、`输出角度` 与 `PWM` 信号对应关系
+
+1. 舵机选择
+    - MG90S-180 度舵机
+    - 【淘宝】限时满70减3 https://m.tb.cn/h.gSzxWhPoudoI3sg?tk=Y7Tf3bsHA3S MF6563 「SG90 9G经典舵机 180/360度
+      数字舵机云台遥控飞机马达固定翼航模」
+      点击链接直接打开 或者 淘宝搜索直接打开
+2. 数据
+    - 根据卖家所给数据来看，每次输入的信号不低于 20ms，信号占空比在 25% 到 75% 之间有效
+      ![如图](/RelevantInformation/Photos/AboutControl/MG90S_0.jpg)
+      ![如图](/RelevantInformation/Photos/AboutControl/MG90S_1.jpg)
+
+### 5.3、`高级定时器` 控制 `PWM` 输出信号
+
+![如图](/RelevantInformation/Photos/AboutControl/STM32F4TIM.png)
+
+1. 初始配置
+    - 开启对应配置并检查文件完整性：同串口，不过开启的是 `TIM`
+    - 代码配置：详见 [myYIM.c](/Users/Src/myTIM.c) 的 `高级定时器使用` 部分的注释
+    - 关于死区：在生成的参考波形 OCxREF 的基础上，可以插入死区时间，用于生成两路互补的输出信号 OCx 和
+      OCxN，死区时间的大小必须根据与输出信号相连接的器件及其特性来调整。
+      ![如图](/RelevantInformation/Photos/AboutControl/DeadTime.png)
+2. 使用
+   - 在使用自写的 `MX_TIM_Advance_Init` 初始化 PWM 后可以通过 `__HAL_TIM_SetCompare()` 调节占空比
+
+### 5.4、`基本定时器` 控制 `脚步状态`
+
+1. 初始配置
+    - 详见 [myYIM.c](/Users/Src/myTIM.c) 的 `基本定时器使用` 部分的注释
+
+> 参考资料
+
+- [野火——STM32F4XX——基本定时器](https://doc.embedfire.com/mcu/stm32/f429tiaozhanzhe/hal/zh/latest/doc/chapter30/chapter30.html)
+- [野火——STM32F4XX——高级定时器](https://doc.embedfire.com/mcu/stm32/f429tiaozhanzhe/hal/zh/latest/doc/chapter31/chapter31.html)

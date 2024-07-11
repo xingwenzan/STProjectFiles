@@ -4,11 +4,12 @@
 
 #include "myTIM.h"
 
+// 定时器结构体（无论哪种定时器，控制其的结构体都是一样的）
 TIM_HandleTypeDef htim_base;
 TIM_HandleTypeDef htim_advance;
 
 
-/* 基本定时器使用实验 **************************************************/
+/* 基本定时器使用 **************************************************/
 /**
   * @brief  基本定时器 TIMx,x[6,7]中断优先级配置
   * @param  无
@@ -36,7 +37,7 @@ static void TIMx_NVIC_Configuration(void)
  */
 static void TIM_Mode_Config(void)
 {
-    // 开启TIMx_CLK,x[6,7]
+    // 开启TIMx_CLK,x[6,7]，定义在 `main.h` 可自行更改
     BASIC_TIM_CLK_ENABLE();
 
     htim_base.Instance = BASIC_TIM;
@@ -70,31 +71,35 @@ void TIMx_Configuration(void)
 }
 
 
-/* 高级定时器使用实验 **************************************************/
+/* 高级定时器使用 **************************************************/
 /* TIM_ADVANCE init function */
 void MX_TIM_Advance_Init(void)
 {
+    // 目前我也不清楚这玩意有啥用，过后去掉试试
     TIM_MasterConfigTypeDef sMasterConfig = {0};
+    // 用于输出比较模式，与 TIM_OCx_SetConfig 函数配合使用完成指定定时器输出通道初始化配置
+    // 高级控制定时器有四个定时器通道，使用时都必须单独设置
     TIM_OC_InitTypeDef sConfigOC = {0};
+    // 用于断路和死区参数的设置，属于高级定时器专用，用于配置断路时通道输出状态，以及死区时间
     TIM_BreakDeadTimeConfigTypeDef sBreakDeadTimeConfig = {0};
 
     /* 定义定时器的句柄即确定定时器寄存器的基地址*/
-    htim_advance.Instance = ADVANCE_TIM;
+    htim_advance.Instance = ADVANCE_TIM;   // ADVANCE_TIM 定义在 `main.h`，定为了定时器 8
     // 高级控制定时器时钟源 TIMxCLK = HCLK = 16MHz
     // 设定定时器频率为 = TIMxCLK/(TIM_Prescaler+1) = 16MHz
     htim_advance.Init.Prescaler = 0;
-    // 计数方式
+    // 计数方式 - 上升沿计数
     htim_advance.Init.CounterMode = TIM_COUNTERMODE_UP;
-    /* 累计 TIM_Period个后产生一个更新或者中断*/
+    /* 累计 TIM_Period 个后产生一个更新或者中断*/
     //当定时器从 0 计数到 65535，即为 65536 次，为一个定时周期
     htim_advance.Init.Period = 65535;
-    // 采样时钟分频
+    // 采样时钟分频 - 不分频
     htim_advance.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-    // 重复计数器
+    // 重复计数器 - 不重复计数
     htim_advance.Init.RepetitionCounter = 0;
-    // 自动输出使能
+    // 自动输出使能 - 不自动输出
     htim_advance.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-    // 初始化定时器TIMx, x[1,8]
+    // 初始化定时器TIMx, x[1,8] - 它会调用下面重写的 HAL_TIM_PWM_MspInit
     if (HAL_TIM_PWM_Init(&htim_advance) != HAL_OK)
     {
         Error_Handler();
@@ -109,15 +114,14 @@ void MX_TIM_Advance_Init(void)
     }
 
     /*PWM模式配置*/
-    //配置为PWM模式1
-    sConfigOC.OCMode = TIM_OCMODE_PWM1;
-    sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
-    sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
-    sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
-    sConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;
-    sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_RESET;
+    sConfigOC.OCMode = TIM_OCMODE_PWM1;   // 比较输出模式选择，总共有八种，常用的为 PWM1/PWM2，这里用 PWM1
+    sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;   // 比较输出极性，可选为高电平有效或低电平有效。它决定着定时器通道有效电平，这里选为高电平有效
+    sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;   // 比较互补输出极性，可选OCxN为高电平有效或低电平有效
+    sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;   // 比较输出模式快速使能，这里不使能
+    sConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;   // 空闲状态时通道输出电平设置，可选输出 1 或 0，即在空闲状态时，经过死区时间后定时器通道输出高电平或低电平，当前为低电平
+    sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_SET;   // 空闲状态时互补通道输出电平设置，可选输出1或输出0，即在空闲状态时，经过死区时间 定时器互补通道输出高电平或低电平，设定值必须与OCIdleState相反
     // 初始化通道 1 输出 PWM
-    sConfigOC.Pulse = MY_PWM_STATE_0;   // max = 2^16，正占空比 = Pulse/max
+    sConfigOC.Pulse = MY_PWM_STATE_0;   // 比较输出脉冲宽度，max = 2^16，正占空比 = Pulse/max
     if (HAL_TIM_PWM_ConfigChannel(&htim_advance, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
     {
         Error_Handler();
@@ -143,6 +147,7 @@ void MX_TIM_Advance_Init(void)
 //    __HAL_TIM_SetCompare(&htim_advance,TIM_CHANNEL_1,0);   // 外部控制占空比代码
 
     /* 自动输出使能，断路、死区时间和锁定配置 */
+    // 这里为了省事全关了，不设置死区
     sBreakDeadTimeConfig.OffStateRunMode = TIM_OSSR_DISABLE;
     sBreakDeadTimeConfig.OffStateIDLEMode = TIM_OSSI_DISABLE;
     sBreakDeadTimeConfig.LockLevel = TIM_LOCKLEVEL_OFF;
@@ -154,11 +159,13 @@ void MX_TIM_Advance_Init(void)
     {
         Error_Handler();
     }
+    // 开启引脚
     HAL_TIM_MspPostInit(&htim_advance);
 
 }
 
-// Initializes the TIM PWM MSP - 代码重写
+// Initializes the TIM PWM MSP - 代码重写 - 开启对应的时钟（引脚在最后配置完成后使用下面的 `HAL_TIM_MspPostInit` 统一开启）
+// 它会在 HAL_TIM_PWM_Init 函数（HAL 库的定时器 PWM 功能初始化函数）中被调用
 void HAL_TIM_PWM_MspInit(TIM_HandleTypeDef* tim_pwmHandle)
 {
 
@@ -174,7 +181,8 @@ void HAL_TIM_PWM_MspInit(TIM_HandleTypeDef* tim_pwmHandle)
         /* USER CODE END TIM8_MspInit 1 */
     }
 }
-// DeInitializes TIM PWM MSP - 代码重写
+// DeInitializes TIM PWM MSP - 代码重写 - 关闭对应的时钟（引脚改变或时钟关闭时功能自然关闭）
+// 它会在 HAL_TIM_PWM_Init 函数（HAL 库的定时器 PWM 功能关闭函数）中被调用
 void HAL_TIM_PWM_MspDeInit(TIM_HandleTypeDef* tim_pwmHandle)
 {
 
