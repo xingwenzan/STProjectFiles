@@ -19,7 +19,7 @@ TIM_HandleTypeDef htim_advance;
 static void TIMx_NVIC_Configuration(void) {
     //设置抢占优先级，子优先级
     HAL_NVIC_SetPriority(BASIC_TIM_IRQn, 0, 3);
-    // 设置中断来源 - 相当于 51 的对应的中断使能
+    // 设置中断来源 - 启用指定中断通道，使能后，NVIC 能够处理该中断请求
     HAL_NVIC_EnableIRQ(BASIC_TIM_IRQn);
 }
 
@@ -44,16 +44,14 @@ static void TIM_Mode_Config(void) {
     //当定时器从 0 计数到 9999，即为 10000 次，为一个定时周期
     htim_base.Init.Period = 10000 - 1;
 
-    //定时器时钟源TIMxCLK = 2 * PCLK1
-    //				PCLK1 = HCLK / 4
-    //				=> TIMxCLK = HCLK/2 = SystemCoreClock/2 = 8MHz
+    // 高级控制定时器时钟源 TIMxCLK = HCLK = 16MHz
     // 设定定时器频率为=TIMxCLK/(TIM_Prescaler+1)=10000Hz
     htim_base.Init.Prescaler = 1600 - 1;
 
     // 初始化基本定时器 TIMx, x[6,7]
     HAL_TIM_Base_Init(&htim_base);
 
-    // 开启定时器更新中断 - 相当于 51 的对应的中断使能
+    // 开启定时器更新中断 - 启动定时器并使能定时器更新中断，这样当定时器达到指定的计数值时，会触发/产生一个中断
     HAL_TIM_Base_Start_IT(&htim_base);
 }
 

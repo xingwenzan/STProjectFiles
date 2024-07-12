@@ -172,17 +172,30 @@ python3 xxx.py   # python3 文件名
       ![如图](/RelevantInformation/Photos/AboutControl/STM32CHX.png)
       ![如图](/RelevantInformation/Photos/AboutControl/STM32FunctionalBlockDiagram.png)
 2. 使用
-    - 先在 `main.c` 使用自写的 `MX_TIM_Advance_Init` 初始化 PWM 
+    - 先在 `main.c` 使用自写的 `MX_TIM_Advance_Init` 初始化 PWM
     - 后通过 `__HAL_TIM_SetCompare(__HANDLE__, __CHANNEL__, __COMPARE__)` 调节占空比
-      - `__HANDLE__`：调节的定时器，这里填 `htim_advance` 即可，已经设置好了 `extern` 关键字
-      - `__CHANNEL__`：通道号，调哪个通道写哪个即可，我的代码中使用 `LEF_SMALL_RIGHT` 之类的是因为在 `main.h` 里 `#define` 了，方便代码和实际物件的对应
-      - `__COMPARE__`：调整后的占空比数值，实际占空比为 `__COMPARE__/2^16`
+        - `__HANDLE__`：调节的定时器，这里填 `htim_advance` 即可，已经设置好了 `extern` 关键字
+        - `__CHANNEL__`：通道号，调哪个通道写哪个即可，我的代码中使用 `LEF_SMALL_RIGHT` 之类的是因为在 `main.h`
+          里 `#define` 了，方便代码和实际物件的对应
+        - `__COMPARE__`：调整后的占空比数值，实际占空比为 `__COMPARE__/2^16`
 
 ### 5.4、`基本定时器` 控制 `脚步状态`
 
 1. 初始配置
     - 开启对应配置并检查文件完整性：同串口，开启的也是 `TIM`
-    - 详见 [myYIM.c](/Users/Src/myTIM.c) 的 `基本定时器使用` 部分的注释
+2. 使用/撰写方法
+    - 根据 [启动文件](/Core/Startup/startup_stm32f446rctx.s) 的中断向量表（146
+      行）在 [中断处理文件](/Core/Src/stm32f4xx_it.c) 里编写对应的 `中断处理函数` 和 `回调函数`
+    - 在合适的文件中（一般单独创建一个文件用于放置定时器相关配置和使用），编写定时器的初始化函数
+        - 详见 [myYIM.c](/Users/Src/myTIM.c) 的 `基本定时器使用` 部分的注释
+    - 在 `main.c` 中调用定时器初始化函数就完成了
+3. 控制脚步
+    - 通过前面提到过的 `__HAL_TIM_SetCompare(__HANDLE__, __CHANNEL__, __COMPARE__)` 控制输出的 PWM 占空比控制对应舵机的角度
+    - 将机器狗走动时的体态分解，使其成为一个个状态，每个状态中的各个舵机输出的 PWM 信号不同，这样，一个状态就能变成一个函数，一个调节各个舵机到正确
+      PWM 值的函数
+    - 创建 `Robot_Control` 函数，其核心是内部带有 `static` 关键字的参数 `state`，代表各个状态，`state` 是多少就会调用多少号状态
+    - 定时器回调函数内调用 `Robot_Control` 函数，每次调用都会更新 `state`，又由于该参数是 `static`
+      ，每次调用 `Robot_Control` 函数时不会清零，而是会在原先的 `state` 值基础上进行更新
 
 > 参考资料
 

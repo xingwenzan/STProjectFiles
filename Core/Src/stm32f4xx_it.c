@@ -185,18 +185,24 @@ void SysTick_Handler(void) {
 /* For the available peripheral interrupt handler names,                      */
 /* please refer to the startup file (startup_stm32f4xx.s).                    */
 /******************************************************************************/
+// 由于启动文件(startup_stm32f4xx.s)中存在中断向量表，在正确使能的情况下，在产生对应中断时，单片机会自动调用本文件同名函数（如果存在）
+// 另：这些函数可以使用 `#define` 重命名，例如下面的基本定时器函数，其在 `main.h` 中定义为定时器 6 的处理函数
 
 /* USER CODE BEGIN 1 */
 /**
-  * @brief  This function handles TIM interrupt request.
+  * @brief  This function handles TIM interrupt request. 基本定时器中断处理程序
   * @param  None
   * @retval None
+  *
+  * 它会在对应的定时器中断产生时自动调用
   */
 void BASIC_TIM_IRQHandler(void) {
-    HAL_TIM_IRQHandler(&htim_base);   // 处理来自 htim_base 的中断
+
+    // HAL_TIM_IRQHandler：负责检查中断标志，清除中断标志，并调用相应的回调函数
+    HAL_TIM_IRQHandler(&htim_base);   // 调用 HAL 库处理来自 htim_base 的中断
 }
 
-// 定时器中断响应 - 代码重写
+// 定时器中断响应（定时器周期溢出时的回调函数） - 代码重写
 // 它会在 HAL_TIM_IRQHandler 函数（HAL 库的定时器响应函数）中被调用 - HAL_TIM_IRQHandler 在上面的 BASIC_TIM_IRQHandler 被调用
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 
