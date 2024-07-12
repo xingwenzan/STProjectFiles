@@ -193,13 +193,14 @@ void SysTick_Handler(void) {
   * @retval None
   */
 void BASIC_TIM_IRQHandler(void) {
-    HAL_TIM_IRQHandler(&htim_base);
+    HAL_TIM_IRQHandler(&htim_base);   // 处理来自 htim_base 的中断
 }
 
 // 定时器中断响应 - 代码重写
+// 它会在 HAL_TIM_IRQHandler 函数（HAL 库的定时器响应函数）中被调用 - HAL_TIM_IRQHandler 在上面的 BASIC_TIM_IRQHandler 被调用
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 
-    if (htim == (&htim_base)) {
+    if (htim == (&htim_base)) {   // 如果是来自 htim_base 的中断，调用下面的函数
 //        MY_GPIO_EXAMPLE_LED_ByTimer(1);
         Robot_Control();
     }

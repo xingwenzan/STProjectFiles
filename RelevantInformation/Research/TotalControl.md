@@ -9,7 +9,7 @@
     - （推荐）创建单独的 `XXX.c` 和 `XXX.h` 用于放置相关函数，分别放在 [Core](/Core)
       文件夹下的 [Inc](/Core/Inc) 和 [Src](/Core/Src)里，前一个文件夹用于放 `XXX.h`，后者放 `XXX.c`
     - （较推荐）创建单独的 `XXX.c` 和 `XXX.h`
-      用于放置相关函数，单独额外创建文件夹用于放置自写的文件（记得添加到项目的 `include` 中）
+      用于放置相关函数，单独额外创建文件夹用于放置自写的文件（记得添加到项目的 `include` 中）<br>
       ![如图](/RelevantInformation/Photos/AboutControl/KeilUserPathAdd.png)
 
 ## 1、控制关系
@@ -103,20 +103,20 @@ python3 xxx.py   # python3 文件名
     - GND - GND
     - RX/RXD - TX/TXD
     - TX/TXD - RX/RXD
-    - 本单片机和转接模块（USB 转 TTL）接线如下
+    - 本单片机和转接模块（USB 转 TTL）接线如下<br>
       ![如图](/RelevantInformation/Photos/AboutControl/USBToUart.png)
 2. 开启对应配置并检查文件完整性
-    - 找到 [stm32f4xx_hal_conf.h](/Core/Inc/stm32f4xx_hal_conf.h) 中对应定义的定义并解除注释
+    - 找到 [stm32f4xx_hal_conf.h](/Core/Inc/stm32f4xx_hal_conf.h) 中对应定义的定义并解除注释<br>
       ![如图](/RelevantInformation/Photos/AboutControl/OpenUartSet.png)
     - 查看 [驱动文件夹](/Drivers/STM32F4xx_HAL_Driver) 下是否存在
       串口驱动文件 [stm32f4xx_hal_uart.c](/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c)
-      和 [stm32f4xx_hal_uart.h](/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)
+      和 [stm32f4xx_hal_uart.h](/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)<br>
       ![如图](/RelevantInformation/Photos/AboutControl/CheckHALUart.png)
     - 如果没有，请自行在 [官网](https://www.st.com/zh/embedded-software/stm32cubef4.html) 下载整个 HAL
       库，并分别复制这两个文件到正确的文件夹下
-3. 串口初始化（详见 [myUart.c](/Users/Src/myUart.c) 注释）
+3. 串口初始化（详见 [myUart.c](/Users/Src/myUsart.c) 注释）
     - 关于代码重写：库文件的函数不能修改，故为了实现初始化，必须重写；同时，这种不允许修改的函数是个 `__weak`
-      （即弱定义）函数，在自写同名函数时将不会使用带 `__weak` 的函数
+      （即弱定义）函数，在自写同名函数时将不会使用带 `__weak` 的函数<br>
       ![如图](/RelevantInformation/Photos/AboutControl/CodeRewrite.png)
 4. 两个函数解决串口常规使用问题
     - 串口发送函数：`HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout)`
@@ -153,7 +153,7 @@ python3 xxx.py   # python3 文件名
       数字舵机云台遥控飞机马达固定翼航模」
       点击链接直接打开 或者 淘宝搜索直接打开
 2. 数据
-    - 根据卖家所给数据来看，每次输入的信号不低于 20ms，信号占空比在 25% 到 75% 之间有效
+    - 根据卖家所给数据来看，每次输入的信号不低于 20ms，信号占空比在 25% 到 75% 之间有效<br>
       ![如图](/RelevantInformation/Photos/AboutControl/MG90S_0.jpg)
       ![如图](/RelevantInformation/Photos/AboutControl/MG90S_1.jpg)
 
@@ -165,14 +165,23 @@ python3 xxx.py   # python3 文件名
     - 开启对应配置并检查文件完整性：同串口，不过开启的是 `TIM`
     - 代码配置：详见 [myYIM.c](/Users/Src/myTIM.c) 的 `高级定时器使用` 部分的注释
     - 关于死区：在生成的参考波形 OCxREF 的基础上，可以插入死区时间，用于生成两路互补的输出信号 OCx 和
-      OCxN，死区时间的大小必须根据与输出信号相连接的器件及其特性来调整。
+      OCxN，死区时间的大小必须根据与输出信号相连接的器件及其特性来调整。<br>
       ![如图](/RelevantInformation/Photos/AboutControl/DeadTime.png)
+    - 关于通道与引脚对应：这次我们使用的是 TIM8，通道 1、2、3、4 分别对应引脚 PC6、PC7、PC8、PC9（也可自行调整，不过只有这几个在本开发板上引出针脚了，图中的
+      CHx 是各个通道）<br>
+      ![如图](/RelevantInformation/Photos/AboutControl/STM32CHX.png)
+      ![如图](/RelevantInformation/Photos/AboutControl/STM32FunctionalBlockDiagram.png)
 2. 使用
-   - 在使用自写的 `MX_TIM_Advance_Init` 初始化 PWM 后可以通过 `__HAL_TIM_SetCompare()` 调节占空比
+    - 先在 `main.c` 使用自写的 `MX_TIM_Advance_Init` 初始化 PWM 
+    - 后通过 `__HAL_TIM_SetCompare(__HANDLE__, __CHANNEL__, __COMPARE__)` 调节占空比
+      - `__HANDLE__`：调节的定时器，这里填 `htim_advance` 即可，已经设置好了 `extern` 关键字
+      - `__CHANNEL__`：通道号，调哪个通道写哪个即可，我的代码中使用 `LEF_SMALL_RIGHT` 之类的是因为在 `main.h` 里 `#define` 了，方便代码和实际物件的对应
+      - `__COMPARE__`：调整后的占空比数值，实际占空比为 `__COMPARE__/2^16`
 
 ### 5.4、`基本定时器` 控制 `脚步状态`
 
 1. 初始配置
+    - 开启对应配置并检查文件完整性：同串口，开启的也是 `TIM`
     - 详见 [myYIM.c](/Users/Src/myTIM.c) 的 `基本定时器使用` 部分的注释
 
 > 参考资料

@@ -14,6 +14,7 @@ extern TIM_HandleTypeDef htim_base;
 #define BASIC_TIM           		TIM6
 #define BASIC_TIM_CLK_ENABLE()     	__TIM6_CLK_ENABLE()
 
+// 可选 TIM1、TIM8
 #define ADVANCE_TIM                 TIM8
 #define ADVANCE_TIM_CLK_ENABLE()    __HAL_RCC_TIM8_CLK_ENABLE()
 #define ADVANCE_TIM_CLK_DISABLE()   __HAL_RCC_TIM8_CLK_DISABLE();

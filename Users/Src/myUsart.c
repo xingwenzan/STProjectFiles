@@ -2,7 +2,7 @@
 // Created by 86159 on 2024/4/30.
 //
 
-#include "myUart.h"
+#include "myUsart.h"
 
 // `串口结构体`，用于控制串口的状态
 // 该参数是个 extern 参数，第一次出现在 `myUart.h`，可在项目的其他文件使用
@@ -26,7 +26,8 @@ void MX_UART_Init(void) {
 
 }
 
-// UART MSP Init - 代码重写 - 开启对应的引脚和时钟 - 它会在 HAL_UART_Init 函数（HAL 库的串口初始化函数）中被调用
+// UART MSP Init - 代码重写 - 开启对应的引脚和时钟
+// 它会在 HAL_UART_Init 函数（HAL 库的串口初始化函数）中被调用 - HAL_UART_Init 在上面的 MX_UART_Init 被调用
 void HAL_UART_MspInit(UART_HandleTypeDef *uartHandle) {
 
     GPIO_InitTypeDef GPIO_InitStruct = {0};

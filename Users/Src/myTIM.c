@@ -5,6 +5,7 @@
 #include "myTIM.h"
 
 // 定时器结构体（无论哪种定时器，控制其的结构体都是一样的）
+// 它们都在 `.h` 文件里添加了 extern，可以跨文件使用
 TIM_HandleTypeDef htim_base;
 TIM_HandleTypeDef htim_advance;
 
@@ -15,11 +16,10 @@ TIM_HandleTypeDef htim_advance;
   * @param  无
   * @retval 无
   */
-static void TIMx_NVIC_Configuration(void)
-{
+static void TIMx_NVIC_Configuration(void) {
     //设置抢占优先级，子优先级
     HAL_NVIC_SetPriority(BASIC_TIM_IRQn, 0, 3);
-    // 设置中断来源
+    // 设置中断来源 - 相当于 51 的对应的中断使能
     HAL_NVIC_EnableIRQ(BASIC_TIM_IRQn);
 }
 
@@ -35,8 +35,7 @@ static void TIMx_NVIC_Configuration(void)
  * TIM_RepetitionCounter TIMx,x[1,8]才有(高级定时器)
  *-----------------------------------------------------------------------------
  */
-static void TIM_Mode_Config(void)
-{
+static void TIM_Mode_Config(void) {
     // 开启TIMx_CLK,x[6,7]，定义在 `main.h` 可自行更改
     BASIC_TIM_CLK_ENABLE();
 
@@ -51,10 +50,10 @@ static void TIM_Mode_Config(void)
     // 设定定时器频率为=TIMxCLK/(TIM_Prescaler+1)=10000Hz
     htim_base.Init.Prescaler = 1600 - 1;
 
-    // 初始化定时器TIMx, x[6,7]
+    // 初始化基本定时器 TIMx, x[6,7]
     HAL_TIM_Base_Init(&htim_base);
 
-    // 开启定时器更新中断
+    // 开启定时器更新中断 - 相当于 51 的对应的中断使能
     HAL_TIM_Base_Start_IT(&htim_base);
 }
 
@@ -63,8 +62,7 @@ static void TIM_Mode_Config(void)
   * @param  无
   * @retval 无
   */
-void TIMx_Configuration(void)
-{
+void TIMx_Configuration(void) {
     TIMx_NVIC_Configuration();
 
     TIM_Mode_Config();
@@ -73,8 +71,7 @@ void TIMx_Configuration(void)
 
 /* 高级定时器使用 **************************************************/
 /* TIM_ADVANCE init function */
-void MX_TIM_Advance_Init(void)
-{
+void MX_TIM_Advance_Init(void) {
     // 目前我也不清楚这玩意有啥用，过后去掉试试
     TIM_MasterConfigTypeDef sMasterConfig = {0};
     // 用于输出比较模式，与 TIM_OCx_SetConfig 函数配合使用完成指定定时器输出通道初始化配置
@@ -100,16 +97,14 @@ void MX_TIM_Advance_Init(void)
     // 自动输出使能 - 不自动输出
     htim_advance.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
     // 初始化定时器TIMx, x[1,8] - 它会调用下面重写的 HAL_TIM_PWM_MspInit
-    if (HAL_TIM_PWM_Init(&htim_advance) != HAL_OK)
-    {
+    if (HAL_TIM_PWM_Init(&htim_advance) != HAL_OK) {
         Error_Handler();
     }
 
     /* 自动输出使能，断路、死区时间和锁定配置 */
     sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
     sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-    if (HAL_TIMEx_MasterConfigSynchronization(&htim_advance, &sMasterConfig) != HAL_OK)
-    {
+    if (HAL_TIMEx_MasterConfigSynchronization(&htim_advance, &sMasterConfig) != HAL_OK) {
         Error_Handler();
     }
 
@@ -120,28 +115,24 @@ void MX_TIM_Advance_Init(void)
     sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;   // 比较输出模式快速使能，这里不使能
     sConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;   // 空闲状态时通道输出电平设置，可选输出 1 或 0，即在空闲状态时，经过死区时间后定时器通道输出高电平或低电平，当前为低电平
     sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_SET;   // 空闲状态时互补通道输出电平设置，可选输出1或输出0，即在空闲状态时，经过死区时间 定时器互补通道输出高电平或低电平，设定值必须与OCIdleState相反
-    // 初始化通道 1 输出 PWM
+    // 初始化通道 1 输出 PWM（各通道在使用不同定时器时对应不同引脚，这部分数据手册上已经标明）
     sConfigOC.Pulse = MY_PWM_STATE_0;   // 比较输出脉冲宽度，max = 2^16，正占空比 = Pulse/max
-    if (HAL_TIM_PWM_ConfigChannel(&htim_advance, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
-    {
+    if (HAL_TIM_PWM_ConfigChannel(&htim_advance, &sConfigOC, TIM_CHANNEL_1) != HAL_OK) {
         Error_Handler();
     }
     // 初始化通道 2 输出 PWM
     sConfigOC.Pulse = MY_PWM_STATE_0;
-    if (HAL_TIM_PWM_ConfigChannel(&htim_advance, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
-    {
+    if (HAL_TIM_PWM_ConfigChannel(&htim_advance, &sConfigOC, TIM_CHANNEL_2) != HAL_OK) {
         Error_Handler();
     }
     // 初始化通道 3 输出 PWM
     sConfigOC.Pulse = MY_PWM_STATE_0;
-    if (HAL_TIM_PWM_ConfigChannel(&htim_advance, &sConfigOC, TIM_CHANNEL_3) != HAL_OK)
-    {
+    if (HAL_TIM_PWM_ConfigChannel(&htim_advance, &sConfigOC, TIM_CHANNEL_3) != HAL_OK) {
         Error_Handler();
     }
     // 初始化通道 4 输出 PWM
     sConfigOC.Pulse = MY_PWM_STATE_0;
-    if (HAL_TIM_PWM_ConfigChannel(&htim_advance, &sConfigOC, TIM_CHANNEL_4) != HAL_OK)
-    {
+    if (HAL_TIM_PWM_ConfigChannel(&htim_advance, &sConfigOC, TIM_CHANNEL_4) != HAL_OK) {
         Error_Handler();
     }
 //    __HAL_TIM_SetCompare(&htim_advance,TIM_CHANNEL_1,0);   // 外部控制占空比代码
@@ -155,8 +146,7 @@ void MX_TIM_Advance_Init(void)
     sBreakDeadTimeConfig.BreakState = TIM_BREAK_DISABLE;
     sBreakDeadTimeConfig.BreakPolarity = TIM_BREAKPOLARITY_HIGH;
     sBreakDeadTimeConfig.AutomaticOutput = TIM_AUTOMATICOUTPUT_DISABLE;
-    if (HAL_TIMEx_ConfigBreakDeadTime(&htim_advance, &sBreakDeadTimeConfig) != HAL_OK)
-    {
+    if (HAL_TIMEx_ConfigBreakDeadTime(&htim_advance, &sBreakDeadTimeConfig) != HAL_OK) {
         Error_Handler();
     }
     // 开启引脚
@@ -165,12 +155,10 @@ void MX_TIM_Advance_Init(void)
 }
 
 // Initializes the TIM PWM MSP - 代码重写 - 开启对应的时钟（引脚在最后配置完成后使用下面的 `HAL_TIM_MspPostInit` 统一开启）
-// 它会在 HAL_TIM_PWM_Init 函数（HAL 库的定时器 PWM 功能初始化函数）中被调用
-void HAL_TIM_PWM_MspInit(TIM_HandleTypeDef* tim_pwmHandle)
-{
+// 它会在 HAL_TIM_PWM_Init 函数（HAL 库的定时器 PWM 功能初始化函数）中被调用 - MX_TIM_Advance_Init 在上面的 MX_TIM_Advance_Init 被调用
+void HAL_TIM_PWM_MspInit(TIM_HandleTypeDef *tim_pwmHandle) {
 
-    if(tim_pwmHandle->Instance==ADVANCE_TIM)
-    {
+    if (tim_pwmHandle->Instance == ADVANCE_TIM) {
         /* USER CODE BEGIN TIM8_MspInit 0 */
 
         /* USER CODE END TIM8_MspInit 0 */
@@ -181,13 +169,12 @@ void HAL_TIM_PWM_MspInit(TIM_HandleTypeDef* tim_pwmHandle)
         /* USER CODE END TIM8_MspInit 1 */
     }
 }
+
 // DeInitializes TIM PWM MSP - 代码重写 - 关闭对应的时钟（引脚改变或时钟关闭时功能自然关闭）
 // 它会在 HAL_TIM_PWM_Init 函数（HAL 库的定时器 PWM 功能关闭函数）中被调用
-void HAL_TIM_PWM_MspDeInit(TIM_HandleTypeDef* tim_pwmHandle)
-{
+void HAL_TIM_PWM_MspDeInit(TIM_HandleTypeDef *tim_pwmHandle) {
 
-    if(tim_pwmHandle->Instance==ADVANCE_TIM)
-    {
+    if (tim_pwmHandle->Instance == ADVANCE_TIM) {
         /* USER CODE BEGIN TIM8_MspDeInit 0 */
 
         /* USER CODE END TIM8_MspDeInit 0 */
@@ -200,12 +187,10 @@ void HAL_TIM_PWM_MspDeInit(TIM_HandleTypeDef* tim_pwmHandle)
 }
 
 // 定时器使用 PWM 开启端口及引脚
-void HAL_TIM_MspPostInit(TIM_HandleTypeDef* timHandle)
-{
+void HAL_TIM_MspPostInit(TIM_HandleTypeDef *timHandle) {
 
     GPIO_InitTypeDef GPIO_InitStruct = {0};
-    if(timHandle->Instance==TIM8)
-    {
+    if (timHandle->Instance == TIM8) {
         /* USER CODE BEGIN TIM8_MspPostInit 0 */
 
         /* USER CODE END TIM8_MspPostInit 0 */
