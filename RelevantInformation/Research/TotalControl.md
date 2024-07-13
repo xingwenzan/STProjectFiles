@@ -30,7 +30,55 @@
 
 > 具体步骤如下
 
------------还没写---------
+1. 定时拍摄
+    - 定时任务使用（参考 [课设](/RelevantInformation/Research/课程设计_机器狗.docx) 第 6 到 8 页的 `定时任务（Cron）` 部分）
+    - 拍摄（参考 [课设](/RelevantInformation/Research/课程设计_机器狗.docx) 第 8 到 10 页的 `图片截取` 部分）
+    - 组合：
+        - 创建定时使用的脚本（参考下方 `代码 1`）
+        - 脚本添加内容（参考下方 `代码 2`）
+        - 将定时任务里的 `command` 替换为下方 `代码 3` 的内容
+2. 自启动测距
+    - 自启动（参考 [开机启动使用](https://shumeipai.nxez.com/2020/06/30/linux-usage-systemd.html)）
+    - 距离测量（参考 [课设](/RelevantInformation/Research/课程设计_机器狗.docx) 第 10 到 13 页的 `图片处理` 部分）
+    - 组合：
+        - 创建测距的 python 文件（参考下方 `代码 4`）
+        - 将 [课设](/RelevantInformation/Research/课程设计_机器狗.docx) 第 8 到 10 页的 `图片截取`
+          部分的 `测距完整程序`
+          下的代码框里的内容全粘贴到刚创建的 `XXX.py` 文件里（注意：`frame = cv2.imread(filepath,flags)`
+          里面的 `filepath` 改为上一部分 `定时拍摄` 里生成的 `tmp.jpg` 文件的路径）
+        - 按下图更改 `.service` 文件的内容<br>
+          ![如图](/RelevantInformation/Photos/AboutControl/UseSelfStart.png)
+
+```shell
+# 代码 1
+# 创建定时使用的脚本
+nano XXX.sh   # XXX 是脚本名，`.sh` 是脚本文件的后缀
+# sudo nano XXX.sh   # 上一行命令失败使用这个
+```
+
+```shell
+# 代码 2
+# 脚本添加内容 - 直接复制粘贴到上一步命令成功后所在的界面即可
+# 功能：循环拍摄，循环次数为 1min/(拍摄延时 + 1 到 0.5 秒)
+# 循环次数数值可以大，定时任务会自动打断上一轮未完成的定时任务
+# ----------- 只添加这条线以下的内容 ------------------
+#! /bin/bash
+for i in $(seq 1 30) # 控制循环次数用
+do
+    libcamera-jpeg -o tmp.jpg -t 1000
+done
+```
+
+```shell
+/你的路径/XXX.sh   # 最好写从根目录到该文件的绝对路径，不容易出错
+```
+
+```shell
+# 代码 4
+# 创建测距的 python 文件
+nano XXX.py   # XXX 是脚本名，`.py` 是 python 文件的后缀
+# sudo nano XXX.py   # 上一行命令失败使用这个
+```
 
 > 参考资料如下
 
