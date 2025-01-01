@@ -97,6 +97,12 @@
             - [Doxygen 注释规范](https://www.cnblogs.com/silencehuan/p/11169084.html)
     - 相关文档
         - [Keil创建STM32项目并烧录使用](RelevantInformation/AboutSTM32/STM32InitByKeil.md)
+- 扩展板
+    - [扩展板结构](RelevantInformation/ExpansionBoard)
+        - [二代](RelevantInformation/ExpansionBoard/exBoard_2.eprj)
+    - 芯片使用
+        - [三八译码器](https://atta.szlcsc.com/upload/public/pdf/source/20200619/C513527_D04113946337FFA11528F3555AE2E14A.pdf)
+        - [三态门](https://atta.szlcsc.com/upload/public/pdf/source/20200402/C507191_D85B46125E3A0A7EFEB90895E388FB75.pdf)
 - 树莓派
     - [官网](https://www.raspberrypi.com/)
     - [资料全集](https://pan.baidu.com/s/1SkvnrBC5YwOKgMn1FnPlzw?pwd=mylo)
@@ -106,7 +112,8 @@
             - 上传方法：百度搜索 - Linux scp 使用
             - 这里的 .bashrc 文件就不要用了，但是可以参考其中的 tmux 设置
     - 串口使用
-        - [资料全集](https://pan.baidu.com/s/1SkvnrBC5YwOKgMn1FnPlzw?pwd=mylo)/ `入门版——树莓派4B型初学者使用及设置指南`/`8.串口连接外部设备通信`
+        - [资料全集](https://pan.baidu.com/s/1SkvnrBC5YwOKgMn1FnPlzw?pwd=mylo)/
+          `入门版——树莓派4B型初学者使用及设置指南`/`8.串口连接外部设备通信`
         - [原资料改编版](RelevantInformation/AboutRaspberryPi/RaspberryPiUartUse.docx)
         - [python 调用](https://blog.csdn.net/ZhuanShangNiDeXin/article/details/113791267)
     - 摄像头使用
@@ -125,7 +132,9 @@
             - cron 命令调用生成的内容有时候会自带写保护，影响不大
     - [开机启动使用](https://shumeipai.nxez.com/2020/06/30/linux-usage-systemd.html)
         - 自启动服务应在 `/etc/systemd/system/`
-          文件夹下，但为了方便，服务文件在被自启动的文件所在文件夹也有一份备份，请在该备份中更改，并在更改后将其复制到应在的文件夹，如 `sudo cp distance_measurement.service /etc/systemd/system/distance_measurement.service`
+          文件夹下，但为了方便，服务文件在被自启动的文件所在文件夹也有一份备份，请在该备份中更改，并在更改后将其复制到应在的文件夹，如
+          `sudo cp distance_measurement.service /etc/systemd/system/distance_measurement.service`
+    - [jupyter lab 使用](https://lingshunlab.com/book/raspberry-pi/raspberry-pi-install-jupyter-lab)
     - python 使用
         - 虚拟环境使用
             - [网络参考文档](https://blog.csdn.net/qq_59449692/article/details/136397131)
