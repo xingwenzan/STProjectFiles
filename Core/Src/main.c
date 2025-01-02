@@ -80,15 +80,23 @@ int main(void) {
 
     /* Initialize all configured peripherals *************************************/
     /* USER CODE BEGIN 2 */
+
+    // 初始化 LED
+    MY_LED_GPIO_CLK_ENABLE();   // LED（C 端口）时钟使能，使用外设时都要先开启它的时钟，且端口时钟使能后才能进行初始化
+    MY_GPIO_INIT(MY_LED_GPIO_PORT,MY_LED_PIN);   // 初始化 LED & 5v 引脚
+
+    // 初始化 5v 引脚、pwm 控制引脚
+    MY_PWM_GPIO_CLK_ENABLE();  // 5v（C 端口）时钟使能
+    MY_GPIO_INIT(MY_PWM_GPIO_PORT,MY_PWM_POWER_PIN|MY_PWM_CONTROL_PIN);   // 初始化 5v 引脚、pwm 控制引脚
+
     // PWM - 供电
-    MY_GPIO_INIT();   // 初始化 LED & 5v 引脚
     HAL_GPIO_WritePin(MY_PWM_GPIO_PORT, MY_PWM_POWER_PIN, GPIO_PIN_SET);   // 开启 PWM 正极
     HAL_GPIO_WritePin(MY_LED_GPIO_PORT, MY_LED_PIN, GPIO_PIN_RESET);    // 开启小灯指示
 
     // 机器人初始化
-    Robot_Init();   // 机器人初始化函数
-    Robot_Stand();   // 机器人站立
-    HAL_Delay(3000);   // 延时等待
+//    Robot_Init();   // 机器人初始化函数
+//    Robot_Stand();   // 机器人站立
+//    HAL_Delay(3000);   // 延时等待
 //    Robot_Move();
 
     // 其他功能
@@ -104,7 +112,7 @@ int main(void) {
         // 主要信号接收部分，通过接收串口信号实现启停接收
         int ch;
         HAL_UART_Receive(&huart, (uint8_t *) &ch, 1, 0xFFFF);   // 串口接收
-//        HAL_UART_Transmit(&huart, (uint8_t *) &ch, 1, 0xFFFF);   // 串口发送
+        HAL_UART_Transmit(&huart, (uint8_t *) &ch, 1, 0xFFFF);   // 串口发送
         if (ch == '1') {
             walk = 1;
             HAL_GPIO_WritePin(MY_LED_GPIO_PORT, MY_LED_PIN, GPIO_PIN_RESET);
@@ -113,9 +121,7 @@ int main(void) {
             HAL_GPIO_WritePin(MY_LED_GPIO_PORT, MY_LED_PIN, GPIO_PIN_SET);
         }
 
-//        x = 0xa000;
-//                __HAL_TIM_SetCompare(&htim_advance, TIM_CHANNEL_1, x);
-//        HAL_Delay(500);
+
         /* USER CODE END 3 */
     }
     /* USER CODE END WHILE */

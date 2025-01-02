@@ -7,7 +7,11 @@
 
 #include "main.h"
 
-void MY_GPIO_INIT(void);
+#define MY_LED_PIN GPIO_PIN_0
+#define MY_LED_GPIO_PORT GPIOC
+#define MY_LED_GPIO_CLK_ENABLE() __HAL_RCC_GPIOC_CLK_ENABLE()
+
+void MY_GPIO_INIT(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
 void MY_GPIO_EXAMPLE_LED_ByDelay(uint32_t delay_num);
 void MY_GPIO_EXAMPLE_LED_ByTimer(uint32_t sysTickNum);
 

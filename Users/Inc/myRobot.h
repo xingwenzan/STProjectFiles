@@ -1,5 +1,6 @@
 //
 // Created by 86159 on 2024/5/13.
+// 旧版机器狗控制 - 即将不再使用
 //
 
 #ifndef STPROJECTFILES_MYROBOT_H
@@ -7,6 +8,7 @@
 
 #include "main.h"
 #include "myTIM.h"
+#include "myPWMparameter.h"
 
 /**机器人各腿对应通道
  * 1 -> 右前 & 左后大腿 -> 右大腿

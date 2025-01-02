@@ -6,6 +6,7 @@
 #define STPROJECTFILES_MYTIM_H
 
 #include "main.h"
+#include "myPWMparameter.h"
 
 extern TIM_HandleTypeDef htim_advance;
 extern TIM_HandleTypeDef htim_base;

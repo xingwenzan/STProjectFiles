@@ -5,23 +5,25 @@
 #include "myGpio.h"
 
 /**
- * @brief GPIO 初始化
+ * @brief GPIO 初始化，但是需要提前使想初始化的引脚所在端口时钟使能
+ * @param GPIOx 想初始化的引脚的所在端口
+ * @param GPIO_Pin 想初始化的引脚
  */
-void MY_GPIO_INIT(void) {
+void MY_GPIO_INIT(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin) {
     GPIO_InitTypeDef GPIO_InitStruct = {0};
 
     /* GPIO Ports Clock Enable */
     MY_LED_GPIO_CLK_ENABLE();   // LED（C 端口）时钟使能，使用外设时都要先开启它的时钟
 
     /*Configure GPIO pin Output Level */
-    HAL_GPIO_WritePin(MY_LED_GPIO_PORT, MY_LED_PIN | MY_PWM_POWER_PIN, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(GPIOx, GPIO_Pin, GPIO_PIN_RESET);
 
     /*Configure GPIO pin : PtPin */
-    GPIO_InitStruct.Pin = MY_LED_PIN | MY_PWM_POWER_PIN;
+    GPIO_InitStruct.Pin = GPIO_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    HAL_GPIO_Init(MY_LED_GPIO_PORT, &GPIO_InitStruct);
+    HAL_GPIO_Init(GPIOx, &GPIO_InitStruct);
 }
 
 /**
