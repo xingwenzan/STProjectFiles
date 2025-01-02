@@ -94,10 +94,10 @@ int main(void) {
     HAL_GPIO_WritePin(MY_LED_GPIO_PORT, MY_LED_PIN, GPIO_PIN_RESET);    // 开启小灯指示
 
     // 机器人初始化
-//    Robot_Init();   // 机器人初始化函数
-//    Robot_Stand();   // 机器人站立
-//    HAL_Delay(3000);   // 延时等待
-//    Robot_Move();
+    Robot_Init();   // 机器人初始化函数
+    // 机器狗测试
+    Robot_Leg_PWM(6554);
+    Robot_Leg_Choose(1);
 
     // 其他功能
     TIMx_Configuration();   // 初始化基本定时器定时，1s 产生一次中断，控制机器人运动的每一步的核心
@@ -112,14 +112,18 @@ int main(void) {
         // 主要信号接收部分，通过接收串口信号实现启停接收
         int ch;
         HAL_UART_Receive(&huart, (uint8_t *) &ch, 1, 0xFFFF);   // 串口接收
-        HAL_UART_Transmit(&huart, (uint8_t *) &ch, 1, 0xFFFF);   // 串口发送
-        if (ch == '1') {
-            walk = 1;
-            HAL_GPIO_WritePin(MY_LED_GPIO_PORT, MY_LED_PIN, GPIO_PIN_RESET);
-        } else {
-            walk = 0;
-            HAL_GPIO_WritePin(MY_LED_GPIO_PORT, MY_LED_PIN, GPIO_PIN_SET);
-        }
+//        HAL_UART_Transmit(&huart, (uint8_t *) &ch, 1, 0xFFFF);   // 串口发送
+//        if (ch == '1') {
+//            walk = 1;
+//            HAL_GPIO_WritePin(MY_LED_GPIO_PORT, MY_LED_PIN, GPIO_PIN_RESET);
+//        } else {
+//            walk = 0;
+//            HAL_GPIO_WritePin(MY_LED_GPIO_PORT, MY_LED_PIN, GPIO_PIN_SET);
+//        }
+
+        // 腿部舵机选择测试
+//        Robot_Leg_Choose(ch-'0');
+
 
 
         /* USER CODE END 3 */

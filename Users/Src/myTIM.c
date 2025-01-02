@@ -119,20 +119,20 @@ void MX_TIM_Advance_Init(void) {
         Error_Handler();
     }
     // 初始化通道 2 输出 PWM
-    sConfigOC.Pulse = MY_PWM_STATE_0;
-    if (HAL_TIM_PWM_ConfigChannel(&htim_advance, &sConfigOC, TIM_CHANNEL_2) != HAL_OK) {
-        Error_Handler();
-    }
+//    sConfigOC.Pulse = MY_PWM_STATE_0;
+//    if (HAL_TIM_PWM_ConfigChannel(&htim_advance, &sConfigOC, TIM_CHANNEL_2) != HAL_OK) {
+//        Error_Handler();
+//    }
     // 初始化通道 3 输出 PWM
-    sConfigOC.Pulse = MY_PWM_STATE_0;
-    if (HAL_TIM_PWM_ConfigChannel(&htim_advance, &sConfigOC, TIM_CHANNEL_3) != HAL_OK) {
-        Error_Handler();
-    }
+//    sConfigOC.Pulse = MY_PWM_STATE_0;
+//    if (HAL_TIM_PWM_ConfigChannel(&htim_advance, &sConfigOC, TIM_CHANNEL_3) != HAL_OK) {
+//        Error_Handler();
+//    }
     // 初始化通道 4 输出 PWM
-    sConfigOC.Pulse = MY_PWM_STATE_0;
-    if (HAL_TIM_PWM_ConfigChannel(&htim_advance, &sConfigOC, TIM_CHANNEL_4) != HAL_OK) {
-        Error_Handler();
-    }
+//    sConfigOC.Pulse = MY_PWM_STATE_0;
+//    if (HAL_TIM_PWM_ConfigChannel(&htim_advance, &sConfigOC, TIM_CHANNEL_4) != HAL_OK) {
+//        Error_Handler();
+//    }
 //    __HAL_TIM_SetCompare(&htim_advance,TIM_CHANNEL_1,0);   // 外部控制占空比代码
 
     /* 自动输出使能，断路、死区时间和锁定配置 */
@@ -195,7 +195,7 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *timHandle) {
 
         MY_PWM_GPIO_CLK_ENABLE();
 
-        GPIO_InitStruct.Pin = MY_PWM_CONTROL_PIN;
+        GPIO_InitStruct.Pin = GPIO_PIN_6;
         GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
         GPIO_InitStruct.Pull = GPIO_NOPULL;
         GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;

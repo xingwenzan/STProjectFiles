@@ -104,12 +104,6 @@
             - [Doxygen 注释规范](https://www.cnblogs.com/silencehuan/p/11169084.html)
     - 相关文档
         - [Keil创建STM32项目并烧录使用](RelevantInformation/AboutSTM32/STM32InitByKeil.md)
-- 扩展板
-    - [扩展板结构](RelevantInformation/ExpansionBoard)
-        - [二代](RelevantInformation/ExpansionBoard/exBoard_2.eprj)
-    - 芯片使用
-        - [三八译码器](https://atta.szlcsc.com/upload/public/pdf/source/20200619/C513527_D04113946337FFA11528F3555AE2E14A.pdf)
-        - [三态门](https://atta.szlcsc.com/upload/public/pdf/source/20200402/C507191_D85B46125E3A0A7EFEB90895E388FB75.pdf)
 - 树莓派
     - [官网](https://www.raspberrypi.com/)
     - [资料全集](https://pan.baidu.com/s/1SkvnrBC5YwOKgMn1FnPlzw?pwd=mylo)
@@ -156,6 +150,14 @@
         - [B站视频](https://www.bilibili.com/video/BV1QB4y1M7EJ/?buvid=XU8906089F0C5E86A9676712E0A07656645F7&from_spmid=search.search-result.0.0&is_story_h5=false&mid=n%2FX0f%2F%2FzAX2mMZP5OK9PEg%3D%3D&p=1&plat_id=122&share_from=ugc&share_medium=android&share_plat=android&share_session_id=6aa7a45c-79b4-434e-a531-84a6a2bed73f&share_source=WEIXIN&share_tag=s_i&spmid=united.player-video-detail.0.0&timestamp=1713808563&unique_k=U51iiDN&up_id=330866298&vd_source=1ccb8ff2c60b49bbfff6dfe8c1bb0eab)
         - [使用 python](https://blog.csdn.net/Eden2088/article/details/122118962)
         - [树莓派定时发送图片到服务器](https://www.cnblogs.com/nnnv/p/17722550.html)
+- 其他相关
+  - 扩展板
+      - [扩展板结构](RelevantInformation/ExpansionBoard)
+          - [二代](RelevantInformation/ExpansionBoard/exBoard_2.eprj)
+      - 芯片使用
+          - [三八译码器](https://atta.szlcsc.com/upload/public/pdf/source/20200619/C513527_D04113946337FFA11528F3555AE2E14A.pdf)
+          - [三态门](https://atta.szlcsc.com/upload/public/pdf/source/20200402/C507191_D85B46125E3A0A7EFEB90895E388FB75.pdf)
+  - [舵机占空比参考](https://shumeipai.nxez.com/2018/06/21/pan-tilt-multi-servo-control.html)
 
 ## 问题解决
 

@@ -1,6 +1,6 @@
 //
-// Created by 86159 on 2024/5/13.
-// 旧版机器狗控制 - 即将不再使用
+// Created by 86159 on 2025/1/2.
+// 机器狗控制 - 版本 v2
 //
 
 #ifndef STPROJECTFILES_MYROBOT_H
@@ -9,25 +9,28 @@
 #include "main.h"
 #include "myTIM.h"
 #include "myPWMparameter.h"
+#include "myGpio.h"
 
-/**机器人各腿对应通道
- * 1 -> 右前 & 左后大腿 -> 右大腿
- * 2 -> 左前 & 右后大腿 -> 左大腿
- * 3 -> 右前 & 左后小腿 -> 右小腿
- * 4 -> 左前 & 右后小腿 -> 左小腿
- */
-#define LEG_LARGE_RIGHT TIM_CHANNEL_1
-#define LEG_LARGE_LEFT TIM_CHANNEL_2
-#define LEF_SMALL_RIGHT TIM_CHANNEL_3
-#define LEF_SMALL_LEFT TIM_CHANNEL_4
+#define MY_ROBOT_GPIO_Port GPIOC  // 机器人端口
+// 控制三八译码器的引脚，A 为低位，C 为高位，低电平为 0，高电平为 1
+// 输出从 Y0 到 Y7，依次变为低电平
+#define MY_ROBOT_CHOOSE_PIN_A GPIO_PIN_9
+#define MY_ROBOT_CHOOSE_PIN_B GPIO_PIN_8
+#define MY_ROBOT_CHOOSE_PIN_C GPIO_PIN_7
 
-// 启停标志，代表是否运动，1 为允许运动，0 为拒绝（注意：作为 extern 变量，它在整个项目第一次使用前必须正确赋值）
-extern uint8_t walk;
+//#define MY_ROBOT_CHOOSE_PORT_AB GPIOE
+//#define MY_ROBOT_CHOOSE_PIN_A GPIO_PIN_13
+//#define MY_ROBOT_CHOOSE_PIN_B GPIO_PIN_9
+//#define MY_ROBOT_CHOOSE_PORT_C GPIOA
+//#define MY_ROBOT_CHOOSE_PIN_C GPIO_PIN_2
+//
+//#define MY_ROBOT_CHOOSE_AB_CLK_ENABLE() __HAL_RCC_GPIOE_CLK_ENABLE()
+//#define MY_ROBOT_CHOOSE_C_CLK_ENABLE() __HAL_RCC_GPIOA_CLK_ENABLE()
+// pwm 输出通道
+#define MY_PWM_CHANNEL TIM_CHANNEL_1
 
-void Robot_Init();
-void Robot_Stand();
-void Robot_Move();
-void Robot_State_Choose(uint8_t state);
-void Robot_Control();
+void Robot_Leg_Choose(uint8_t idx);
+void Robot_Leg_PWM(uint16_t pwm);
+void Robot_Init();  // 机器人初始化
 
 #endif //STPROJECTFILES_MYROBOT_H

@@ -22,9 +22,9 @@
 #include "stm32f4xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-//#include "myGpio.h"
+#include "myGpio.h"
 #include "myTIM.h"
-#include "myRobot.h"
+//#include "myRobot.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -208,7 +208,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 
     if (htim == (&htim_base)) {   // 如果是来自 htim_base 的中断，调用下面的函数
 //        MY_GPIO_EXAMPLE_LED_ByTimer(1);
-        Robot_Control();
+//        Robot_Control();
+        // 这里应该放置机器狗的腿部定时控制，但是目前没重写，就先放 led 了
+        HAL_GPIO_TogglePin(MY_LED_GPIO_PORT, MY_LED_PIN);
+//        HAL_GPIO_TogglePin(MY_PWM_GPIO_PORT,MY_PWM_CONTROL_PIN);
     }
 }
 /* USER CODE END 1 */
