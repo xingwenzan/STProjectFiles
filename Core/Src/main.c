@@ -87,7 +87,7 @@ int main(void) {
 
     // 初始化 5v 引脚、pwm 控制引脚
     MY_PWM_GPIO_CLK_ENABLE();  // 5v（C 端口）时钟使能
-    MY_GPIO_INIT(MY_PWM_GPIO_PORT,MY_PWM_POWER_PIN|MY_PWM_CONTROL_PIN);   // 初始化 5v 引脚、pwm 控制引脚
+    MY_GPIO_INIT(MY_PWM_GPIO_PORT, MY_PWM_POWER_PIN | MY_PWM_CONTROL_PIN_ALL);   // 初始化 5v 引脚、pwm 控制引脚
 
     // PWM - 供电
     HAL_GPIO_WritePin(MY_PWM_GPIO_PORT, MY_PWM_POWER_PIN, GPIO_PIN_SET);   // 开启 PWM 正极
@@ -105,6 +105,7 @@ int main(void) {
     HAL_UART_Transmit(&huart, "my Uart Hello!\n", 15, 100);   // 串口发送内容（用于测试，可有可无）
     /* USER CODE END 2 */
 
+    uint16_t tmp = 0;
     /* Infinite loop *************************************************************/
     /* USER CODE BEGIN WHILE */
     while (1) {
@@ -120,6 +121,15 @@ int main(void) {
 //            walk = 0;
 //            HAL_GPIO_WritePin(MY_LED_GPIO_PORT, MY_LED_PIN, GPIO_PIN_SET);
 //        }
+
+        // 舵机角度测试
+        if (ch == '=') {
+            Robot_Leg_PWM(tmp);
+            tmp = 0;
+        } else {
+            tmp *= 10;
+            tmp += ch-'0';
+        }
 
         // 腿部舵机选择测试
 //        Robot_Leg_Choose(ch-'0');

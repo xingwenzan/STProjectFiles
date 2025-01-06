@@ -86,8 +86,8 @@ void MX_TIM_Advance_Init(void) {
     // 计数方式 - 上升沿计数
     htim_advance.Init.CounterMode = TIM_COUNTERMODE_UP;
     /* 累计 TIM_Period 个后产生一个更新或者中断*/
-    //当定时器从 0 计数到 65535，即为 65536 次，为一个定时周期
-    htim_advance.Init.Period = 65535;
+    // 当定时器从 0 计数到 MY_PWM_Period，即为 MY_PWM_Period 次，为一个定时周期
+    htim_advance.Init.Period = MY_PWM_Period;
     // 采样时钟分频 - 不分频
     htim_advance.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
     // 重复计数器 - 不重复计数
@@ -114,7 +114,7 @@ void MX_TIM_Advance_Init(void) {
     sConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;   // 空闲状态时通道输出电平设置，可选输出 1 或 0，即在空闲状态时，经过死区时间后定时器通道输出高电平或低电平，当前为低电平
     sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_SET;   // 空闲状态时互补通道输出电平设置，可选输出1或输出0，即在空闲状态时，经过死区时间 定时器互补通道输出高电平或低电平，设定值必须与OCIdleState相反
     // 初始化通道 1 输出 PWM（各通道在使用不同定时器时对应不同引脚，这部分数据手册上已经标明）
-    sConfigOC.Pulse = MY_PWM_STATE_0;   // 比较输出脉冲宽度，max = 2^16，正占空比 = Pulse/max
+    sConfigOC.Pulse = 0;   // 比较输出脉冲宽度，max = 2^16，正占空比 = Pulse/max
     if (HAL_TIM_PWM_ConfigChannel(&htim_advance, &sConfigOC, TIM_CHANNEL_1) != HAL_OK) {
         Error_Handler();
     }
@@ -195,7 +195,7 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *timHandle) {
 
         MY_PWM_GPIO_CLK_ENABLE();
 
-        GPIO_InitStruct.Pin = GPIO_PIN_6;
+        GPIO_InitStruct.Pin = MY_PWM_CONTROL_PIN;
         GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
         GPIO_InitStruct.Pull = GPIO_NOPULL;
         GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
