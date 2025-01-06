@@ -17,7 +17,7 @@
       点击链接直接打开 或者 淘宝搜索直接打开
 - 仿真器 - JLink
 
-## 各自进度
+## 进度
 
 - 电控
     - STM32
@@ -81,11 +81,11 @@
     - 结果：很难坐立，但是行走正常（虽然脚步怪怪的）
     - 优化：调整代码，与树莓派结合
 - [ ] 极限实验
-  - [x] 图像获取：受树莓派本身和摄像头本身影响，获取速度已经达到极限值，约每秒 1 张照片，考虑到机器狗实际移速不高，改获取速度应当足够满足需要
-  - [ ] 图像处理
-  - [ ] 通讯速度：受波特率影响，速度绝对够，晚上再算
-  - [ ] 单片机反应速度
-  - [ ] 功耗测定
+    - [x] 图像获取：受树莓派本身和摄像头本身影响，获取速度已经达到极限值，约每秒 1 张照片，考虑到机器狗实际移速不高，改获取速度应当足够满足需要
+    - [ ] 图像处理
+    - [ ] 通讯速度：受波特率影响，速度绝对够，有时间再算
+    - [ ] 单片机反应速度
+    - [ ] 功耗测定
 
 # 相关资料
 
@@ -140,7 +140,8 @@
         - 虚拟环境使用
             - [网络参考文档](https://blog.csdn.net/qq_59449692/article/details/136397131)
             - [自写文档](RelevantInformation/AboutRaspberryPi/PythonVirtualEnvironment.docx)
-        - 我的环境路径：`$HOME/.env`
+            - [创建虚拟环境时、环境创建后进行配置](https://docs.python.org/3/library/venv.html)
+            - 我的环境路径：`$HOME/.env`
         - [更换国内源](https://blog.csdn.net/qq_44214671/article/details/111008427)
         - [串口使用](https://blog.csdn.net/ZhuanShangNiDeXin/article/details/113791267)
         - [特定图形（颜色块）测距](https://blog.csdn.net/qq_42444944/article/details/97415276)
@@ -151,13 +152,13 @@
         - [使用 python](https://blog.csdn.net/Eden2088/article/details/122118962)
         - [树莓派定时发送图片到服务器](https://www.cnblogs.com/nnnv/p/17722550.html)
 - 其他相关
-  - 扩展板
-      - [扩展板结构](RelevantInformation/ExpansionBoard)
-          - [二代](RelevantInformation/ExpansionBoard/exBoard_2.eprj)
-      - 芯片使用
-          - [三八译码器](https://atta.szlcsc.com/upload/public/pdf/source/20200619/C513527_D04113946337FFA11528F3555AE2E14A.pdf)
-          - [三态门](https://atta.szlcsc.com/upload/public/pdf/source/20200402/C507191_D85B46125E3A0A7EFEB90895E388FB75.pdf)
-  - [舵机占空比参考](https://shumeipai.nxez.com/2018/06/21/pan-tilt-multi-servo-control.html)
+    - 扩展板
+        - [扩展板结构](RelevantInformation/ExpansionBoard)
+            - [二代](RelevantInformation/ExpansionBoard/exBoard_2.eprj)
+        - 芯片使用
+            - [三八译码器](https://atta.szlcsc.com/upload/public/pdf/source/20200619/C513527_D04113946337FFA11528F3555AE2E14A.pdf)
+            - [三态门](https://atta.szlcsc.com/upload/public/pdf/source/20200402/C507191_D85B46125E3A0A7EFEB90895E388FB75.pdf)
+    - [舵机占空比参考](https://shumeipai.nxez.com/2018/06/21/pan-tilt-multi-servo-control.html)
 
 ## 问题解决
 
@@ -172,11 +173,23 @@
 - [树莓派为 py 安装依赖的包时 error: externally-managed-environment](https://www.yaolong.net/article/pip-externally-managed-environment/#%E6%96%B9%E6%A1%88%E4%B8%89%E9%AB%98%E9%98%B6-%E4%BD%BF%E7%94%A8venv)
 - [树莓派使用 pip 安装太慢解决](https://blog.csdn.net/qq_43556844/article/details/113616214)
 - [树莓派 py 使用串口不好使](https://blog.csdn.net/ChenWenHaoHaoHao/article/details/130328922)
+- [无法进入图形界面](https://www.cnblogs.com/ssjxx98/p/16172291.html)：设置默认进入命令行，然后命令行运行 `startx` 命令
+    - 如果同时开启 `systemctl` 开机自启动内容和 `cron` 定时功能，会出现该问题（因为 CPU 满了）
+    - 解决 1：停止使用这两个功能，永久性解决问题
+    - 解决 2：设置命令行进入，临时解决问题
+        - ssh 登录，单次关闭两个中的任意一个，
+        - 使用 `sudo raspi-config` 设置 `System Options`-
+          `S5 Boot Auto Login Select boot into desktop or to command line` 为
+          `B2 Console Autologin Text console,automatically logged in as 'your_name'user`
+        - 重启，树莓派重启后屏幕默认将会变为命令行，在命令行里面再次任意关闭其中任意一个功能，输入 `startx` 即可进入正常界面
+- [树莓派 git 问题](https://blog.csdn.net/qq_40296909/article/details/134285451)
+- [树莓派使用 python 虚拟环境无法调用 `libcamera`](https://github.com/raspberrypi/picamera2/issues/341)
+    - [创建虚拟环境时、环境创建后进行配置](https://docs.python.org/3/library/venv.html)
 
 ## 备注
 
 - 代码规则
-  - 自写代码添加到 [Users](Users) 文件夹中使用
-  - `main.h` 里仅保留完全和 `main.c`、项目全局有关的定义，且被所有自写头文件调用
-  - 所有自写头文件仅被 `main.c`、同名 `.c` 文件、相关头文件调用，内部仅包含自己相关的定义
-  - `main.c` 仅在使用对应功能时引用相关头文件
+    - 自写代码添加到 [Users](Users) 文件夹中使用
+    - `main.h` 里仅保留完全和 `main.c`、项目全局有关的定义，且被所有自写头文件调用
+    - 所有自写头文件仅被 `main.c`、同名 `.c` 文件、相关头文件调用，内部仅包含自己相关的定义
+    - `main.c` 仅在使用对应功能时引用相关头文件
