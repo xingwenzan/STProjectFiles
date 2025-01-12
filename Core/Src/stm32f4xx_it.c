@@ -210,7 +210,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 //        MY_GPIO_EXAMPLE_LED_ByTimer(1);
 //        Robot_Control();
         // 这里应该放置机器狗的腿部定时控制，但是目前没重写，就先放 led 了
-        HAL_GPIO_TogglePin(MY_LED_GPIO_PORT, MY_LED_PIN);
+//        HAL_GPIO_TogglePin(MY_LED_GPIO_PORT, MY_LED_PIN);
     }
 }
 /* USER CODE END 1 */

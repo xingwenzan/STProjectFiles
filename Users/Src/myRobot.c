@@ -36,6 +36,13 @@ void Robot_Init() {
 //    MY_ROBOT_CHOOSE_C_CLK_ENABLE();
 //    MY_GPIO_INIT(MY_ROBOT_CHOOSE_PORT_C, MY_ROBOT_CHOOSE_PIN_C);
 
+    // 初始化 5v 引脚、pwm 控制、三八译码器高电平引脚
+    MY_PWM_GPIO_CLK_ENABLE();  // 5v（C 端口）时钟使能
+    MY_GPIO_INIT(MY_PWM_GPIO_PORT, MY_PWM_POWER_PIN | MY_PWM_CONTROL_PIN_ALL|MY_PWM_POWER_PIN_38);   // 初始化 5v 引脚、pwm 控制引脚
+
+    // PWM 5v 供电，三八译码器高电平输出
+    HAL_GPIO_WritePin(MY_PWM_GPIO_PORT, MY_PWM_POWER_PIN, GPIO_PIN_SET);   // 开启 PWM 正极
+    HAL_GPIO_WritePin(MY_LED_GPIO_PORT, MY_PWM_POWER_PIN_38, GPIO_PIN_RESET);    // 开启三八译码器高电平输出
 
     MX_TIM_Advance_Init();   // 初始化高级定时器 - 用于PWM
     HAL_TIM_PWM_Start(&htim_advance, MY_PWM_CHANNEL);    /* 开启 PWM 通道 1 */
@@ -49,7 +56,8 @@ void Robot_Init() {
 void Robot_Leg_State(uint8_t leg,uint8_t isDoLeg){
     // 收腿与出腿状态下 8 个舵机的 PWM 值，0-7 号为收腿时的值，8-15 为出腿的值
     uint16_t pwms[16] = {
-            0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+            33000,22000,17000,25000,36000,25000,14000,25000,
+            30000,10000,20000,37000,32000,13000,18000,37000
     };
 
     // 偏移值：如果要求出腿，舵机 pwm 值映射上方数组的后 8 个值，否则映射前 8 个
