@@ -155,7 +155,8 @@
 - 其他相关
     - 扩展板
         - [扩展板结构](RelevantInformation/ExpansionBoard)
-            - [二代](RelevantInformation/ExpansionBoard/exBoard_2.eprj)
+            - [二代](RelevantInformation/ExpansionBoard/exBoard_2.eprj)&#x2002;误将高电平直接接 5v
+            - [三代](RelevantInformation/ExpansionBoard/exBoard_3.eprj)
         - 芯片使用
             - [三八译码器](https://atta.szlcsc.com/upload/public/pdf/source/20200619/C513527_D04113946337FFA11528F3555AE2E14A.pdf)
             - [三态门](https://atta.szlcsc.com/upload/public/pdf/source/20200402/C507191_D85B46125E3A0A7EFEB90895E388FB75.pdf)
