@@ -80,18 +80,14 @@ int main(void) {
 
     /* Initialize all configured peripherals *************************************/
     /* USER CODE BEGIN 2 */
-
     // 初始化 LED
     MY_LED_GPIO_CLK_ENABLE();   // LED（C 端口）时钟使能，使用外设时都要先开启它的时钟，且端口时钟使能后才能进行初始化
     MY_GPIO_INIT(MY_LED_GPIO_PORT,MY_LED_PIN);   // 初始化 LED & 5v 引脚
-
-
     // 机器人初始化
     Robot_Init();   // 机器人初始化函数
     // 机器狗测试
     Robot_Leg_PWM(6554);
     Robot_Leg_Choose(1);
-
     // 其他功能
     TIMx_Configuration();   // 初始化基本定时器定时，1s 产生一次中断，控制机器人运动的每一步的核心
     MX_UART_Init();   // 初始化串口
@@ -106,14 +102,6 @@ int main(void) {
         // 主要信号接收部分，通过接收串口信号实现启停接收
         int ch;
         HAL_UART_Receive(&huart, (uint8_t *) &ch, 1, 0xFFFF);   // 串口接收
-//        HAL_UART_Transmit(&huart, (uint8_t *) &ch, 1, 0xFFFF);   // 串口发送
-//        if (ch == '1') {
-//            walk = 1;
-//            HAL_GPIO_WritePin(MY_LED_GPIO_PORT, MY_LED_PIN, GPIO_PIN_RESET);
-//        } else {
-//            walk = 0;
-//            HAL_GPIO_WritePin(MY_LED_GPIO_PORT, MY_LED_PIN, GPIO_PIN_SET);
-//        }
         HAL_GPIO_TogglePin(MY_LED_GPIO_PORT, MY_LED_PIN);
         // 舵机角度测试
         if (ch == '=') {

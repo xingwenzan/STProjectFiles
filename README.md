@@ -124,7 +124,7 @@
         - python 库调用 - [创建虚拟环境时、环境创建后进行配置](https://docs.python.org/3/library/venv.html)
             - [picamera 库](https://blog.csdn.net/yong1585855343/article/details/121762202)
             - OpenCV(cv2 库)
-            - [YOLO v11](https://github.com/ultralytics/ultralytics)
+            - [YOLO v11](https://github.com/ultralytics/ultralytics)：[模型训练](https://www.heywhale.com/mw/project/677f7f94bf47195ee71aaf17)
         - 视频截取帧：`ffmpeg` 命令
     - [定时使用脚本](https://www.labno3.com/2021/08/05/raspberry-pi-time-lapse-in-four-easy-steps/#i-8)
         - 最低使用间隔：1min -> 可通过循环命令和 `sleep` 命令解决
@@ -137,6 +137,8 @@
           文件夹下，但为了方便，服务文件在被自启动的文件所在文件夹也有一份备份，请在该备份中更改，并在更改后将其复制到应在的文件夹，如
           `sudo cp distance_measurement.service /etc/systemd/system/distance_measurement.service`
     - [jupyter lab 使用](https://lingshunlab.com/book/raspberry-pi/raspberry-pi-install-jupyter-lab)
+        - [官网下载](https://jupyter.org/)
+        - [汉化](https://blog.csdn.net/weixin_52444045/article/details/124558541)
     - python 使用
         - 虚拟环境使用
             - [网络参考文档](https://blog.csdn.net/qq_59449692/article/details/136397131)
@@ -160,6 +162,7 @@
         - 芯片使用
             - [三八译码器](https://atta.szlcsc.com/upload/public/pdf/source/20200619/C513527_D04113946337FFA11528F3555AE2E14A.pdf)
             - [三态门](https://atta.szlcsc.com/upload/public/pdf/source/20200402/C507191_D85B46125E3A0A7EFEB90895E388FB75.pdf)
+            - [反相器](https://atta.szlcsc.com/upload/public/pdf/source/20231109/6055D1B61DE2E899F5391931885BEAFC.pdf)
     - 舵机占空比参考：参考淘宝（注意：时基是 20ms，因此，约 5 次 PWM 周期才能凑出一次）
 
 ## 问题解决
