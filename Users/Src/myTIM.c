@@ -8,6 +8,7 @@
 // 它们都在 `.h` 文件里添加了 extern，可以跨文件使用
 TIM_HandleTypeDef htim_base;
 TIM_HandleTypeDef htim_advance;
+TIM_HandleTypeDef htim3;
 
 
 /* 基本定时器使用 **************************************************/
@@ -152,11 +153,44 @@ void MX_TIM_Advance_Init(void) {
 
 }
 
+void MX_TIM3_Init(void)
+{
+    TIM_MasterConfigTypeDef sMasterConfig = {0};
+    TIM_OC_InitTypeDef sConfigOC = {0};
+
+    htim3.Instance = TIM3;
+    htim3.Init.Prescaler = 0;
+    htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
+    htim3.Init.Period = 65535;
+    htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+    htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+    if (HAL_TIM_PWM_Init(&htim3) != HAL_OK)
+    {
+        Error_Handler();
+    }
+    sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+    sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+    if (HAL_TIMEx_MasterConfigSynchronization(&htim3, &sMasterConfig) != HAL_OK)
+    {
+        Error_Handler();
+    }
+    sConfigOC.OCMode = TIM_OCMODE_PWM1;
+    sConfigOC.Pulse = 0;
+    sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+    sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+    if (HAL_TIM_PWM_ConfigChannel(&htim3, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
+    {
+        Error_Handler();
+    }
+    HAL_TIM_MspPostInit(&htim3);
+
+}
+
 // Initializes the TIM PWM MSP - 代码重写 - 开启对应的时钟（引脚在最后配置完成后使用下面的 `HAL_TIM_MspPostInit` 统一开启）
 // 它会在 HAL_TIM_PWM_Init 函数（HAL 库的定时器 PWM 功能初始化函数）中被调用 - MX_TIM_Advance_Init 在上面的 MX_TIM_Advance_Init 被调用
 void HAL_TIM_PWM_MspInit(TIM_HandleTypeDef *tim_pwmHandle) {
 
-    if (tim_pwmHandle->Instance == ADVANCE_TIM) {
+    if (tim_pwmHandle->Instance == ADVANCE_TIM) {  // 机器狗舵机 PWM 控制用
         /* USER CODE BEGIN TIM8_MspInit 0 */
 
         /* USER CODE END TIM8_MspInit 0 */
@@ -165,6 +199,15 @@ void HAL_TIM_PWM_MspInit(TIM_HandleTypeDef *tim_pwmHandle) {
         /* USER CODE BEGIN TIM8_MspInit 1 */
 
         /* USER CODE END TIM8_MspInit 1 */
+    } else if (tim_pwmHandle->Instance == TIM3) {  // IMU 模块用
+        /* USER CODE BEGIN TIM3_MspInit 0 */
+
+        /* USER CODE END TIM3_MspInit 0 */
+        /* TIM3 clock enable */
+        __HAL_RCC_TIM3_CLK_ENABLE();
+        /* USER CODE BEGIN TIM3_MspInit 1 */
+
+        /* USER CODE END TIM3_MspInit 1 */
     }
 }
 
@@ -172,7 +215,7 @@ void HAL_TIM_PWM_MspInit(TIM_HandleTypeDef *tim_pwmHandle) {
 // 它会在 HAL_TIM_PWM_Init 函数（HAL 库的定时器 PWM 功能关闭函数）中被调用
 void HAL_TIM_PWM_MspDeInit(TIM_HandleTypeDef *tim_pwmHandle) {
 
-    if (tim_pwmHandle->Instance == ADVANCE_TIM) {
+    if (tim_pwmHandle->Instance == ADVANCE_TIM) {  // 机器狗舵机 PWM 控制用
         /* USER CODE BEGIN TIM8_MspDeInit 0 */
 
         /* USER CODE END TIM8_MspDeInit 0 */
@@ -181,6 +224,15 @@ void HAL_TIM_PWM_MspDeInit(TIM_HandleTypeDef *tim_pwmHandle) {
         /* USER CODE BEGIN TIM8_MspDeInit 1 */
 
         /* USER CODE END TIM8_MspDeInit 1 */
+    } else if (tim_pwmHandle->Instance == TIM3) {  // IMU 模块用
+        /* USER CODE BEGIN TIM3_MspDeInit 0 */
+
+        /* USER CODE END TIM3_MspDeInit 0 */
+        /* Peripheral clock disable */
+        __HAL_RCC_TIM3_CLK_DISABLE();
+        /* USER CODE BEGIN TIM3_MspDeInit 1 */
+
+        /* USER CODE END TIM3_MspDeInit 1 */
     }
 }
 
@@ -188,7 +240,7 @@ void HAL_TIM_PWM_MspDeInit(TIM_HandleTypeDef *tim_pwmHandle) {
 void HAL_TIM_MspPostInit(TIM_HandleTypeDef *timHandle) {
 
     GPIO_InitTypeDef GPIO_InitStruct = {0};
-    if (timHandle->Instance == TIM8) {
+    if (timHandle->Instance == TIM8) {  // 机器狗舵机 PWM 控制用
         /* USER CODE BEGIN TIM8_MspPostInit 0 */
 
         /* USER CODE END TIM8_MspPostInit 0 */
@@ -205,6 +257,25 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *timHandle) {
         /* USER CODE BEGIN TIM8_MspPostInit 1 */
 
         /* USER CODE END TIM8_MspPostInit 1 */
+    } else if (timHandle->Instance == TIM3) {  // IMU 模块用
+        /* USER CODE BEGIN TIM3_MspPostInit 0 */
+
+        /* USER CODE END TIM3_MspPostInit 0 */
+
+        __HAL_RCC_GPIOB_CLK_ENABLE();
+        /**TIM3 GPIO Configuration
+        PB5     ------> TIM3_CH2
+        */
+        GPIO_InitStruct.Pin = GPIO_PIN_5;
+        GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+        GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+        GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+        GPIO_InitStruct.Alternate = GPIO_AF2_TIM3;
+        HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+        /* USER CODE BEGIN TIM3_MspPostInit 1 */
+
+        /* USER CODE END TIM3_MspPostInit 1 */
     }
 
 }

@@ -62,7 +62,7 @@
 /* #define HAL_SAI_MODULE_ENABLED */
 /* #define HAL_SD_MODULE_ENABLED */
 /* #define HAL_MMC_MODULE_ENABLED */
-/* #define HAL_SPI_MODULE_ENABLED */
+#define HAL_SPI_MODULE_ENABLED
 #define HAL_TIM_MODULE_ENABLED
 #define HAL_UART_MODULE_ENABLED
 /* #define HAL_USART_MODULE_ENABLED */
@@ -70,7 +70,7 @@
 /* #define HAL_SMARTCARD_MODULE_ENABLED */
 /* #define HAL_SMBUS_MODULE_ENABLED */
 /* #define HAL_WWDG_MODULE_ENABLED */
-/* #define HAL_PCD_MODULE_ENABLED */
+#define HAL_PCD_MODULE_ENABLED
 /* #define HAL_HCD_MODULE_ENABLED */
 /* #define HAL_DSI_MODULE_ENABLED */
 /* #define HAL_QSPI_MODULE_ENABLED */
@@ -96,7 +96,7 @@
   *        (when HSE is used as system clock source, directly or through the PLL).
   */
 #if !defined  (HSE_VALUE)
-  #define HSE_VALUE    25000000U /*!< Value of the External oscillator in Hz */
+  #define HSE_VALUE    12000000U /*!< Value of the External oscillator in Hz */
 #endif /* HSE_VALUE */
 
 #if !defined  (HSE_STARTUP_TIMEOUT)
@@ -484,11 +484,6 @@
   #define assert_param(expr) ((expr) ? (void)0U : assert_failed((uint8_t *)__FILE__, __LINE__))
 /* Exported functions ------------------------------------------------------- */
   void assert_failed(uint8_t* file, uint32_t line);
-//  {
-//      // 输入参数错误重定向输出，为自行手动添加操作
-//      // 不用可删，记得加分号
-//      printf(“\r\n 输入参数错误，错误文件名=%s,行号=%s”,file,line);
-//  }
 #else
   #define assert_param(expr) ((void)0U)
 #endif /* USE_FULL_ASSERT */

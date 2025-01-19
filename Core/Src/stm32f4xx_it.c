@@ -58,8 +58,13 @@
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
+extern PCD_HandleTypeDef hpcd_USB_OTG_FS;
+extern DMA_HandleTypeDef hdma_spi2_rx;
+extern DMA_HandleTypeDef hdma_spi2_tx;
 /* USER CODE BEGIN EV */
-
+extern PCD_HandleTypeDef hpcd_USB_OTG_FS;
+extern DMA_HandleTypeDef hdma_spi2_rx;
+extern DMA_HandleTypeDef hdma_spi2_tx;
 /* USER CODE END EV */
 
 /******************************************************************************/
@@ -185,12 +190,49 @@ void SysTick_Handler(void) {
 /* For the available peripheral interrupt handler names,                      */
 /* please refer to the startup file (startup_stm32f4xx.s).                    */
 /******************************************************************************/
-// 由于启动文件(startup_stm32f4xx.s)中存在中断向量表，在正确使能的情况下，在产生对应中断时，单片机会自动调用本文件同名函数（如果存在）
-// 另：这些函数可以使用 `#define` 重命名，例如下面的基本定时器函数，其在 `main.h` 中定义为定时器 6 的处理函数
+
+/**
+  * @brief This function handles DMA1 stream3 global interrupt.
+  */
+void DMA1_Stream3_IRQHandler(void) {
+    /* USER CODE BEGIN DMA1_Stream3_IRQn 0 */
+
+    /* USER CODE END DMA1_Stream3_IRQn 0 */
+    HAL_DMA_IRQHandler(&hdma_spi2_rx);
+    /* USER CODE BEGIN DMA1_Stream3_IRQn 1 */
+
+    /* USER CODE END DMA1_Stream3_IRQn 1 */
+}
+
+/**
+  * @brief This function handles DMA1 stream4 global interrupt.
+  */
+void DMA1_Stream4_IRQHandler(void) {
+    /* USER CODE BEGIN DMA1_Stream4_IRQn 0 */
+
+    /* USER CODE END DMA1_Stream4_IRQn 0 */
+    HAL_DMA_IRQHandler(&hdma_spi2_tx);
+    /* USER CODE BEGIN DMA1_Stream4_IRQn 1 */
+
+    /* USER CODE END DMA1_Stream4_IRQn 1 */
+}
+
+/**
+  * @brief This function handles USB On The Go FS global interrupt.
+  */
+void OTG_FS_IRQHandler(void) {
+    /* USER CODE BEGIN OTG_FS_IRQn 0 */
+
+    /* USER CODE END OTG_FS_IRQn 0 */
+    HAL_PCD_IRQHandler(&hpcd_USB_OTG_FS);
+    /* USER CODE BEGIN OTG_FS_IRQn 1 */
+
+    /* USER CODE END OTG_FS_IRQn 1 */
+}
 
 /* USER CODE BEGIN 1 */
 /**
-  * @brief  This function handles TIM interrupt request. 基本定时器中断处理程序
+  * @brief  This function handles TIM interrupt request. 基本定时器中断处理程�?
   * @param  None
   * @retval None
   *
@@ -198,19 +240,26 @@ void SysTick_Handler(void) {
   */
 void BASIC_TIM_IRQHandler(void) {
 
-    // HAL_TIM_IRQHandler：负责检查中断标志，清除中断标志，并调用相应的回调函数
-    HAL_TIM_IRQHandler(&htim_base);   // 调用 HAL 库处理来自 htim_base 的中断
+    // HAL_TIM_IRQHandler：负责检查中断标志，清除中断标志，并调用相应的回调函�?
+    HAL_TIM_IRQHandler(&htim_base);   // 调用 HAL 库处理来�? htim_base 的中�?
 }
 
 // 定时器中断响应（定时器周期溢出时的回调函数） - 代码重写
-// 它会在 HAL_TIM_IRQHandler 函数（HAL 库的定时器响应函数）中被调用 - HAL_TIM_IRQHandler 在上面的 BASIC_TIM_IRQHandler 被调用
+// 它会�? HAL_TIM_IRQHandler 函数（HAL 库的定时器响应函数）中被调用 - HAL_TIM_IRQHandler 在上面的 BASIC_TIM_IRQHandler 被调�?
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 
-    if (htim == (&htim_base)) {   // 如果是来自 htim_base 的中断，调用下面的函数
-//        MY_GPIO_EXAMPLE_LED_ByTimer(1);
-//        Robot_Control();
+    if (htim == (&htim_base)) {   // 如果是来�? htim_base 的中断，调用下面的函�?
         // 这里应该放置机器狗的腿部定时控制，但是目前没重写，就先放 led 了
-//        HAL_GPIO_TogglePin(MY_LED_GPIO_PORT, MY_LED_PIN);
+        HAL_GPIO_TogglePin(MY_LED_GPIO_PORT, MY_LED_PIN);
+//        static uint8_t walk_state = 0;
+//        if (walk==0){
+//            Robot_Leg_Do(0);
+//        } else if (walk==1){
+//            Robot_Leg_Do(1);
+//        } else{
+//            Robot_Leg_Do(2+walk_state);
+//            walk_state = 1-walk_state;
+//        }
     }
 }
 /* USER CODE END 1 */

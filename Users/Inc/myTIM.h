@@ -10,10 +10,11 @@
 
 extern TIM_HandleTypeDef htim_advance;
 extern TIM_HandleTypeDef htim_base;
+extern TIM_HandleTypeDef htim3;
 
 // 可选 TIM6、TIM7
-#define BASIC_TIM           		TIM6
-#define BASIC_TIM_CLK_ENABLE()     	__TIM6_CLK_ENABLE()
+#define BASIC_TIM                TIM6
+#define BASIC_TIM_CLK_ENABLE()        __TIM6_CLK_ENABLE()
 
 // 可选 TIM1、TIM8
 #define ADVANCE_TIM                 TIM8
@@ -21,12 +22,16 @@ extern TIM_HandleTypeDef htim_base;
 #define ADVANCE_TIM_CLK_DISABLE()   __HAL_RCC_TIM8_CLK_DISABLE();
 #define GPIO_AF_ADVANCE_TIM         GPIO_AF3_TIM8
 
-#define BASIC_TIM_IRQn				TIM6_DAC_IRQn   // stm32f446xx.h 中可找
-#define BASIC_TIM_IRQHandler    	TIM6_DAC_IRQHandler
+#define BASIC_TIM_IRQn                TIM6_DAC_IRQn   // stm32f446xx.h 中可找
+#define BASIC_TIM_IRQHandler        TIM6_DAC_IRQHandler
 
 void TIMx_Configuration(void);
 
+
 void MX_TIM_Advance_Init(void);
+
+void MX_TIM3_Init(void);
+
 void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 
 #endif //STPROJECTFILES_MYTIM_H

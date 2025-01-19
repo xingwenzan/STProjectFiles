@@ -35,6 +35,8 @@
 // pwm 输出通道
 #define MY_PWM_CHANNEL TIM_CHANNEL_1
 
+extern uint8_t walk;
+
 void Robot_Leg_Choose(uint8_t idx);
 void Robot_Leg_PWM(uint16_t pwm);
 void Robot_Init();  // 机器人初始化

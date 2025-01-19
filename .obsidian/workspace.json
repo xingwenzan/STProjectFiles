@@ -1,0 +1,160 @@
+{
+  "main": {
+    "id": "cfad51206f92154f",
+    "type": "split",
+    "children": [
+      {
+        "id": "103f2f34d6769917",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "ee5c1735c044a960",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "RelevantInformation/Research/TotalControl.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "e7cf50f8be52668a",
+    "type": "split",
+    "children": [
+      {
+        "id": "52b0f0fc7921ab4f",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "a5263c1a14fce99f",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "b23df8e526d0ac6b",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "2bcd9dc2c6407aa3",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "71221c432d1b3418",
+    "type": "split",
+    "children": [
+      {
+        "id": "bf45bd010e0e38f3",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "839f25b3cf9fe319",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "RelevantInformation/Research/TotalControl.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "f2287b9563e38b3d",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "RelevantInformation/Research/TotalControl.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "11423b251ea97ccf",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "f5f2fed65a4d8560",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "RelevantInformation/Research/TotalControl.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false
+    }
+  },
+  "active": "ee5c1735c044a960",
+  "lastOpenFiles": [
+    "README.md",
+    "README.pdf",
+    "RelevantInformation/Research/TotalControl.md",
+    "RelevantInformation/Research/TotalControl.pdf",
+    "RelevantInformation/AboutSTM32/STM32InitByKeil.md",
+    "RelevantInformation/AboutSTM32/STM32InitByKeil.pdf",
+    "RelevantInformation/AboutRaspberryPi/RaspberryPiInit.md",
+    "RelevantInformation/AboutRaspberryPi/RaspberryPiInit.pdf"
+  ]
+}

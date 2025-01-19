@@ -19,8 +19,8 @@
 /* USER CODE END Header */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef MAIN_H
-#define MAIN_H
+#ifndef __MAIN_H
+#define __MAIN_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -36,7 +36,9 @@ extern "C" {
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
-
+typedef unsigned char bool_t;
+typedef float fp32;
+typedef double fp64;
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/
@@ -50,11 +52,14 @@ extern "C" {
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/
+void Error_Handler(void);
+
 /* USER CODE BEGIN EFP */
 void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+
 /* USER CODE BEGIN Private defines */
 /* USER CODE END Private defines */
 
@@ -62,4 +67,4 @@ void Error_Handler(void);
 }
 #endif
 
-#endif /* MAIN_H */
+#endif /* __MAIN_H */

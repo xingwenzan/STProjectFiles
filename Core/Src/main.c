@@ -24,6 +24,8 @@
 #include "myTIM.h"
 #include "myUsart.h"
 #include "myRobot.h"
+#include "BMI088driver.h"
+#include "myIMU.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -44,17 +46,19 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-uint8_t walk = 1;   // ä¸º myRobot çš„ walk èµ‹å€¼ï¼Œè¯¥å‚æ•°æ˜¯ extern å‹å˜é‡ï¼Œå¯ä»¥åœ¨åŒä¸€ä¸ªé¡¹ç›®ä¸­è·¨æ–‡ä»¶ä½¿ç”¨ï¼Œåªè¦åœ¨ä½¿ç”¨å‰æ­£ç¡®èµ‹å€¼äº†
+uint8_t walk = 0;   // ?? myRobot ?? walk ¸³???£¬¸Ã²ÎÊıÊÇ extern ĞÍ±äÁ¿£¬¿ÉÒÔÔÚÍ¬??¸öÏîÄ¿ÖĞ¿çÎÄ¼şÊ¹ÓÃ£¬Ö»ÒªÔÚÊ¹ÓÃÇ°ÕıÈ·¸³???ÁË
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
+void SystemClock_Config(void);
+
 /* USER CODE BEGIN PFP */
-void SystemClock_Config(void);   // æ–‡ä»¶åˆ›å»ºè‡ªå¸¦å‡½æ•°
+void SystemClock_Config(void);   // ÎÄ¼ş´´½¨×Ô´øº¯Êı
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+fp32 gyro[3], accel[3], temp;
 /* USER CODE END 0 */
 
 /**
@@ -69,57 +73,143 @@ int main(void) {
     /* MCU Configuration--------------------------------------------------------*/
 
     /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+    HAL_Init();
+
     /* USER CODE BEGIN Init */
     HAL_Init();
     /* USER CODE END Init */
 
-    /* Configure the system clock *************************************************/
+    /* Configure the system clock */
+    SystemClock_Config();
+
     /* USER CODE BEGIN SysInit */
     SystemClock_Config();
     /* USER CODE END SysInit */
 
-    /* Initialize all configured peripherals *************************************/
+    /* Initialize all configured peripherals */
+    MX_DMA_Init();
+    MX_SPI2_Init();
+    MX_TIM3_Init();
+    MX_USB_DEVICE_Init();
     /* USER CODE BEGIN 2 */
-    // åˆå§‹åŒ– LED
-    MY_LED_GPIO_CLK_ENABLE();   // LEDï¼ˆC ç«¯å£ï¼‰æ—¶é’Ÿä½¿èƒ½ï¼Œä½¿ç”¨å¤–è®¾æ—¶éƒ½è¦å…ˆå¼€å¯å®ƒçš„æ—¶é’Ÿï¼Œä¸”ç«¯å£æ—¶é’Ÿä½¿èƒ½åæ‰èƒ½è¿›è¡Œåˆå§‹åŒ–
-    MY_GPIO_INIT(MY_LED_GPIO_PORT,MY_LED_PIN);   // åˆå§‹åŒ– LED & 5v å¼•è„š
-    // æœºå™¨äººåˆå§‹åŒ–
-    Robot_Init();   // æœºå™¨äººåˆå§‹åŒ–å‡½æ•°
-    // æœºå™¨ç‹—æµ‹è¯•
-    Robot_Leg_PWM(6554);
-    Robot_Leg_Choose(1);
-    // å…¶ä»–åŠŸèƒ½
-    TIMx_Configuration();   // åˆå§‹åŒ–åŸºæœ¬å®šæ—¶å™¨å®šæ—¶ï¼Œ1s äº§ç”Ÿä¸€æ¬¡ä¸­æ–­ï¼Œæ§åˆ¶æœºå™¨äººè¿åŠ¨çš„æ¯ä¸€æ­¥çš„æ ¸å¿ƒ
-    MX_UART_Init();   // åˆå§‹åŒ–ä¸²å£
-    HAL_UART_Transmit(&huart, "my Uart Hello!\n", 15, 100);   // ä¸²å£å‘é€å†…å®¹ï¼ˆç”¨äºæµ‹è¯•ï¼Œå¯æœ‰å¯æ— ï¼‰
+    // ³õÊ¼?? LED
+    MY_LED_GPIO_CLK_ENABLE();   // LED£¨C ¶Ë¿Ú£©Ê±ÖÓÊ¹ÄÜ£¬Ê¹ÓÃÍâÉèÊ±¶¼ÒªÏÈ??ÆôËüµÄÊ±ÖÓ£¬ÇÒ¶Ë¿ÚÊ±ÖÓÊ¹ÄÜºó²ÅÄÜ½øĞĞ³õÊ¼??
+    MY_GPIO_INIT(MY_LED_GPIO_PORT, MY_LED_PIN);   // ³õÊ¼?? LED Òı½Å
+    HAL_GPIO_WritePin(MY_LED_GPIO_PORT, MY_LED_PIN, GPIO_PIN_SET);
+    // »úÆ÷ÈË³õÊ¼»¯
+    Robot_Init();   // »úÆ÷ÈË³õÊ¼»¯º¯Êı
+    // ÆäËû¹¦ÄÜ
+    TIMx_Configuration();   // ³õÊ¼»¯»ù±¾¶¨Ê±Æ÷¶¨Ê±??1s ²úÉú??´ÎÖĞ¶Ï£¬¿ØÖÆ»úÆ÷ÈËÔË¶¯µÄÃ¿Ò»²½µÄºËĞÄ
+    MX_UART_Init();   // ³õÊ¼»¯´®??
+    HAL_UART_Transmit(&huart, "my Uart Hello!\n", 15, 100);   // ´®¿Ú·¢???ÄÚÈİ£¨ÓÃÓÚ²âÊÔ£¬¿ÉÓĞ¿ÉÎŞ£©
+    // ³õÊ¼?? IMU
+    IMU_Init();
+    HAL_GPIO_WritePin(MY_LED_GPIO_PORT, MY_LED_PIN, GPIO_PIN_RESET);
+    // ¶æ»ú½Ç¶È²âÊÔ??
+//    uint16_t tmp = 0;
+    // »úÆ÷¹·Î»ÒÆ²âÊÔÓÃ
+//    walk = 0;
+//    HAL_Delay(10000);
+//    walk = 1;
+//    HAL_Delay(10000);
+//    walk = 2;
+    // IMU ²âÊÔÓÃ£¬ÓÃÓÚ½«»ñÈ¡µÄÄÚÈİ·¢???³ö??
+    union Data_Uart_Float tmp_out = {0};
     /* USER CODE END 2 */
 
-    uint16_t tmp = 0;
-    /* Infinite loop *************************************************************/
+    /* Infinite loop */
     /* USER CODE BEGIN WHILE */
     while (1) {
         /* USER CODE BEGIN 3 */
-        // ä¸»è¦ä¿¡å·æ¥æ”¶éƒ¨åˆ†ï¼Œé€šè¿‡æ¥æ”¶ä¸²å£ä¿¡å·å®ç°å¯åœæ¥æ”¶
-        int ch;
-        HAL_UART_Receive(&huart, (uint8_t *) &ch, 1, 0xFFFF);   // ä¸²å£æ¥æ”¶
-        HAL_GPIO_TogglePin(MY_LED_GPIO_PORT, MY_LED_PIN);
-        // èˆµæœºè§’åº¦æµ‹è¯•
-        if (ch == '=') {
-            Robot_Leg_PWM(tmp);
-            tmp = 0;
-        } else {
-            tmp *= 10;
-            tmp += ch-'0';
-        }
+        // Ö÷ÒªĞÅºÅ½ÓÊÕ²¿·Ö£¬???¹ı½ÓÊÕ´®¿ÚĞÅºÅÊµÏÖÆôÍ£½ÓÊÕ
+//        int ch;
+//        HAL_UART_Receive(&huart, (uint8_t *) &ch, 1, 0xFFFF);   // ´®¿Ú½ÓÊÕ
+//        HAL_GPIO_TogglePin(MY_LED_GPIO_PORT, MY_LED_PIN);
+//        // ¶æ»ú½Ç¶È²âÊÔ
+//        if (ch == '=') {
+//            Robot_Leg_PWM(tmp);
+//            tmp = 0;
+//        } else {
+//            tmp *= 10;
+//            tmp += ch-'0';
+//        }
 
-        // è…¿éƒ¨èˆµæœºé€‰æ‹©æµ‹è¯•
+        // ÍÈ²¿¶æ»úÑ¡Ôñ²âÊÔ
 //        Robot_Leg_Choose(ch-'0');
 
-
+        // IMU ²âÊÔ
+        BMI088_read(gyro, accel, &temp);
+        HAL_Delay(10);
+        HAL_UART_Transmit(&huart, "\nTemp:", 6, 100);
+        tmp_out.fx = temp;
+        Float_Uart_Out(&huart, tmp_out);
+        HAL_UART_Transmit(&huart, "\nAccelX:", 8, 100);
+        tmp_out.fx = accel[0];
+        Float_Uart_Out(&huart, tmp_out);
+        HAL_UART_Transmit(&huart, "\nAccelY:", 8, 100);
+        tmp_out.fx = accel[1];
+        Float_Uart_Out(&huart, tmp_out);
+        HAL_UART_Transmit(&huart, "\nAccelZ:", 8, 100);
+        tmp_out.fx = accel[2];
+        Float_Uart_Out(&huart, tmp_out);
+        HAL_UART_Transmit(&huart, "\nGyroX:", 7, 100);
+        tmp_out.fx = gyro[0];
+        Float_Uart_Out(&huart, tmp_out);
+        HAL_UART_Transmit(&huart, "\nGyroY:", 7, 100);
+        tmp_out.fx = gyro[1];
+        Float_Uart_Out(&huart, tmp_out);
+        HAL_UART_Transmit(&huart, "\nGyroZ:", 7, 100);
+        tmp_out.fx = gyro[2];
+        Float_Uart_Out(&huart, tmp_out);
+        HAL_Delay(10000);
 
         /* USER CODE END 3 */
     }
     /* USER CODE END WHILE */
+
+    /* USER CODE BEGIN 3 */
+    // Ö÷ÒªĞÅºÅ½ÓÊÕ²¿·Ö£¬???¹ı½ÓÊÕ´®¿ÚĞÅºÅÊµÏÖÆôÍ£½ÓÊÕ
+//        int ch;
+//        HAL_UART_Receive(&huart, (uint8_t *) &ch, 1, 0xFFFF);   // ´®¿Ú½ÓÊÕ
+//        HAL_GPIO_TogglePin(MY_LED_GPIO_PORT, MY_LED_PIN);
+//        // ¶æ»ú½Ç¶È²âÊÔ
+//        if (ch == '=') {
+//            Robot_Leg_PWM(tmp);
+//            tmp = 0;
+//        } else {
+//            tmp *= 10;
+//            tmp += ch-'0';
+//        }
+
+    // ÍÈ²¿¶æ»úÑ¡Ôñ²âÊÔ
+//        Robot_Leg_Choose(ch-'0');
+
+    // IMU ²âÊÔ
+    BMI088_read(gyro, accel, &temp);
+    HAL_Delay(10);
+    HAL_UART_Transmit(&huart, "\nTemp:", 6, 100);
+    tmp_out.fx = temp;
+    Float_Uart_Out(&huart, tmp_out);
+    HAL_UART_Transmit(&huart, "\nAccelX:", 8, 100);
+    tmp_out.fx = accel[0];
+    Float_Uart_Out(&huart, tmp_out);
+    HAL_UART_Transmit(&huart, "\nAccelY:", 8, 100);
+    tmp_out.fx = accel[1];
+    Float_Uart_Out(&huart, tmp_out);
+    HAL_UART_Transmit(&huart, "\nAccelZ:", 8, 100);
+    tmp_out.fx = accel[2];
+    Float_Uart_Out(&huart, tmp_out);
+    HAL_UART_Transmit(&huart, "\nGyroX:", 7, 100);
+    tmp_out.fx = gyro[0];
+    Float_Uart_Out(&huart, tmp_out);
+    HAL_UART_Transmit(&huart, "\nGyroY:", 7, 100);
+    tmp_out.fx = gyro[1];
+    Float_Uart_Out(&huart, tmp_out);
+    HAL_UART_Transmit(&huart, "\nGyroZ:", 7, 100);
+    tmp_out.fx = gyro[2];
+    Float_Uart_Out(&huart, tmp_out);
+
+    /* USER CODE END 3 */
 }
 
 /**
@@ -133,15 +223,20 @@ void SystemClock_Config(void) {
     /** Configure the main internal regulator output voltage
     */
     __HAL_RCC_PWR_CLK_ENABLE();
-    __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE3);
+    __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
 
     /** Initializes the RCC Oscillators according to the specified parameters
     * in the RCC_OscInitTypeDef structure.
     */
-    RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
-    RCC_OscInitStruct.HSIState = RCC_HSI_ON;
-    RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
-    RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
+    RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+    RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+    RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+    RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
+    RCC_OscInitStruct.PLL.PLLM = 6;
+    RCC_OscInitStruct.PLL.PLLN = 168;
+    RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
+    RCC_OscInitStruct.PLL.PLLQ = 7;
+    RCC_OscInitStruct.PLL.PLLR = 2;
     if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK) {
         Error_Handler();
     }
@@ -150,12 +245,12 @@ void SystemClock_Config(void) {
     */
     RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK
                                   | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
-    RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
+    RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
     RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-    RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
-    RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+    RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
+    RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;
 
-    if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK) {
+    if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_5) != HAL_OK) {
         Error_Handler();
     }
 }

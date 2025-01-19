@@ -9,6 +9,12 @@
 
 extern UART_HandleTypeDef huart;
 
+// 用于辅助 float 变量测试的共用体
+// 共用体：https://www.runoob.com/cprogramming/c-unions.html
+union Data_Uart_Float {
+    float fx;
+    uint8_t byte[4];
+};
 
 /**
  * UART SET
@@ -35,5 +41,7 @@ extern UART_HandleTypeDef huart;
 
 
 void MX_UART_Init(void);
+
+void Float_Uart_Out(UART_HandleTypeDef *huart, union Data_Uart_Float data);
 
 #endif //STPROJECTFILES_MYUSART_H

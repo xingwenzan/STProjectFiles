@@ -101,3 +101,7 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef *uartHandle) {
         /* USER CODE END UART5_MspDeInit 1 */
     }
 }
+
+void Float_Uart_Out(UART_HandleTypeDef *huart, union Data_Uart_Float data){
+    HAL_UART_Transmit(huart, data.byte, 4, 100);
+}

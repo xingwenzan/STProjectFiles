@@ -1,7 +1,7 @@
 #此文件从模板自动生成! 请勿更改!
 set(CMAKE_SYSTEM_NAME Generic)
 set(CMAKE_SYSTEM_VERSION 1)
-cmake_minimum_required(VERSION 3.27)
+cmake_minimum_required(VERSION 3.30)
 
 # specify cross-compilers and tools
 set(CMAKE_C_COMPILER arm-none-eabi-gcc)
@@ -55,19 +55,25 @@ include_directories(
         Drivers/STM32F4xx_HAL_Driver/Inc/Legacy
         Drivers/CMSIS/Device/ST/STM32F4xx/Include
         Drivers/CMSIS/Include
+        USB_DEVICE/App
+        USB_DEVICE/Target
+        Middlewares/ST/STM32_USB_Device_Library/Core/Inc
+        Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc
         Users/Inc
+        Users/BMI088
 )
 
 add_definitions(-DDEBUG -DUSE_HAL_DRIVER -DSTM32F446xx)
 
 file(GLOB_RECURSE SOURCES
         "Core/*.*"
+        "Middlewares/*.*"
         "Drivers/*.*"
+        "USB_DEVICE/*.*"
         "Users/*.*"
 )
 
-set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/STM32F446RCTX_FLASH.ld
-)
+set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/STM32F446RCTX_FLASH.ld)
 
 add_link_options(-Wl,-gc-sections,--print-memory-usage,-Map=${PROJECT_BINARY_DIR}/${PROJECT_NAME}.map)
 add_link_options(-mcpu=cortex-m4 -mthumb -mthumb-interwork)
