@@ -2,7 +2,7 @@
 #define BMI088MIDDLEWARE_H
 
 #include "main.h"
-#include "spi.h"
+#include "mySpi.h"
 
 #define BMI088_USE_SPI
 //#define BMI088_USE_IIC

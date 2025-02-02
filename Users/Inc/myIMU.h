@@ -7,8 +7,8 @@
 
 #include "main.h"
 #include "myGpio.h"
-#include "dma.h"
-#include "spi.h"
+#include "myDma.h"
+#include "mySpi.h"
 #include "usb_device.h"
 #include "myTIM.h"
 #include "BMI088driver.h"

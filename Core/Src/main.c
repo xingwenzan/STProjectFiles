@@ -66,6 +66,7 @@ fp32 gyro[3], accel[3], temp;
   * @retval int
   */
 int main(void) {
+
     /* USER CODE BEGIN 1 */
 
     /* USER CODE END 1 */
@@ -76,21 +77,15 @@ int main(void) {
     HAL_Init();
 
     /* USER CODE BEGIN Init */
-    HAL_Init();
     /* USER CODE END Init */
 
     /* Configure the system clock */
     SystemClock_Config();
 
     /* USER CODE BEGIN SysInit */
-    SystemClock_Config();
     /* USER CODE END SysInit */
 
     /* Initialize all configured peripherals */
-    MX_DMA_Init();
-    MX_SPI2_Init();
-    MX_TIM3_Init();
-    MX_USB_DEVICE_Init();
     /* USER CODE BEGIN 2 */
     // 初始?? LED
     MY_LED_GPIO_CLK_ENABLE();   // LED（C 端口）时钟使能，使用外设时都要先??启它的时钟，且端口时钟使能后才能进行初始??
@@ -208,6 +203,7 @@ int main(void) {
     HAL_UART_Transmit(&huart, "\nGyroZ:", 7, 100);
     tmp_out.fx = gyro[2];
     Float_Uart_Out(&huart, tmp_out);
+    HAL_Delay(10000);
 
     /* USER CODE END 3 */
 }

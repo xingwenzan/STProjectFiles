@@ -47,7 +47,7 @@ static void TIM_Mode_Config(void) {
 
     // 高级控制定时器时钟源 TIMxCLK = HCLK = 16MHz
     // 设定定时器频率为=TIMxCLK/(TIM_Prescaler+1)=10000Hz
-    htim_base.Init.Prescaler = 1600 - 1;
+    htim_base.Init.Prescaler = 16800 - 1;
 
     // 初始化基本定时器 TIMx, x[6,7]
     HAL_TIM_Base_Init(&htim_base);

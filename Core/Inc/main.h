@@ -59,6 +59,14 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define Accel_INT_Pin GPIO_PIN_2
+#define Accel_INT_GPIO_Port GPIOC
+#define Gryo_INT_Pin GPIO_PIN_3
+#define Gryo_INT_GPIO_Port GPIOC
+#define SPI2_Gyro_CS_Pin GPIO_PIN_0
+#define SPI2_Gyro_CS_GPIO_Port GPIOB
+#define SPI2_Accel_CS_Pin GPIO_PIN_1
+#define SPI2_Accel_CS_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 /* USER CODE END Private defines */

@@ -18,7 +18,7 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include "spi.h"
+#include "mySpi.h"
 
 /* USER CODE BEGIN 0 */
 

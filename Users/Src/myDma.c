@@ -18,7 +18,7 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include "dma.h"
+#include "myDma.h"
 
 /* USER CODE BEGIN 0 */
 
