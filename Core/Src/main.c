@@ -53,7 +53,6 @@ uint8_t walk = 0;   // ?? myRobot ?? walk ¸³???£¬¸Ã²ÎÊýÊÇ extern ÐÍ±äÁ¿£¬¿ÉÒÔÔÚÍ
 void SystemClock_Config(void);
 
 /* USER CODE BEGIN PFP */
-void SystemClock_Config(void);   // ÎÄ¼þ´´½¨×Ô´øº¯Êý
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -134,78 +133,33 @@ int main(void) {
 
         // IMU ²âÊÔ
         BMI088_read(gyro, accel, &temp);
-        HAL_Delay(10);
-        HAL_UART_Transmit(&huart, "\nTemp:", 6, 100);
-        tmp_out.fx = temp;
-        Float_Uart_Out(&huart, tmp_out);
-        HAL_UART_Transmit(&huart, "\nAccelX:", 8, 100);
-        tmp_out.fx = accel[0];
-        Float_Uart_Out(&huart, tmp_out);
-        HAL_UART_Transmit(&huart, "\nAccelY:", 8, 100);
-        tmp_out.fx = accel[1];
-        Float_Uart_Out(&huart, tmp_out);
-        HAL_UART_Transmit(&huart, "\nAccelZ:", 8, 100);
-        tmp_out.fx = accel[2];
-        Float_Uart_Out(&huart, tmp_out);
-        HAL_UART_Transmit(&huart, "\nGyroX:", 7, 100);
-        tmp_out.fx = gyro[0];
-        Float_Uart_Out(&huart, tmp_out);
-        HAL_UART_Transmit(&huart, "\nGyroY:", 7, 100);
-        tmp_out.fx = gyro[1];
-        Float_Uart_Out(&huart, tmp_out);
-        HAL_UART_Transmit(&huart, "\nGyroZ:", 7, 100);
-        tmp_out.fx = gyro[2];
-        Float_Uart_Out(&huart, tmp_out);
-        HAL_Delay(10000);
+//        HAL_Delay(10);
+//        HAL_UART_Transmit(&huart, "\nTemp:", 6, 100);
+//        tmp_out.fx = temp;
+//        Float_Uart_Out(&huart, tmp_out);
+//        HAL_UART_Transmit(&huart, "\nAccelX:", 8, 100);
+//        tmp_out.fx = accel[0];
+//        Float_Uart_Out(&huart, tmp_out);
+//        HAL_UART_Transmit(&huart, "\nAccelY:", 8, 100);
+//        tmp_out.fx = accel[1];
+//        Float_Uart_Out(&huart, tmp_out);
+//        HAL_UART_Transmit(&huart, "\nAccelZ:", 8, 100);
+//        tmp_out.fx = accel[2];
+//        Float_Uart_Out(&huart, tmp_out);
+//        HAL_UART_Transmit(&huart, "\nGyroX:", 7, 100);
+//        tmp_out.fx = gyro[0];
+//        Float_Uart_Out(&huart, tmp_out);
+//        HAL_UART_Transmit(&huart, "\nGyroY:", 7, 100);
+//        tmp_out.fx = gyro[1];
+//        Float_Uart_Out(&huart, tmp_out);
+//        HAL_UART_Transmit(&huart, "\nGyroZ:", 7, 100);
+//        tmp_out.fx = gyro[2];
+//        Float_Uart_Out(&huart, tmp_out);
+//        HAL_Delay(10000);
 
         /* USER CODE END 3 */
     }
     /* USER CODE END WHILE */
-
-    /* USER CODE BEGIN 3 */
-    // Ö÷ÒªÐÅºÅ½ÓÊÕ²¿·Ö£¬???¹ý½ÓÊÕ´®¿ÚÐÅºÅÊµÏÖÆôÍ£½ÓÊÕ
-//        int ch;
-//        HAL_UART_Receive(&huart, (uint8_t *) &ch, 1, 0xFFFF);   // ´®¿Ú½ÓÊÕ
-//        HAL_GPIO_TogglePin(MY_LED_GPIO_PORT, MY_LED_PIN);
-//        // ¶æ»ú½Ç¶È²âÊÔ
-//        if (ch == '=') {
-//            Robot_Leg_PWM(tmp);
-//            tmp = 0;
-//        } else {
-//            tmp *= 10;
-//            tmp += ch-'0';
-//        }
-
-    // ÍÈ²¿¶æ»úÑ¡Ôñ²âÊÔ
-//        Robot_Leg_Choose(ch-'0');
-
-    // IMU ²âÊÔ
-    BMI088_read(gyro, accel, &temp);
-    HAL_Delay(10);
-    HAL_UART_Transmit(&huart, "\nTemp:", 6, 100);
-    tmp_out.fx = temp;
-    Float_Uart_Out(&huart, tmp_out);
-    HAL_UART_Transmit(&huart, "\nAccelX:", 8, 100);
-    tmp_out.fx = accel[0];
-    Float_Uart_Out(&huart, tmp_out);
-    HAL_UART_Transmit(&huart, "\nAccelY:", 8, 100);
-    tmp_out.fx = accel[1];
-    Float_Uart_Out(&huart, tmp_out);
-    HAL_UART_Transmit(&huart, "\nAccelZ:", 8, 100);
-    tmp_out.fx = accel[2];
-    Float_Uart_Out(&huart, tmp_out);
-    HAL_UART_Transmit(&huart, "\nGyroX:", 7, 100);
-    tmp_out.fx = gyro[0];
-    Float_Uart_Out(&huart, tmp_out);
-    HAL_UART_Transmit(&huart, "\nGyroY:", 7, 100);
-    tmp_out.fx = gyro[1];
-    Float_Uart_Out(&huart, tmp_out);
-    HAL_UART_Transmit(&huart, "\nGyroZ:", 7, 100);
-    tmp_out.fx = gyro[2];
-    Float_Uart_Out(&huart, tmp_out);
-    HAL_Delay(10000);
-
-    /* USER CODE END 3 */
 }
 
 /**

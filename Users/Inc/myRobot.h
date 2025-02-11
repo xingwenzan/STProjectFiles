@@ -27,9 +27,10 @@
 #define MY_ROBOT_GPIO_Port GPIOC  // 机器人端口
 // 控制三八译码器的引脚，A 为低位，C 为高位，低电平为 0，高电平为 1
 // 输出从 Y0 到 Y7，依次变为低电平
+// 鉴于已有三八译码器，实际只需二四译码，C 取消不用
 #define MY_ROBOT_CHOOSE_PIN_A GPIO_PIN_9
 #define MY_ROBOT_CHOOSE_PIN_B GPIO_PIN_8
-#define MY_ROBOT_CHOOSE_PIN_C GPIO_PIN_7
+//#define MY_ROBOT_CHOOSE_PIN_C GPIO_PIN_7
 
 
 // pwm 输出通道

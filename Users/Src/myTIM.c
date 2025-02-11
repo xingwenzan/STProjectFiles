@@ -41,13 +41,14 @@ static void TIM_Mode_Config(void) {
     BASIC_TIM_CLK_ENABLE();
 
     htim_base.Instance = BASIC_TIM;
-    /* 累计 TIM_Period 个脉冲后产生一个更新或者中断*/
-    //当定时器从 0 计数到 9999，即为 10000 次，为一个定时周期
-    htim_base.Init.Period = 10000 - 1;
-
-    // 高级控制定时器时钟源 TIMxCLK = HCLK = 16MHz
+    // 高级控制定时器时钟源 TIMxCLK = APB1 = HCLK/2 = 84MHz
     // 设定定时器频率为=TIMxCLK/(TIM_Prescaler+1)=10000Hz
-    htim_base.Init.Prescaler = 16800 - 1;
+    htim_base.Init.Prescaler = 8400 - 1;
+
+    /* 累计 TIM_Period 个脉冲后产生一个更新或者中断*/
+    // 当定时器从 0 计数到 24，即为 25 次，为一个定时周期
+    // 实际定时器工作频率为 10000/50 = 200 Hz
+    htim_base.Init.Period = 50 - 1;
 
     // 初始化基本定时器 TIMx, x[6,7]
     HAL_TIM_Base_Init(&htim_base);
@@ -81,13 +82,14 @@ void MX_TIM_Advance_Init(void) {
 
     /* 定义定时器的句柄即确定定时器寄存器的基地址*/
     htim_advance.Instance = ADVANCE_TIM;   // ADVANCE_TIM 定义在 `main.h`，定为了定时器 8
-    // 高级控制定时器时钟源 TIMxCLK = HCLK = 16MHz
-    // 设定定时器频率为 = TIMxCLK/(TIM_Prescaler+1) = 16MHz
-    htim_advance.Init.Prescaler = 0;
+    // 高级控制定时器时钟源 TIMxCLK = APB2 = HCLK = 168MHz
+    // 设定定时器频率为 = TIMxCLK/(TIM_Prescaler+1) = 2MHz
+    htim_advance.Init.Prescaler = 84-1;
     // 计数方式 - 上升沿计数
     htim_advance.Init.CounterMode = TIM_COUNTERMODE_UP;
     /* 累计 TIM_Period 个后产生一个更新或者中断*/
     // 当定时器从 0 计数到 MY_PWM_Period，即为 MY_PWM_Period 次，为一个定时周期
+    // 实际定时器工作产生波形频率 = 定时器频率/(MY_PWM_Period + 1) = 200Hz
     htim_advance.Init.Period = MY_PWM_Period;
     // 采样时钟分频 - 不分频
     htim_advance.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
@@ -120,10 +122,10 @@ void MX_TIM_Advance_Init(void) {
         Error_Handler();
     }
     // 初始化通道 2 输出 PWM
-//    sConfigOC.Pulse = MY_PWM_STATE_0;
-//    if (HAL_TIM_PWM_ConfigChannel(&htim_advance, &sConfigOC, TIM_CHANNEL_2) != HAL_OK) {
-//        Error_Handler();
-//    }
+    sConfigOC.Pulse = 0;
+    if (HAL_TIM_PWM_ConfigChannel(&htim_advance, &sConfigOC, TIM_CHANNEL_2) != HAL_OK) {
+        Error_Handler();
+    }
     // 初始化通道 3 输出 PWM
 //    sConfigOC.Pulse = MY_PWM_STATE_0;
 //    if (HAL_TIM_PWM_ConfigChannel(&htim_advance, &sConfigOC, TIM_CHANNEL_3) != HAL_OK) {

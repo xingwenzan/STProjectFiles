@@ -14,7 +14,7 @@ void Robot_Leg_Choose(uint8_t idx) {
 //    HAL_GPIO_WritePin(MY_ROBOT_GPIO_Port, MY_ROBOT_CHOOSE_PIN_C, (idx & 0x04)?GPIO_PIN_SET:GPIO_PIN_RESET);
     HAL_GPIO_WritePin(MY_ROBOT_GPIO_Port, MY_ROBOT_CHOOSE_PIN_A, (idx & 0x01));
     HAL_GPIO_WritePin(MY_ROBOT_GPIO_Port, MY_ROBOT_CHOOSE_PIN_B, (idx & 0x02));
-    HAL_GPIO_WritePin(MY_ROBOT_GPIO_Port, MY_ROBOT_CHOOSE_PIN_C, (idx & 0x04));
+//    HAL_GPIO_WritePin(MY_ROBOT_GPIO_Port, MY_ROBOT_CHOOSE_PIN_C, (idx & 0x04));
 }
 
 /**

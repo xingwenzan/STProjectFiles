@@ -22,6 +22,6 @@
 #define MY_PWM_GPIO_CLK_ENABLE() __HAL_RCC_GPIOC_CLK_ENABLE()   // 端口时钟使能
 
 // PWM 控制状态相关
-#define MY_PWM_Period 65535  // 当定时器从 0 计数到 MY_PWM_Period，即为 MY_PWM_Period 次，为一个定时周期，是 pwm 的初始设定值
+#define MY_PWM_Period 9999  // 当定时器从 0 计数到 MY_PWM_Period，即为 MY_PWM_Period 次，为一个定时周期，是 pwm 的初始设定值
 
 #endif //STPROJECTFILES_MYPWMPARAMETER_H

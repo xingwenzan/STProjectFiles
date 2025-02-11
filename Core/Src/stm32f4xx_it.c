@@ -264,9 +264,16 @@ void BASIC_TIM_IRQHandler(void) {
 // 它会??? HAL_TIM_IRQHandler 函数（HAL 库的定时器响应函数）中被调用 - HAL_TIM_IRQHandler 在上面的 BASIC_TIM_IRQHandler 被调???
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 
-    if (htim == (&htim_base)) {   // 如果是来??? htim_base 的中断，调用下面的函???
-        // 这里应该放置机器狗的腿部定时控制，但是目前没重写，就先放 led ??
-        HAL_GPIO_TogglePin(MY_LED_GPIO_PORT, MY_LED_PIN);
+    if (htim == (&htim_base)) {   // 如果是来自 htim_base 的中断，调用下面的函数
+        // 这里应该放置机器狗的腿部定时控制，但是目前没重写，就先放 led
+//        Robot_Leg_Do(0);
+
+        static uint8_t tmp = 0;
+        Robot_Leg_Choose(tmp);
+        Robot_Leg_PWM(3000);
+        tmp = (tmp + 1)%4;
+
+//        HAL_GPIO_TogglePin(MY_LED_GPIO_PORT, MY_LED_PIN);
 //        static uint8_t walk_state = 0;
 //        if (walk==0){
 //            Robot_Leg_Do(0);

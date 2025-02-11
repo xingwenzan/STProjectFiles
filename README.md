@@ -158,11 +158,14 @@
     - 扩展板
         - [扩展板结构](RelevantInformation/ExpansionBoard)
             - [二代](RelevantInformation/ExpansionBoard/exBoard_2.eprj)&#x2002;误将高电平直接接 5v
-            - [三代](RelevantInformation/ExpansionBoard/exBoard_3.eprj)
+            - [三代](RelevantInformation/ExpansionBoard/exBoard_3.eprj)&#x2002;PWM 输出有时 GND 悬空（高阻态），波形无法使用
+            - [四代](RelevantInformation/ExpansionBoard/exBoard_4.eprj)
         - 芯片使用
             - [三八译码器](https://atta.szlcsc.com/upload/public/pdf/source/20200619/C513527_D04113946337FFA11528F3555AE2E14A.pdf)
             - [三态门](https://atta.szlcsc.com/upload/public/pdf/source/20200402/C507191_D85B46125E3A0A7EFEB90895E388FB75.pdf)
             - [反相器](https://atta.szlcsc.com/upload/public/pdf/source/20231109/6055D1B61DE2E899F5391931885BEAFC.pdf)
+            - [反相器2](https://atta.szlcsc.com/upload/public/pdf/source/20170918/C131317_1505726905601976309.pdf)
+            - [与门](https://atta.szlcsc.com/upload/public/pdf/source/20200624/C5593_29BD22E613BAE221D22F61679620A23D.pdf)
     - 舵机占空比参考：参考淘宝（注意：时基是 20ms，因此，约 5 次 PWM 周期才能凑出一次）
 
 ## 问题解决
