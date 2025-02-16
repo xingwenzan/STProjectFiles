@@ -47,7 +47,7 @@ static void TIM_Mode_Config(void) {
 
     /* 累计 TIM_Period 个脉冲后产生一个更新或者中断*/
     // 当定时器从 0 计数到 24，即为 25 次，为一个定时周期
-    // 实际定时器工作频率为 10000/50 = 200 Hz
+    // 实际定时器工作/中断频率为 10000/50 = 200 Hz
     htim_base.Init.Period = 50 - 1;
 
     // 初始化基本定时器 TIMx, x[6,7]

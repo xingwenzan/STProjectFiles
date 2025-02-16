@@ -3,6 +3,7 @@
 //
 
 #include "myRobot.h"
+#include "myUsart.h"
 
 /**
  * 机器狗腿部舵机选择
@@ -13,17 +14,24 @@ void Robot_Leg_Choose(uint8_t idx) {
 //    HAL_GPIO_WritePin(MY_ROBOT_GPIO_Port, MY_ROBOT_CHOOSE_PIN_B, (idx & 0x02)?GPIO_PIN_SET:GPIO_PIN_RESET);
 //    HAL_GPIO_WritePin(MY_ROBOT_GPIO_Port, MY_ROBOT_CHOOSE_PIN_C, (idx & 0x04)?GPIO_PIN_SET:GPIO_PIN_RESET);
     HAL_GPIO_WritePin(MY_ROBOT_GPIO_Port, MY_ROBOT_CHOOSE_PIN_A, (idx & 0x01));
-    HAL_GPIO_WritePin(MY_ROBOT_GPIO_Port, MY_ROBOT_CHOOSE_PIN_B, (idx & 0x02));
-//    HAL_GPIO_WritePin(MY_ROBOT_GPIO_Port, MY_ROBOT_CHOOSE_PIN_C, (idx & 0x04));
+    HAL_GPIO_WritePin(MY_ROBOT_GPIO_Port, MY_ROBOT_CHOOSE_PIN_B, (idx & 0x02)>>1);
+
+//    HAL_UART_Transmit(&huart, &idx, 1, 100);
+//    uint8_t tmp = (idx & 0x01);
+//    HAL_UART_Transmit(&huart, &tmp, 1, 100);
+//    tmp = (idx & 0x02);
+//    HAL_UART_Transmit(&huart, &tmp, 1, 100);
 }
 
 /**
  * 机器狗腿部舵机角度调整
- * @param pwm pwm 值，其占据 pwm 设定值的比例（即占空比）决定当前舵机的角度
+ * @param pwmG 大腿 pwm 值，其占据 pwm 设定值的比例（即占空比）决定当前舵机的角度
+ * @param pwmS 小腿 pwm 值，其占据 pwm 设定值的比例（即占空比）决定当前舵机的角度
  */
-void Robot_Leg_PWM(uint16_t pwm) {
-    if (pwm >= MY_PWM_Period)return;  // 保证不会爆掉
-            __HAL_TIM_SetCompare(&htim_advance, MY_PWM_CHANNEL, pwm);
+void Robot_Leg_PWM(uint16_t pwmG, uint16_t pwmS) {
+    if (pwmG >= MY_PWM_Period || pwmS >= MY_PWM_Period)return;  // 保证不会爆掉
+            __HAL_TIM_SetCompare(&htim_advance, MY_PWM_CHANNEL_G, pwmG);
+            __HAL_TIM_SetCompare(&htim_advance, MY_PWM_CHANNEL_S, pwmS);
 }
 
 /**
@@ -46,50 +54,51 @@ void Robot_Init() {
 //    HAL_GPIO_WritePin(MY_LED_GPIO_PORT, MY_PWM_POWER_PIN_38, GPIO_PIN_RESET);    // 开启三八译码器高电平输出
 
     MX_TIM_Advance_Init();   // 初始化高级定时器 - 用于PWM
-    HAL_TIM_PWM_Start(&htim_advance, MY_PWM_CHANNEL);    /* 开启 PWM 通道 1 */
+    HAL_TIM_PWM_Start(&htim_advance, MY_PWM_CHANNEL_G);    /* 开启 PWM 通道 1 */
+    HAL_TIM_PWM_Start(&htim_advance, MY_PWM_CHANNEL_S);    /* 开启 PWM 通道 2 */
 }
 
 /**
- * 单条腿部状态选择，只有两种状态，出腿、收腿
- * @param leg 腿部选择，范围 0-3，对应 4 条腿，每条腿上两个舵机
- * @param isDoLeg 是否出腿：0 - 否，即收腿；other - 是，即出腿。出腿即为正常站立时机器狗的腿部状态
+ * 控制机器狗腿部动作，受 walk 影响\n
+ * walk 当前有用位为低四位，功能如下：（低位为 0 号，高位为 7 号）\n
+ * 2、3 号：选定当前腿，00 - 11 依次为左前、右前、左后、右后\n
+ * 1 号：0 静止（站立、下蹲）；1 运动/走路\n
+ * 0 号：（1 号为 0 时）0 下蹲，1 站立；（1 号为 0 时）走路时的两种状态\n
+ * 其余位：暂时无用，设置为 0
  */
-void Robot_Leg_State(uint8_t leg, uint8_t isDoLeg) {
-    // 收腿与出腿状态下 8 个舵机的 PWM 值，0-7 号为收腿时的值，8-15 为出腿的值
-    uint16_t pwms[16] = {
-            33000, 22000, 17000, 25000, 36000, 25000, 14000, 25000,
-            30000, 10000, 20000, 37000, 32000, 13000, 18000, 37000
+void Robot_Leg_Do() {
+    // 大腿各状态的 pwm 值，同一行为同一状态，同一列为同一条腿
+    static uint16_t pwm_G[4][4] = {
+            // 右前、左后、右后、左前（流水线未知偏移导致）
+            {2000, 4000, 2000, 4000}, // 下蹲
+            {2000, 4000, 2000, 4000}, // 站立
+            {2000, 4000, 3000, 3000}, // 迈步 0
+            {3000, 3000, 2000, 4000}  // 迈步 1
     };
-
-    // 偏移值：如果要求出腿，舵机 pwm 值映射上方数组的后 8 个值，否则映射前 8 个
-    isDoLeg = isDoLeg ? 8 : 0;
-    // 选择腿部对应的大腿舵机并动作
-    uint8_t bigLeg = leg * 2;
-    Robot_Leg_Choose(bigLeg);
-    Robot_Leg_PWM(pwms[bigLeg + isDoLeg]);
-    // 选择腿部对应的小腿舵机并动作
-    uint8_t smallLeg = leg * 2 + 1;
-    Robot_Leg_Choose(smallLeg);
-    Robot_Leg_PWM(pwms[smallLeg + isDoLeg]);
-}
-
-/**
- * 机器狗腿部动作
- * @param state 机器狗当前状态，范围：受当前机器狗可以进行的动作影响\n
- * 0 - 站立\n
- * 1 - 下蹲\n
- * 2 - 行走 1 - 左前腿、右后腿前迈\n
- * 3 - 行走 2 - 右前腿、左后腿前迈
- */
-void Robot_Leg_Do(uint8_t state) {
-    uint8_t legState[4][4] = {
-            {1, 1, 1, 1},  // 状态 0 - 站立
-            {0, 0, 0, 0},  // 状态 1 - 下蹲
-            {1, 0, 1, 0},  // 状态 2 - 行走 1 - 左前腿、右后腿前迈
-            {0, 1, 0, 1}  // 状态 3 - 行走 2 - 右前腿、左后腿前迈
+    // 小腿各状态的 pwm 值，同一行为同一状态，同一列为同一条腿
+    static uint16_t pwm_S[4][4] = {
+            // 右前、左后、右后、左前（流水线未知偏移导致）
+            {3000, 3000, 3000, 3000}, // 下蹲
+            {4000, 2000, 4000, 2000}, // 站立
+            {4000, 2000, 1500, 4500}, // 迈步 0
+            {1500, 4500, 4000, 2000}  // 迈步 1
     };
+    static uint8_t count = 0;
+    static uint8_t state, leg;
 
-    for (uint8_t i = 0; i < 4; ++i) {
-        Robot_Leg_State(i, legState[state][i]);
-    }
+    state = walk & 0x03, leg = walk >> 2;
+    Robot_Leg_Choose(leg);
+    Robot_Leg_PWM(pwm_G[state][leg], pwm_S[state][leg]);
+
+//    HAL_UART_Transmit(&huart, &leg, 1, 100);
+//    count = pwm_G[state][leg]/1000;
+//    HAL_UART_Transmit(&huart, &count, 1, 100);
+//    HAL_UART_Transmit(&huart, " ", 1, 100);
+
+
+    if (leg == 3 && (state >> 1)) { count++; }
+    if (count == 16) {
+        count = 0;
+        walk = (leg << 2) + 3 - state % 2;
+    } // walk = (leg << 2) + 2 + (1 - state % 2);
 }

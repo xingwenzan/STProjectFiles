@@ -46,7 +46,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-uint8_t walk = 0;   // ?? myRobot ?? walk 赋???，该参数是 extern 型变量，可以在同??个项目中跨文件使用，只要在使用前正确赋???了
+uint8_t walk = 0;   // walk 赋值，该参数是 extern 型变量，可以在同一个项目中跨文件使用
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -93,21 +93,30 @@ int main(void) {
     // 机器人初始化
     Robot_Init();   // 机器人初始化函数
     // 其他功能
-    TIMx_Configuration();   // 初始化基本定时器定时??1s 产生??次中断，控制机器人运动的每一步的核心
-    MX_UART_Init();   // 初始化串??
-    HAL_UART_Transmit(&huart, "my Uart Hello!\n", 15, 100);   // 串口发???内容（用于测试，可有可无）
-    // 初始?? IMU
+    TIMx_Configuration();   // 初始化基本定时器定时器，控制机器人运动的每一步的核心
+    MX_UART_Init();   // 初始化串口
+    HAL_UART_Transmit(&huart, "my Uart Hello!\n", 15, 100);   // 串口发送内容（用于测试，可有可无）
+    // 初始化 IMU
     IMU_Init();
     HAL_GPIO_WritePin(MY_LED_GPIO_PORT, MY_LED_PIN, GPIO_PIN_RESET);
-    // 舵机角度测试??
-//    uint16_t tmp = 0;
     // 机器狗位移测试用
-//    walk = 0;
-//    HAL_Delay(10000);
-//    walk = 1;
-//    HAL_Delay(10000);
-//    walk = 2;
-    // IMU 测试用，用于将获取的内容发???出??
+    HAL_Delay(3000);
+    walk = 1;
+    HAL_Delay(3000);
+    walk = 2;
+//    Robot_Leg_Choose(0);
+//    Robot_Leg_PWM(2000,2000);
+//    HAL_Delay(3000);
+//    Robot_Leg_Choose(1);
+//    Robot_Leg_PWM(2000,2000);
+//    HAL_Delay(3000);
+//    Robot_Leg_Choose(2);
+//    Robot_Leg_PWM(2000,2000);
+//    HAL_Delay(3000);
+//    Robot_Leg_Choose(3);
+//    Robot_Leg_PWM(2000,2000);
+//    HAL_Delay(3000);
+    // IMU 测试用，用于将获取的内容发出到串口
     union Data_Uart_Float tmp_out = {0};
     /* USER CODE END 2 */
 

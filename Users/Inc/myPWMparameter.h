@@ -17,8 +17,8 @@
  * PC8     ------> TIM8_CH3
  * PC9     ------> TIM8_CH4
  */
-#define MY_PWM_CONTROL_PIN_ALL (GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_9)   // 三八译码器输出选择引脚
-#define MY_PWM_CONTROL_PIN GPIO_PIN_6   // PWM 输出引脚
+#define MY_PWM_CONTROL_PIN_ALL (GPIO_PIN_8|GPIO_PIN_9)   // 三八译码器输出选择引脚
+#define MY_PWM_CONTROL_PIN (GPIO_PIN_6|GPIO_PIN_7)   // PWM 输出引脚
 #define MY_PWM_GPIO_CLK_ENABLE() __HAL_RCC_GPIOC_CLK_ENABLE()   // 端口时钟使能
 
 // PWM 控制状态相关
