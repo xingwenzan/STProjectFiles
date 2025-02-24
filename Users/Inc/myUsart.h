@@ -9,11 +9,15 @@
 
 extern UART_HandleTypeDef huart;
 
-// 用于辅助 float 变量测试的共用体
+// 用于辅助 float、double 变量测试的共用体
 // 共用体：https://www.runoob.com/cprogramming/c-unions.html
 union Data_Uart_Float {
     float fx;
     uint8_t byte[4];
+};
+union Data_Uart_Double {
+    double dx;
+    uint8_t byte[8];
 };
 
 /**

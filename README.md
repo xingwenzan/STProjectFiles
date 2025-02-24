@@ -25,6 +25,7 @@
         - [x] Example By SysTick
         - [x] PWM 初步应用
         - [x] 串口使用
+        - [ ] IMU 应用
     - 树莓派
         - [x] 外壳组装
         - [x] 系统下载
@@ -47,10 +48,19 @@
 - 原理
     - [机器人足数调研](RelevantInformation/Research/机械人足数调研.docx)
     - [机器人足部运动方式调研](RelevantInformation/Research/足部运动.docx)
+    - [灯哥开源](https://space.bilibili.com/493192058/lists/895912?type=series)
+        - [运动学逆解](https://www.bilibili.com/video/BV13T4y1G7qy?spm_id_from=333.788.recommend_more_video.1&vd_source=1ccb8ff2c60b49bbfff6dfe8c1bb0eab)
+        - [摆线坐标](https://www.bilibili.com/video/BV1KQ4y1K7aV/?spm_id_from=333.1387.collection.video_card.click&vd_source=1ccb8ff2c60b49bbfff6dfe8c1bb0eab)
+        - [程序参考](https://github.com/ToanTech/py-apple-quadruped-robot/tree/master/Py%20Apple%20Dynamics%20V6.8/Py%20Apple%20Dynamics%20V6.8%20%E5%9B%BA%E4%BB%B6%E5%8F%8A%E7%A8%8B%E5%BA%8F/V6.8%20%E6%BA%90%E4%BB%A3%E7%A0%81)
+    - 仿真（皆为 matlab 脚本）
+        - [足部运动摆线](RelevantInformation/LegSport/Cyclone.m)
+        - [腿部沿摆线运动整体形状](RelevantInformation/LegSport/LegCyclone.m)
 - 结构
     - [x] 最初版结构
-    - [x] 3D 打印外壳，结构更新([菠萝狗](http://padog.com.cn/#/index.md))
-    - [ ] 结构重做，打印新的扩展板
+    - [x] 3D 打印外壳，结构更新（[菠萝狗](http://padog.com.cn/#/index.md)）
+    - [x] 
+      结构重做（[菠萝狗-灯哥开源](https://github.com/ToanTech/py-apple-quadruped-robot/tree/master/%E4%BA%8C%E4%BB%A3%E8%8F%A0%E8%90%9D%EF%BC%88Py-Apple%20Structure%20V10.0%20%E4%B8%B2%E8%81%94%EF%BC%89)
+      ），打印新的扩展板
 
 ## 实验进程
 
@@ -81,8 +91,7 @@
     - 结果：很难坐立，但是行走正常（虽然脚步怪怪的）
     - 优化：调整代码，与树莓派结合
 - [ ] 极限实验
-    - [x] 图像获取：受树莓派本身和摄像头本身影响，获取速度已经达到极限值，约每秒 1 张照片，考虑到机器狗实际移速不高，改获取速度应当足够满足需要
-    - [ ] 图像处理
+    - [x] 图像获取与处理
     - [ ] 通讯速度：受波特率影响，速度绝对够，有时间再算
     - [ ] 单片机反应速度
     - [ ] 功耗测定
@@ -163,7 +172,7 @@
         - 芯片使用
             - [三八译码器](https://atta.szlcsc.com/upload/public/pdf/source/20200619/C513527_D04113946337FFA11528F3555AE2E14A.pdf)
             - [三态门](https://atta.szlcsc.com/upload/public/pdf/source/20200402/C507191_D85B46125E3A0A7EFEB90895E388FB75.pdf)
-            - [反相器](https://atta.szlcsc.com/upload/public/pdf/source/20231109/6055D1B61DE2E899F5391931885BEAFC.pdf)
+            - [反相器1](https://atta.szlcsc.com/upload/public/pdf/source/20231109/6055D1B61DE2E899F5391931885BEAFC.pdf)
             - [反相器2](https://atta.szlcsc.com/upload/public/pdf/source/20170918/C131317_1505726905601976309.pdf)
             - [与门](https://atta.szlcsc.com/upload/public/pdf/source/20200624/C5593_29BD22E613BAE221D22F61679620A23D.pdf)
     - 舵机占空比参考：参考淘宝（注意：时基是 20ms，因此，约 5 次 PWM 周期才能凑出一次）

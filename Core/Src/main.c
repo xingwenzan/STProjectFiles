@@ -47,6 +47,8 @@
 
 /* USER CODE BEGIN PV */
 uint8_t walk = 0;   // walk 赋值，该参数是 extern 型变量，可以在同一个项目中跨文件使用
+uint8_t walk_state = 0;  // walk_state 赋值，该参数是 extern 型变量，可以在同一个项目中跨文件使用
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -95,15 +97,10 @@ int main(void) {
     // 其他功能
     TIMx_Configuration();   // 初始化基本定时器定时器，控制机器人运动的每一步的核心
     MX_UART_Init();   // 初始化串口
-    HAL_UART_Transmit(&huart, "my Uart Hello!\n", 15, 100);   // 串口发送内容（用于测试，可有可无）
+    HAL_UART_Transmit(&huart, "my Uart Hello!\n", 15, 100);
     // 初始化 IMU
     IMU_Init();
-    HAL_GPIO_WritePin(MY_LED_GPIO_PORT, MY_LED_PIN, GPIO_PIN_RESET);
-    // 机器狗位移测试用
-    HAL_Delay(3000);
-    walk = 1;
-    HAL_Delay(3000);
-    walk = 2;
+//    HAL_GPIO_WritePin(MY_LED_GPIO_PORT, MY_LED_PIN, GPIO_PIN_RESET);
 //    Robot_Leg_Choose(0);
 //    Robot_Leg_PWM(2000,2000);
 //    HAL_Delay(3000);
@@ -124,6 +121,8 @@ int main(void) {
     /* USER CODE BEGIN WHILE */
     while (1) {
         /* USER CODE BEGIN 3 */
+        if (walk_sign) { walk_sign = 0; }
+        Robot_Leg_Do();
         // 主要信号接收部分，???过接收串口信号实现启停接收
 //        int ch;
 //        HAL_UART_Receive(&huart, (uint8_t *) &ch, 1, 0xFFFF);   // 串口接收
@@ -137,8 +136,7 @@ int main(void) {
 //            tmp += ch-'0';
 //        }
 
-        // 腿部舵机选择测试
-//        Robot_Leg_Choose(ch-'0');
+
 
         // IMU 测试
         BMI088_read(gyro, accel, &temp);

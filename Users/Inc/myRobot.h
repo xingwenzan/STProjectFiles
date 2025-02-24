@@ -9,7 +9,6 @@
  * X1 - RF
  * X2 - LB
  * X3 - RB
- * 备注：各端口的对应在流水线上实际上存在未知原因的异常偏移（例如我选中 X0 时，实际上是由 X1 输出结果），这是经过调整后的结果
  */
 
 #ifndef STPROJECTFILES_MYROBOT_H
@@ -26,8 +25,6 @@
 // 鉴于已有三八译码器，实际只需二四译码，C 取消不用
 #define MY_ROBOT_CHOOSE_PIN_A GPIO_PIN_9
 #define MY_ROBOT_CHOOSE_PIN_B GPIO_PIN_8
-//#define MY_ROBOT_CHOOSE_PIN_C GPIO_PIN_7
-
 
 // pwm 输出通道：G - 大腿；S - 小腿
 #define MY_PWM_CHANNEL_G TIM_CHANNEL_1
@@ -35,13 +32,18 @@
 
 /**
  * walk 用于控制机器狗腿部动作\n
- * 当前有用位为低四位，功能如下：（低位为 0 号，高位为 7 号）\n
- * 2、3 号：选定当前腿，00 - 11 依次为左前、右前、左后、右后\n
- * 1 号：0 静止（站立、下蹲）；1 运动/走路\n
- * 0 号：（1 号为 0 时）0 下蹲，1 站立；（1 号为 0 时）走路时的两种状态\n
- * 其余位：暂时无用，设置为 0
+ * 各位的功能如下：（低位为 0 号，高位为 7 号）\n
+ * 0、1 号：腿部选择
+ * 2-7 号：控制该腿在摆线的状态（范围：0-49）
  */
 extern uint8_t walk;
+/**
+ * 机器狗运动类型
+ * 0 - 下蹲
+ * 1 - 站立
+ * 2 - 走路
+ */
+extern uint8_t walk_state;
 
 void Robot_Leg_Choose(uint8_t idx);
 void Robot_Leg_PWM(uint16_t pwmG,uint16_t pwmS);

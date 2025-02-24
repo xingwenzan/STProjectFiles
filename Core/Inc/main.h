@@ -28,6 +28,7 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx_hal.h"
+#include "math.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -43,22 +44,6 @@ typedef double fp64;
 
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
-
-/* USER CODE END EC */
-
-/* Exported macro ------------------------------------------------------------*/
-/* USER CODE BEGIN EM */
-
-/* USER CODE END EM */
-
-/* Exported functions prototypes ---------------------------------------------*/
-void Error_Handler(void);
-
-/* USER CODE BEGIN EFP */
-void Error_Handler(void);
-/* USER CODE END EFP */
-
-/* Private defines -----------------------------------------------------------*/
 #define Accel_INT_Pin GPIO_PIN_2
 #define Accel_INT_GPIO_Port GPIOC
 #define Gryo_INT_Pin GPIO_PIN_3
@@ -67,8 +52,20 @@ void Error_Handler(void);
 #define SPI2_Gyro_CS_GPIO_Port GPIOB
 #define SPI2_Accel_CS_Pin GPIO_PIN_1
 #define SPI2_Accel_CS_GPIO_Port GPIOB
+/* USER CODE END EC */
 
+/* Exported macro ------------------------------------------------------------*/
+/* USER CODE BEGIN EM */
+/* USER CODE END EM */
+
+/* Exported functions prototypes ---------------------------------------------*/
+/* USER CODE BEGIN EFP */
+void Error_Handler(void);
+/* USER CODE END EFP */
+
+/* Private defines -----------------------------------------------------------*/
 /* USER CODE BEGIN Private defines */
+static uint8_t walk_sign = 0; // 代表 walk 值是否改变，改变则对舵机操作（1 是 0 否）
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus
