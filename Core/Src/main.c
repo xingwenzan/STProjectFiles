@@ -89,32 +89,20 @@ int main(void) {
     /* Initialize all configured peripherals */
     /* USER CODE BEGIN 2 */
     // 初始?? LED
-    MY_LED_GPIO_CLK_ENABLE();   // LED（C 端口）时钟使能，使用外设时都要先??启它的时钟，且端口时钟使能后才能进行初始??
-    MY_GPIO_INIT(MY_LED_GPIO_PORT, MY_LED_PIN);   // 初始?? LED 引脚
+    MY_LED_GPIO_CLK_ENABLE();   // LED（C 端口）时钟使能，使用外设时都要先开启它的时钟，且端口时钟使能后才能进行初始化
+    MY_GPIO_INIT(MY_LED_GPIO_PORT, MY_LED_PIN);   // 初始化 LED 引脚
     HAL_GPIO_WritePin(MY_LED_GPIO_PORT, MY_LED_PIN, GPIO_PIN_SET);
     // 机器人初始化
     Robot_Init();   // 机器人初始化函数
     // 其他功能
     TIMx_Configuration();   // 初始化基本定时器定时器，控制机器人运动的每一步的核心
     MX_UART_Init();   // 初始化串口
-    HAL_UART_Transmit(&huart, "my Uart Hello!\n", 15, 100);
+//    HAL_UART_Transmit(&huart, "my Uart Hello!\n", 15, 100);
     // 初始化 IMU
     IMU_Init();
-//    HAL_GPIO_WritePin(MY_LED_GPIO_PORT, MY_LED_PIN, GPIO_PIN_RESET);
-//    Robot_Leg_Choose(0);
-//    Robot_Leg_PWM(2000,2000);
-//    HAL_Delay(3000);
-//    Robot_Leg_Choose(1);
-//    Robot_Leg_PWM(2000,2000);
-//    HAL_Delay(3000);
-//    Robot_Leg_Choose(2);
-//    Robot_Leg_PWM(2000,2000);
-//    HAL_Delay(3000);
-//    Robot_Leg_Choose(3);
-//    Robot_Leg_PWM(2000,2000);
-//    HAL_Delay(3000);
+
     // IMU 测试用，用于将获取的内容发出到串口
-    union Data_Uart_Float tmp_out = {0};
+//    union Data_Uart_Float tmp_out = {0};
     /* USER CODE END 2 */
 
     /* Infinite loop */
@@ -123,7 +111,29 @@ int main(void) {
         /* USER CODE BEGIN 3 */
         if (walk_sign) { walk_sign = 0; }
         Robot_Leg_Do();
-        // 主要信号接收部分，???过接收串口信号实现启停接收
+
+        // IMU 数据读取
+        BMI088_read(gyro, accel, &temp);
+        /*
+        // IMU 测试（数据读取显示）
+        // temp
+        tmp_out.fx = temp;
+        Float_Uart_Out(&huart, tmp_out);
+        // accel x,y,z
+        for (int i = 0; i < 3; ++i) {
+            tmp_out.fx = accel[i];
+            Float_Uart_Out(&huart, tmp_out);
+        }
+        // gyro x,y,z
+        for (int i = 0; i < 3; ++i) {
+            tmp_out.fx = gyro[i];
+            Float_Uart_Out(&huart, tmp_out);
+        }
+        HAL_Delay(100);
+         */
+
+        /*
+        // 主要信号接收部分，通过接收串口信号实现启停接收
 //        int ch;
 //        HAL_UART_Receive(&huart, (uint8_t *) &ch, 1, 0xFFFF);   // 串口接收
 //        HAL_GPIO_TogglePin(MY_LED_GPIO_PORT, MY_LED_PIN);
@@ -135,34 +145,7 @@ int main(void) {
 //            tmp *= 10;
 //            tmp += ch-'0';
 //        }
-
-
-
-        // IMU 测试
-        BMI088_read(gyro, accel, &temp);
-//        HAL_Delay(10);
-//        HAL_UART_Transmit(&huart, "\nTemp:", 6, 100);
-//        tmp_out.fx = temp;
-//        Float_Uart_Out(&huart, tmp_out);
-//        HAL_UART_Transmit(&huart, "\nAccelX:", 8, 100);
-//        tmp_out.fx = accel[0];
-//        Float_Uart_Out(&huart, tmp_out);
-//        HAL_UART_Transmit(&huart, "\nAccelY:", 8, 100);
-//        tmp_out.fx = accel[1];
-//        Float_Uart_Out(&huart, tmp_out);
-//        HAL_UART_Transmit(&huart, "\nAccelZ:", 8, 100);
-//        tmp_out.fx = accel[2];
-//        Float_Uart_Out(&huart, tmp_out);
-//        HAL_UART_Transmit(&huart, "\nGyroX:", 7, 100);
-//        tmp_out.fx = gyro[0];
-//        Float_Uart_Out(&huart, tmp_out);
-//        HAL_UART_Transmit(&huart, "\nGyroY:", 7, 100);
-//        tmp_out.fx = gyro[1];
-//        Float_Uart_Out(&huart, tmp_out);
-//        HAL_UART_Transmit(&huart, "\nGyroZ:", 7, 100);
-//        tmp_out.fx = gyro[2];
-//        Float_Uart_Out(&huart, tmp_out);
-//        HAL_Delay(10000);
+         */
 
         /* USER CODE END 3 */
     }

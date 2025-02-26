@@ -54,7 +54,7 @@
         - [程序参考](https://github.com/ToanTech/py-apple-quadruped-robot/tree/master/Py%20Apple%20Dynamics%20V6.8/Py%20Apple%20Dynamics%20V6.8%20%E5%9B%BA%E4%BB%B6%E5%8F%8A%E7%A8%8B%E5%BA%8F/V6.8%20%E6%BA%90%E4%BB%A3%E7%A0%81)
     - 仿真（皆为 matlab 脚本）
         - [足部运动摆线](RelevantInformation/LegSport/Cyclone.m)
-        - [腿部沿摆线运动整体形状](RelevantInformation/LegSport/LegCyclone.m)
+        - [腿部沿摆线运动整体形状](RelevantInformation/LegSport/LegCyclone.m)![如图](RelevantInformation/Photos/AboutOverall/FootMovementCycloid.png)
 - 结构
     - [x] 最初版结构
     - [x] 3D 打印外壳，结构更新（[菠萝狗](http://padog.com.cn/#/index.md)）
@@ -64,6 +64,7 @@
 
 ## 实验进程
 
+> 2024
 - [x] 第一次实验 - PWM 控制 4 电机 - 仅前移
     - 结果：无法行动
     - 问题：
@@ -90,6 +91,11 @@
 - [x] 第六次实验 - 8 舵机 & 加脚掌 - 坐立 & 行走
     - 结果：很难坐立，但是行走正常（虽然脚步怪怪的）
     - 优化：调整代码，与树莓派结合
+> 2025
+- [x] 第一次实验 - 重新设计扩展板 & 重整步态方程
+  - 结果：体态结构恢复正常，坐立运动皆可实现（运动时左偏，可能与初始零点设置有关）
+  - 优化：重整零点，添加 IMU 模块调整
+  - 实验效果：[效果视频](RelevantInformation/Photos/AboutOverall/RobotDogSport.mp4)
 - [ ] 极限实验
     - [x] 图像获取与处理
     - [ ] 通讯速度：受波特率影响，速度绝对够，有时间再算
@@ -176,6 +182,9 @@
             - [反相器2](https://atta.szlcsc.com/upload/public/pdf/source/20170918/C131317_1505726905601976309.pdf)
             - [与门](https://atta.szlcsc.com/upload/public/pdf/source/20200624/C5593_29BD22E613BAE221D22F61679620A23D.pdf)
     - 舵机占空比参考：参考淘宝（注意：时基是 20ms，因此，约 5 次 PWM 周期才能凑出一次）
+    - 调试（通过 win11 串口接收内容调试，主要用于调试 IMU）
+        - [基础/通用/原始版](RelevantInformation/DebugByWinUart/WinUartBase.c)
+        - [IMU 特化版](RelevantInformation/DebugByWinUart/WinUartForIMU.c)
 
 ## 问题解决
 

@@ -15,8 +15,8 @@ static uint16_t pwmGS[2] = {3000, 3000};
 // 50 为单条腿迈步摆线的总周期，50 次 pwm 输出为 1 步，而单条腿接收的也是 50Hz 的 pwm 信号，即 1s 迈步一次
 // 2 为占空比的倒数，单条腿一半时间用作摆动相，一半时间用作支撑相
 static const uint8_t Ts_lambda = 50 / 2;
-static int8_t x_st = -1, x_ed = 1; // 摆线在起点、终点的 x 轴坐标
-static int8_t z_st = -10; // 摆线在起点的 z 轴坐标
+static float x_st = -1, x_ed = 1; // 摆线在起点、终点的 x 轴坐标
+static float z_st = -10; // 摆线在起点的 z 轴坐标
 static int8_t h = 1; // 摆线的高度
 
 // 用于求运动学逆解的参数
@@ -78,7 +78,7 @@ void get_Kinematics_Inverse_Solution(uint8_t leg) {
         pwmGS[0] = (uint16_t) (4000.0 * thetaG / M_PI + 1000.0); //G
         thetaS = M_PI - thetaS;
     }
-    pwmGS[1] = (uint16_t) (4000.0 * thetaS / M_PI+1000.0); //S
+    pwmGS[1] = (uint16_t) (4000.0 * thetaS / M_PI + 1000.0); //S
 }
 
 /**

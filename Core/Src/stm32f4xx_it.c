@@ -255,14 +255,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
         if (tim_it_count%3000==0 && walk_state<2){
             walk_state++;
         }
-//        if (tim_it_count%3000==0){
-//            if (walk_state<2){
-//                walk_state++;
-//                HAL_GPIO_WritePin(MY_LED_GPIO_PORT, MY_LED_PIN, GPIO_PIN_SET);
-//            } else{
-//                HAL_GPIO_WritePin(MY_LED_GPIO_PORT, MY_LED_PIN, GPIO_PIN_RESET);
-//            }
-//        }
     }
 }
 /* USER CODE END 1 */
