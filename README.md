@@ -65,6 +65,7 @@
 ## 实验进程
 
 > 2024
+
 - [x] 第一次实验 - PWM 控制 4 电机 - 仅前移
     - 结果：无法行动
     - 问题：
@@ -91,11 +92,13 @@
 - [x] 第六次实验 - 8 舵机 & 加脚掌 - 坐立 & 行走
     - 结果：很难坐立，但是行走正常（虽然脚步怪怪的）
     - 优化：调整代码，与树莓派结合
+
 > 2025
+
 - [x] 第一次实验 - 重新设计扩展板 & 重整步态方程
-  - 结果：体态结构恢复正常，坐立运动皆可实现（运动时左偏，可能与初始零点设置有关）
-  - 优化：重整零点，添加 IMU 模块调整
-  - 实验效果：[效果视频](RelevantInformation/Photos/AboutOverall/RobotDogSport.mp4)
+    - 结果：体态结构恢复正常，坐立运动皆可实现（运动时左偏，可能与初始零点设置有关）
+    - 优化：重整零点，添加 IMU 模块调整
+    - 实验效果：[效果视频](RelevantInformation/Photos/AboutOverall/RobotDogSport.mp4)
 - [ ] 极限实验
     - [x] 图像获取与处理
     - [ ] 通讯速度：受波特率影响，速度绝对够，有时间再算
@@ -139,7 +142,9 @@
         - python 库调用 - [创建虚拟环境时、环境创建后进行配置](https://docs.python.org/3/library/venv.html)
             - [picamera 库](https://blog.csdn.net/yong1585855343/article/details/121762202)
             - OpenCV(cv2 库)
-            - [YOLO v11](https://github.com/ultralytics/ultralytics)：[模型训练](https://www.heywhale.com/mw/project/677f7f94bf47195ee71aaf17)
+            - [YOLO v11](https://github.com/ultralytics/ultralytics)：
+                - [模型训练](https://www.heywhale.com/mw/project/677f7f94bf47195ee71aaf17)
+                - [模型参数](RelevantInformation/AboutRaspberryPi/best.pt)
         - 视频截取帧：`ffmpeg` 命令
     - [定时使用脚本](https://www.labno3.com/2021/08/05/raspberry-pi-time-lapse-in-four-easy-steps/#i-8)
         - 最低使用间隔：1min -> 可通过循环命令和 `sleep` 命令解决

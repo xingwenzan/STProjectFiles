@@ -24,9 +24,42 @@ static const double l_G = 8.0, l_S = 6.15; // 大小腿长度
 
 /**
  * 求单腿足部坐标
+ * @param leg 腿部编号
+ * @param pitch 俯仰角（指针）
+ * @param roll 横滚角（指针）
  */
-void get_leg_point(uint8_t leg) {
+void get_leg_point(uint8_t leg, fp32 *pitch, fp32 *roll) {
     static double sigma, x_BaiDong, x_ZhiCheng, z;
+    // x_st 与 x_ed 相等时（即蹲坐或站立时），所有腿都是支撑相
+    if (x_st == x_ed) {
+        leg_point[0] = 0;
+        leg_point[1] = z_st;
+        // IMU 距前腿在 x 轴上约 8cm，后腿约 6.5cm，前后各调整一半差距的角度
+        // IMU 距左腿在 y 轴上约 7cm，右腿约 6cm，左右各调整一半差距的角度
+        switch (leg) {
+            case 0: {
+                leg_point[1] += 4.0f * tan(*pitch);
+                leg_point[1] += 3.5f * tan(*roll);
+            }
+                break;
+            case 1: {
+                leg_point[1] += 4.0f * tan(*pitch);
+                leg_point[1] -= 3.0f * tan(*roll);
+            }
+                break;
+            case 2: {
+                leg_point[1] -= 3.3f * tan(*pitch);
+                leg_point[1] += 3.5f * tan(*roll);
+            }
+                break;
+            case 3: {
+                leg_point[1] -= 3.3f * tan(*pitch);
+                leg_point[1] -= 3.0f * tan(*roll);
+            }
+                break;
+        }
+        return;
+    }
     uint8_t t = walk >> 2;
     // 根据所在时段求 sigma，计算当前摆动相、支撑相的应该在的坐标
     if (t <= Ts_lambda) { // 前半段
@@ -144,7 +177,7 @@ void Robot_Init() {
  * \n ***************************************************** \n\n
  * 特别强调：该函数只能在 while 里使用，禁止放到定时器中断里去，会使流水线产生未知偏移
  */
-void Robot_Leg_Do() {
+void Robot_Leg_Do(fp32 *pitch, fp32 *roll) {
     if (walk_state == 0) {
         h = 0;
         x_st = x_ed = 0;
@@ -162,10 +195,45 @@ void Robot_Leg_Do() {
 
     uint8_t leg = walk & 0x03;
     // PWM 数值获取
-    get_leg_point(leg);
+    get_leg_point(leg, pitch, roll);
     get_Kinematics_Inverse_Solution(leg);
 
     // PWM 选择输出
     Robot_Leg_Choose(leg);
     Robot_Leg_PWM(pwmGS[0], pwmGS[1]);
+}
+
+/**
+ * 互补滤波器
+ * @param acc 加速度传感器数据
+ * @param gyro 陀螺仪数据
+ * @param dt 运行周期
+ * @return 倾角，受输入影响，可能是俯仰角（Pitch）和横滚角（Roll）
+ */
+float ComplementaryFilter(float acc, float gyro, float dt) {
+    // a = tau / (tau + dt) 融合系数；angle 返回倾角；参考：https://c.miaowlabs.com/B07.html
+    static float a, angle;
+    a = 0.98f;
+    angle = a * (angle + gyro * dt) + (1 - a) * (acc);
+    return angle;
+}
+
+/**
+ * 获取俯仰角（Pitch）和横滚角（Roll）
+ * @param gyro 陀螺仪数据
+ * @param accel 加速度传感器数据
+ * @param pitch 俯仰角（指针）
+ * @param roll 横滚角（指针）
+ */
+void GetPitchAndRoll(fp32 gyro[3], fp32 accel[3], fp32 *pitch, fp32 *roll) {
+    static float g_fAccAngle; // 加速度传感器经过 atan2() 解算得到的角度
+    static float dt = 0.005f; // 互补滤波器控制周期
+
+    // 俯仰角计算
+    g_fAccAngle = (float) (atan2(accel[0], accel[2]));
+    *pitch = ComplementaryFilter(g_fAccAngle, gyro[1], dt);
+
+    // 横滚角计算
+    g_fAccAngle = (float) (atan2(accel[1], accel[2]));
+    *roll = ComplementaryFilter(g_fAccAngle, gyro[0], dt);
 }

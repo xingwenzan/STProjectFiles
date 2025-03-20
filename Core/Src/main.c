@@ -48,6 +48,7 @@
 /* USER CODE BEGIN PV */
 uint8_t walk = 0;   // walk 赋值，该参数是 extern 型变量，可以在同一个项目中跨文件使用
 uint8_t walk_state = 0;  // walk_state 赋值，该参数是 extern 型变量，可以在同一个项目中跨文件使用
+uint8_t walk_sign = 0;
 
 /* USER CODE END PV */
 
@@ -59,7 +60,12 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-fp32 gyro[3], accel[3], temp;
+
+// IMU 获取数据
+fp32 gyro[3]={0}, accel[3]={0}, temp=0;
+fp32 pitch = 0; // 俯仰角
+fp32 roll = 0; // 横滚角
+
 /* USER CODE END 0 */
 
 /**
@@ -102,18 +108,27 @@ int main(void) {
     IMU_Init();
 
     // IMU 测试用，用于将获取的内容发出到串口
-//    union Data_Uart_Float tmp_out = {0};
+    union Data_Uart_Float tmp_out = {0};
     /* USER CODE END 2 */
 
     /* Infinite loop */
     /* USER CODE BEGIN WHILE */
     while (1) {
         /* USER CODE BEGIN 3 */
-        if (walk_sign) { walk_sign = 0; }
-        Robot_Leg_Do();
+        if (walk_sign) {
+            // IMU 数据读取
+            BMI088_read(gyro, accel, &temp);
+            GetPitchAndRoll(gyro, accel, &pitch, &roll);
+            // 机器狗腿运动
+            Robot_Leg_Do(&pitch, &roll);
+            walk_sign = 0;
 
-        // IMU 数据读取
-        BMI088_read(gyro, accel, &temp);
+            // 角度测试
+//            tmp_out.fx = pitch;
+//            Float_Uart_Out(&huart, tmp_out);
+//            tmp_out.fx = roll;
+//            Float_Uart_Out(&huart, tmp_out);
+        }
         /*
         // IMU 测试（数据读取显示）
         // temp

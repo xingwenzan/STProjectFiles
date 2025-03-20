@@ -23,7 +23,6 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "myTIM.h"
-//#include "myRobot.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -252,9 +251,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
             walk_sign = 1;
             walk = (walk+1)%(50<<2);
         }
-        if (tim_it_count%3000==0 && walk_state<2){
-            walk_state++;
-        }
+//        if (tim_it_count%10000==0 && walk_state<2){
+//            walk_state++;
+//        }
     }
 }
 /* USER CODE END 1 */

@@ -65,7 +65,7 @@ void Error_Handler(void);
 
 /* Private defines -----------------------------------------------------------*/
 /* USER CODE BEGIN Private defines */
-static uint8_t walk_sign = 0; // 代表 walk 值是否改变，改变则对舵机操作（1 是 0 否）
+extern uint8_t walk_sign; // 代表 walk 值是否改变，改变则对舵机操作（1 是 0 否）
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

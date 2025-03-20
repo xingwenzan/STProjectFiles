@@ -48,6 +48,7 @@ extern uint8_t walk_state;
 void Robot_Leg_Choose(uint8_t idx);
 void Robot_Leg_PWM(uint16_t pwmG,uint16_t pwmS);
 void Robot_Init();  // 机器人初始化
-void Robot_Leg_Do();
+void Robot_Leg_Do(fp32 *pitch, fp32 *roll);
+void GetPitchAndRoll(fp32 gyro[3], fp32 accel[3], fp32 *pitch, fp32 *roll);
 
 #endif //STPROJECTFILES_MYROBOT_H
