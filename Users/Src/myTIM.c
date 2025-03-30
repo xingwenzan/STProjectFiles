@@ -84,7 +84,7 @@ void MX_TIM_Advance_Init(void) {
     htim_advance.Instance = ADVANCE_TIM;   // ADVANCE_TIM 定义在 `main.h`，定为了定时器 8
     // 高级控制定时器时钟源 TIMxCLK = APB2 = HCLK = 168MHz
     // 设定定时器频率为 = TIMxCLK/(TIM_Prescaler+1) = 2MHz
-    htim_advance.Init.Prescaler = 84-1;
+    htim_advance.Init.Prescaler = 84 - 1;
     // 计数方式 - 上升沿计数
     htim_advance.Init.CounterMode = TIM_COUNTERMODE_UP;
     /* 累计 TIM_Period 个后产生一个更新或者中断*/
@@ -155,8 +155,7 @@ void MX_TIM_Advance_Init(void) {
 
 }
 
-void MX_TIM3_Init(void)
-{
+void MX_TIM3_Init(void) {
     TIM_MasterConfigTypeDef sMasterConfig = {0};
     TIM_OC_InitTypeDef sConfigOC = {0};
 
@@ -166,22 +165,19 @@ void MX_TIM3_Init(void)
     htim3.Init.Period = 65535;
     htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
     htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-    if (HAL_TIM_PWM_Init(&htim3) != HAL_OK)
-    {
+    if (HAL_TIM_PWM_Init(&htim3) != HAL_OK) {
         Error_Handler();
     }
     sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
     sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-    if (HAL_TIMEx_MasterConfigSynchronization(&htim3, &sMasterConfig) != HAL_OK)
-    {
+    if (HAL_TIMEx_MasterConfigSynchronization(&htim3, &sMasterConfig) != HAL_OK) {
         Error_Handler();
     }
     sConfigOC.OCMode = TIM_OCMODE_PWM1;
     sConfigOC.Pulse = 0;
     sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
     sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
-    if (HAL_TIM_PWM_ConfigChannel(&htim3, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
-    {
+    if (HAL_TIM_PWM_ConfigChannel(&htim3, &sConfigOC, TIM_CHANNEL_2) != HAL_OK) {
         Error_Handler();
     }
     HAL_TIM_MspPostInit(&htim3);

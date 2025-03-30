@@ -62,7 +62,7 @@ void SystemClock_Config(void);
 /* USER CODE BEGIN 0 */
 
 // IMU 获取数据
-fp32 gyro[3]={0}, accel[3]={0}, temp=0;
+fp32 gyro[3] = {0}, accel[3] = {0}, temp = 0;
 fp32 pitch = 0; // 俯仰角
 fp32 roll = 0; // 横滚角
 
