@@ -249,7 +249,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
         // 舵机巡回供能（每次选择一条腿发送信号）,200Hz，由于流水线的原因，实际体现在单条腿上 50Hz
         if (tim_it_count % 5 == 0) {
             walk_sign = 1;
-            walk = (walk+1)%(50<<2);
+            walk = (walk+1)%(100<<2);
         }
 //        if (tim_it_count%10000==0 && walk_state<2){
 //            walk_state++;

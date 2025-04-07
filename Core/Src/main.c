@@ -46,8 +46,8 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-uint8_t walk = 0;   // walk 赋值，该参数是 extern 型变量，可以在同一个项目中跨文件使用
-uint8_t walk_state = 0;  // walk_state 赋值，该参数是 extern 型变量，可以在同一个项目中跨文件使用
+uint16_t walk = 0;   // walk 赋值，该参数是 extern 型变量，可以在同一个项目中跨文件使用
+uint8_t walk_state = 2;  // walk_state 赋值，该参数是 extern 型变量，可以在同一个项目中跨文件使用
 uint8_t walk_sign = 0;
 
 /* USER CODE END PV */
@@ -108,7 +108,8 @@ int main(void) {
     IMU_Init();
 
     // IMU 测试用，用于将获取的内容发出到串口
-    union Data_Uart_Float tmp_out = {0};
+//    union Data_Uart_Float tmp_out = {0};
+
     /* USER CODE END 2 */
 
     /* Infinite loop */
@@ -147,11 +148,15 @@ int main(void) {
         HAL_Delay(100);
          */
 
-        /*
+
         // 主要信号接收部分，通过接收串口信号实现启停接收
-//        int ch;
-//        HAL_UART_Receive(&huart, (uint8_t *) &ch, 1, 0xFFFF);   // 串口接收
-//        HAL_GPIO_TogglePin(MY_LED_GPIO_PORT, MY_LED_PIN);
+        uint8_t ch = 0;
+        if (HAL_UART_Receive(&huart,  &ch, 1, 0) == HAL_OK && walk_state!=ch) {// 串口接收
+            HAL_GPIO_TogglePin(MY_LED_GPIO_PORT, MY_LED_PIN);
+            walk_state = ch;
+        }
+
+        /*
 //        // 舵机角度测试
 //        if (ch == '=') {
 //            Robot_Leg_PWM(tmp);

@@ -14,8 +14,9 @@ static uint16_t pwmGS[2] = {3000, 3000};
 // 用于求足部摆线坐标的参数
 // 50 为单条腿迈步摆线的总周期，50 次 pwm 输出为 1 步，而单条腿接收的也是 50Hz 的 pwm 信号，即 1s 迈步一次
 // 2 为占空比的倒数，单条腿一半时间用作摆动相，一半时间用作支撑相
-static const uint8_t Ts_lambda = 50 / 2;
+static const uint8_t Ts_lambda = 25;// 100/4
 static float x_st = -1, x_ed = 1; // 摆线在起点、终点的 x 轴坐标
+static float x_ZhiCheng[4];
 static float z_st = -10; // 摆线在起点的 z 轴坐标
 static int8_t h = 1; // 摆线的高度
 
@@ -29,7 +30,8 @@ static const double l_G = 8.0, l_S = 6.15; // 大小腿长度
  * @param roll 横滚角（指针）
  */
 void get_leg_point(uint8_t leg, fp32 *pitch, fp32 *roll) {
-    static double sigma, x_BaiDong, x_ZhiCheng, z;
+    static double sigma, z;
+    static uint8_t leg_BaiDong;
     // x_st 与 x_ed 相等时（即蹲坐或站立时），所有腿都是支撑相
     if (x_st == x_ed) {
         leg_point[0] = 0;
@@ -60,7 +62,30 @@ void get_leg_point(uint8_t leg, fp32 *pitch, fp32 *roll) {
         }
         return;
     }
-    uint8_t t = walk >> 2;
+    uint16_t t = walk >> 2;
+    leg_BaiDong = t / Ts_lambda;
+
+    t %= Ts_lambda;
+    sigma = 2 * M_PI * t / Ts_lambda;
+    if (leg==leg_BaiDong) { // 前半段 - 作摆动相
+//        sigma = 2 * M_PI * t / Ts_lambda;
+        leg_point[1] = h * (1 - cos(sigma)) / 2 + z_st;
+        leg_point[0] = (x_ed - x_st) * ((sigma - sin(sigma)) / (2 * M_PI)) + x_st;
+    } else { // 后半段 - 作支撑相
+        // 当前腿相对于摆动相腿是第几个腿
+        leg+=4;
+        leg-=leg_BaiDong;
+        leg%=4;
+
+//        sigma = 2 * M_PI * (t - Ts_lambda) / Ts_lambda ;
+        leg_point[1] = z_st;
+        leg_point[0] = (x_ZhiCheng[leg-1] - x_ZhiCheng[leg]) * ((sigma - sin(sigma)) / (2 * M_PI)) + x_ZhiCheng[leg];
+    }
+
+
+
+
+    /*
     // 根据所在时段求 sigma，计算当前摆动相、支撑相的应该在的坐标
     if (t <= Ts_lambda) { // 前半段
         sigma = 2 * M_PI * t / Ts_lambda;
@@ -80,6 +105,7 @@ void get_leg_point(uint8_t leg, fp32 *pitch, fp32 *roll) {
         leg_point[0] = x_ZhiCheng;
         leg_point[1] = z_st;
     }
+     */
 }
 
 // 通过已知的足部坐标求运动学逆解
@@ -190,7 +216,10 @@ void Robot_Leg_Do(fp32 *pitch, fp32 *roll) {
         x_st = -2;
         x_ed = 2; // 摆线在起点、终点的 x 轴坐标
         z_st = -10; // 摆线在起点的 z 轴坐标
-        h = 2; // 摆线的高度
+        h = 3; // 摆线的高度
+        for (int i = 0; i < 4; ++i) {
+            x_ZhiCheng[i] = x_st+(x_ed-x_st)*i/3;
+        }
     }
 
     uint8_t leg = walk & 0x03;
